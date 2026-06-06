@@ -1,0 +1,131 @@
+<!-- pages/ai-plan/ai-plan.wxml -->
+<navigation-bar title="AI 制定计划" color="white" background="#2D2D2D"></navigation-bar>
+
+<scroll-view scroll-y class="page">
+  <!-- 积分卡片 -->
+  <view class="points-card card">
+    <view class="points-left">
+      <text class="points-star">⭐</text>
+      <view>
+        <text class="points-label">积分余额</text>
+        <text class="points-hint">{{planType==='training' ? '训练计划消耗3积分' : '饮食计划消耗2积分'}}</text>
+      </view>
+    </view>
+    <text class="points-num">{{userPoints}}</text>
+  </view>
+
+  <!-- 计划类型选择 -->
+  <view class="form-group">
+    <text class="form-label">选择计划类型</text>
+    <view class="plan-type-row">
+      <view class="plan-type-card {{planType==='training'?'pt-active':''}}" bindtap="switchPlanType" data-type="training">
+        <text class="pt-icon">🏋️</text>
+        <text class="pt-title">AI 力量训练计划</text>
+        <text class="pt-cost">消耗 3 积分</text>
+      </view>
+      <view class="plan-type-card {{planType==='diet'?'pt-active':''}}" bindtap="switchPlanType" data-type="diet">
+        <text class="pt-icon">🍽️</text>
+        <text class="pt-title">AI 饮食计划</text>
+        <text class="pt-cost">消耗 2 积分</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 训练参数 -->
+  <block wx:if="{{planType === 'training'}}">
+    <view class="form-group">
+      <text class="form-label">目标肌群</text>
+      <view class="chip-row">
+        <text wx:for="{{muscleOptions}}" wx:key="*this"
+          class="chip {{trainingTargetMuscles.indexOf(item) >= 0 ? 'chip-active' : ''}}"
+          bindtap="toggleMuscle" data-name="{{item}}">{{item}}</text>
+      </view>
+    </view>
+
+    <view class="form-group">
+      <text class="form-label">训练天数：<text class="text-primary">{{trainingDays}}</text> 天</text>
+      <slider min="1" max="14" value="{{trainingDays}}" block-size="20" activeColor="#FF6B35"
+        bindchange="onDaysChange"/>
+    </view>
+
+    <view class="form-group">
+      <text class="form-label">训练水平</text>
+      <view class="chip-row">
+        <text wx:for="{{levelOptions}}" wx:key="*this"
+          class="chip {{trainingLevel===item?'chip-active':''}}"
+          bindtap="selectLevel" data-name="{{item}}">{{item}}</text>
+      </view>
+    </view>
+
+    <view class="form-group">
+      <text class="form-label">可用器械</text>
+      <view class="chip-row">
+        <text wx:for="{{equipmentOptions}}" wx:key="*this"
+          class="chip {{trainingEquipment.indexOf(item) >= 0 ? 'chip-active' : ''}}"
+          bindtap="toggleEquipment" data-name="{{item}}">{{item}}</text>
+      </view>
+    </view>
+
+    <view class="form-group">
+      <text class="form-label">伤病史（可选）</text>
+      <input class="form-input" placeholder="如有伤病史请填写，AI将避开相关动作"
+        value="{{trainingInjury}}" bindinput="onInjuryInput"/>
+    </view>
+  </block>
+
+  <!-- 饮食参数 -->
+  <block wx:else>
+    <view class="form-group">
+      <text class="form-label">目标</text>
+      <view class="chip-row">
+        <text wx:for="{{goalOptions}}" wx:key="*this"
+          class="chip {{dietGoal===item?'chip-active':''}}"
+          bindtap="selectDietGoal" data-name="{{item}}">{{item}}</text>
+      </view>
+    </view>
+
+    <view class="form-group">
+      <text class="form-label">每日目标热量 (kcal)</text>
+      <input class="form-input" type="number" value="{{dietCalories}}"
+        placeholder="如：2500" bindinput="onCaloriesInput"/>
+    </view>
+
+    <view class="form-group">
+      <text class="form-label">饮食偏好</text>
+      <view class="chip-row">
+        <text wx:for="{{preferenceOptions}}" wx:key="*this"
+          class="chip {{dietPreference===item?'chip-active':''}}"
+          bindtap="selectDietPreference" data-name="{{item}}">{{item}}</text>
+      </view>
+    </view>
+
+    <view class="form-group">
+      <text class="form-label">过敏食材（可选）</text>
+      <input class="form-input" placeholder="如：花生、海鲜、牛奶..."
+        value="{{dietAllergies}}" bindinput="onAllergiesInput"/>
+    </view>
+
+    <view class="form-group">
+      <text class="form-label">计划天数：<text class="text-primary">{{dietDays}}</text> 天</text>
+      <slider min="1" max="14" value="{{dietDays}}" block-size="20" activeColor="#FF6B35"
+        bindchange="onDietDaysChange"/>
+    </view>
+  </block>
+
+  <!-- 生成按钮 -->
+  <view class="generate-btn {{generating ? 'btn-disabled' : ''}}" bindtap="generate">
+    <text wx:if="{{!generating}}">🤖 生成计划（消耗{{pointsCost}}积分）</text>
+    <text wx:else>生成中...</text>
+  </view>
+
+  <!-- 生成中动画 -->
+  <view class="loading-overlay" wx:if="{{generating}}">
+    <view class="loading-dialog">
+      <text class="loading-icon">🤖</text>
+      <text class="loading-text">AI 正在为你生成计划...</text>
+      <progress percent="60" strokeWidth="6" activeColor="#FF6B35" backgroundColor="#f0f0f0"
+        border-radius="4" show-info="{{false}}" active="{{true}}"/>
+      <text class="loading-hint">预计等待 5-15 秒</text>
+    </view>
+  </view>
+</scroll-view>

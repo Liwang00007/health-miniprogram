@@ -1,0 +1,43 @@
+<!-- pages/plan-preview/plan-preview.wxml -->
+<navigation-bar title="计划预览" color="white" background="#2D2D2D"></navigation-bar>
+<scroll-view scroll-y class="page">
+  <view wx:if="{{loading}}" class="loading">加载中...</view>
+
+  <empty-state wx:elif="{{!plan}}" icon="📋" text="计划加载失败" hint="请返回重试"></empty-state>
+
+  <view wx:else class="plan-content">
+    <!-- 计划标题 -->
+    <view class="plan-header card">
+      <text class="plan-name">{{plan.name}}</text>
+      <text class="plan-desc">{{plan.days}}天{{planType==='training' ? '训练' : '饮食'}}计划</text>
+    </view>
+
+    <!-- 每日内容 -->
+    <view wx:for="{{plan.content}}" wx:key="day" class="day-block card">
+      <text class="day-title">第 {{item.day}} 天{{planType==='training' ? ' · ' + item.focus : ''}}</text>
+      <!-- 训练动作 -->
+      <block wx:if="{{planType==='training'}}">
+        <view wx:for="{{item.exercises}}" wx:key="name" wx:for-item="detail" class="detail-item">
+          <text class="detail-name">{{detail.name}}</text>
+          <text class="detail-info">{{detail.sets}}组 × {{detail.reps}}次 · {{detail.weight}}kg · 休息{{detail.restSeconds}}s</text>
+        </view>
+      </block>
+      <!-- 饮食餐 -->
+      <block wx:else>
+        <view wx:for="{{item.meals}}" wx:key="mealType" wx:for-item="meal" class="detail-item">
+          <text class="detail-name meal-type-tag">{{meal.mealType}}</text>
+          <text class="detail-info">
+            <block wx:for="{{meal.foods}}" wx:key="name" wx:for-item="food">{{food.name}} {{food.weight}}g<block wx:if="{{food.calories > 0}}"> ({{food.calories}}kcal)</block>{{index < meal.foods.length - 1 ? '、' : ''}}</block>
+          </text>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 底部操作 -->
+  <view class="bottom-actions" wx:if="{{plan}}">
+    <view class="btn-outline" bindtap="editPlan">✏️ 编辑调整</view>
+    <view class="btn-outline" bindtap="saveToTutorial">📖 保存到教程</view>
+    <view class="btn-primary flex-1" bindtap="saveToGoal">💾 保存计划</view>
+  </view>
+</scroll-view>
