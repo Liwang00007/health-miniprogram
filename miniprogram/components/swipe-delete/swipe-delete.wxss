@@ -1,0 +1,40 @@
+/* components/swipe-delete/swipe-delete.wxss — Skyline 兼容版 */
+
+.swipe-delete {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* ====== 内容层（可左滑） ====== */
+.swipe-content {
+  position: relative;
+  z-index: 2;
+  background: #fff;
+}
+
+.swipe-content--transition {
+  transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ====== 删除按钮（隐藏在右侧） ====== */
+.swipe-delete-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.swipe-delete-btn:active {
+  opacity: 0.85;
+}
+
+.swipe-delete-text {
+  font-size: 28rpx;
+  color: #fff;
+  font-weight: 500;
+}

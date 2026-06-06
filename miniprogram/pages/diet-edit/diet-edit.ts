@@ -77,7 +77,7 @@ Component({
       // 检查是否编辑模式（通过页面参数传入 id）
       const pages = getCurrentPages()
       const current = pages[pages.length - 1] as any
-      const options = current?.options || {}
+      const options = (current && current.options) || {}
       if (options.id) {
         this.setData({ editId: options.id })
         this.loadRecord(options.id)
@@ -130,7 +130,7 @@ Component({
           data: { action: 'search', keyword, pageSize: 20 },
         })
         const result = res.result as any
-        if (result.success && result.data?.list) {
+        if (result.success && result.data && result.data.list) {
           this.setData({
             searchResults: result.data.list,
             showResults: result.data.list.length > 0,

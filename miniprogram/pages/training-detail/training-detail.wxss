@@ -1,0 +1,181 @@
+/* pages/training-detail/training-detail.wxss */
+
+.detail-content {
+  padding: var(--spacing-md) var(--spacing-lg);
+}
+
+/* ====== 记录头 ====== */
+.detail-header {
+  margin-bottom: var(--spacing-sm);
+}
+
+.detail-type-icon {
+  font-size: 48rpx;
+}
+
+.detail-type {
+  font-size: var(--font-lg);
+  font-weight: 800;
+  color: var(--color-text);
+  display: block;
+}
+
+.detail-date {
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
+  display: block;
+  margin-top: 2rpx;
+}
+
+.detail-duration-badge {
+  text-align: center;
+  background: var(--color-primary-light);
+  border-radius: var(--radius-md);
+  padding: 12rpx 24rpx;
+}
+
+.duration-num {
+  font-size: var(--font-xl);
+  font-weight: 800;
+  color: var(--color-primary);
+  display: block;
+  line-height: 1.2;
+}
+
+.duration-unit {
+  font-size: var(--font-xs);
+  color: var(--color-primary);
+}
+
+/* ====== 动作详情 ====== */
+.exercise-detail {
+  margin-bottom: var(--spacing-sm);
+}
+
+.ex-header {
+  margin-bottom: var(--spacing-md);
+}
+
+.ex-index {
+  font-size: var(--font-xs);
+  color: var(--color-text-secondary);
+  display: block;
+}
+
+.ex-name {
+  font-size: var(--font-md);
+  font-weight: 700;
+  color: var(--color-text);
+  display: block;
+  margin-top: 2rpx;
+}
+
+.ex-bodypart {
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
+  background: var(--color-bg);
+  padding: 4rpx 16rpx;
+  border-radius: var(--radius-round);
+}
+
+/* ====== 组数表格 ====== */
+.sets-table {
+  margin-top: var(--spacing-sm);
+}
+
+.sets-header {
+  padding: 8rpx 0;
+  border-bottom: 2rpx solid var(--color-border);
+  margin-bottom: 4rpx;
+}
+
+.sets-row {
+  padding: 14rpx 0;
+  border-bottom: 1rpx solid var(--color-bg);
+}
+
+.sets-row:last-child {
+  border-bottom: none;
+}
+
+.col-group {
+  width: 60rpx;
+  text-align: center;
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
+}
+
+.col-weight {
+  flex: 1;
+  text-align: center;
+  font-size: var(--font-base);
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.col-reps {
+  flex: 1;
+  text-align: center;
+  font-size: var(--font-base);
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.col-rest {
+  flex: 1;
+  text-align: center;
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
+}
+
+.col-unit {
+  font-size: var(--font-xs);
+  font-weight: 400;
+  color: var(--color-text-secondary);
+  margin-left: 2rpx;
+}
+
+.sets-header .col-group,
+.sets-header .col-weight,
+.sets-header .col-reps,
+.sets-header .col-rest {
+  font-size: var(--font-xs);
+  color: var(--color-text-hint);
+  font-weight: 400;
+}
+
+/* ====== 备注 ====== */
+.notes-card {
+  margin-bottom: var(--spacing-sm);
+}
+
+.notes-title {
+  font-size: var(--font-base);
+  font-weight: 600;
+  color: var(--color-text);
+  display: block;
+  margin-bottom: var(--spacing-xs);
+}
+
+.notes-content {
+  font-size: var(--font-base);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+/* ====== 删除按钮 ====== */
+.delete-btn {
+  text-align: center;
+  padding: 28rpx;
+  color: var(--color-danger);
+  font-size: var(--font-base);
+  margin-top: var(--spacing-lg);
+  background: var(--color-card);
+  border-radius: var(--radius-card);
+  border: 1rpx solid var(--color-border);
+}
+
+.delete-btn:active {
+  background: #FFF5F5;
+}

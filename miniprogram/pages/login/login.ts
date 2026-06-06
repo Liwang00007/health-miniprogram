@@ -53,7 +53,7 @@ Component({
 
               const delay = userInfo.isNewUser ? 2000 : 1000
               setTimeout(() => {
-                wx.reLaunch({ url: '/pages/index/index' })
+                wx.reLaunch({ url: '/pages/record/record' })
               }, delay)
             },
             fail(err) {
@@ -95,7 +95,7 @@ Component({
         cancelText: '返回登录',
         success(res) {
           if (res.confirm) {
-            wx.reLaunch({ url: '/pages/index/index' })
+            wx.reLaunch({ url: '/pages/tutorial/tutorial' })
           }
         }
       })

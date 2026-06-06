@@ -57,7 +57,7 @@ Component({
     async loadData() {
       const g = app.globalData
       this.setData({
-        userPoints: g.userInfo?.points || 0,
+        userPoints: (g.userInfo && g.userInfo.points) || 0,
         loading: true,
       })
 
@@ -148,14 +148,14 @@ Component({
         }
 
         // 更新本地积分
-        const pointsEarned = data.checkIn?.pointsEarned || 1
+        const pointsEarned = (data.checkIn && data.checkIn.pointsEarned) || 1
         app.addPoints(pointsEarned)
 
         // 刷新界面
         this.setData({
           checkedToday: true,
-          streakDays: data.checkIn?.consecutiveDays || 1,
-          userPoints: app.globalData.userInfo?.points || 0,
+          streakDays: (data.checkIn && data.checkIn.consecutiveDays) || 1,
+          userPoints: (app.globalData.userInfo && app.globalData.userInfo.points) || 0,
         })
 
         wx.showToast({

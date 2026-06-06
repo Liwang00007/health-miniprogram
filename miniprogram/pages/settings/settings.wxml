@@ -1,0 +1,91 @@
+<!-- pages/settings/settings.wxml -->
+<navigation-bar title="设置" color="white" background="#2D2D2D"></navigation-bar>
+
+<view class="page page--no-tab">
+
+  <!-- 提醒设置 -->
+  <view class="settings-group">
+    <view class="group-title">提醒设置</view>
+    <view class="card">
+      <view class="setting-item">
+        <view class="setting-left">
+          <text class="setting-icon">🏋️</text>
+          <text class="setting-label">训练提醒</text>
+        </view>
+        <switch checked="{{remindTraining}}" bindchange="toggleRemind" data-type="training" color="#FF6B35"/>
+      </view>
+      <view class="divider"></view>
+      <view class="setting-item">
+        <view class="setting-left">
+          <text class="setting-icon">🍽️</text>
+          <text class="setting-label">饮食记录提醒</text>
+        </view>
+        <switch checked="{{remindDiet}}" bindchange="toggleRemind" data-type="diet" color="#FF6B35"/>
+      </view>
+    </view>
+  </view>
+
+  <!-- 数据管理 -->
+  <view class="settings-group">
+    <view class="group-title">数据管理</view>
+    <view class="card">
+      <view class="setting-item" bindtap="exportTrainingCSV">
+        <view class="setting-left">
+          <text class="setting-icon">📤</text>
+          <text class="setting-label">导出训练数据 (CSV)</text>
+        </view>
+        <text class="setting-arrow">›</text>
+      </view>
+      <view class="divider"></view>
+      <view class="setting-item" bindtap="exportDietCSV">
+        <view class="setting-left">
+          <text class="setting-icon">📤</text>
+          <text class="setting-label">导出饮食数据 (CSV)</text>
+        </view>
+        <text class="setting-arrow">›</text>
+      </view>
+      <view class="divider"></view>
+      <view class="setting-item" bindtap="clearCache">
+        <view class="setting-left">
+          <text class="setting-icon">🗑️</text>
+          <text class="setting-label">清除缓存</text>
+        </view>
+        <text class="setting-arrow">›</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 关于 -->
+  <view class="settings-group">
+    <view class="group-title">关于</view>
+    <view class="card">
+      <view class="setting-item" bindtap="viewPrivacyPolicy">
+        <view class="setting-left">
+          <text class="setting-icon">🔒</text>
+          <text class="setting-label">隐私政策</text>
+        </view>
+        <text class="setting-arrow">›</text>
+      </view>
+      <view class="divider"></view>
+      <view class="setting-item" bindtap="viewUserAgreement">
+        <view class="setting-left">
+          <text class="setting-icon">📄</text>
+          <text class="setting-label">用户协议</text>
+        </view>
+        <text class="setting-arrow">›</text>
+      </view>
+      <view class="divider"></view>
+      <view class="setting-item">
+        <view class="setting-left">
+          <text class="setting-icon">ℹ️</text>
+          <text class="setting-label">版本号</text>
+        </view>
+        <text class="setting-value">v1.0.0</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部留白 -->
+  <view style="height: 48rpx;"></view>
+
+</view>

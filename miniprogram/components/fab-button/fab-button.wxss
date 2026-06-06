@@ -1,0 +1,117 @@
+/* components/fab-button/fab-button.wxss — Skyline 兼容版 */
+
+.fab-container {
+  position: fixed;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ====== 遮罩层 ====== */
+.fab-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 998;
+  animation: fab-mask-in 0.2s ease;
+}
+
+@keyframes fab-mask-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ====== 菜单项 ====== */
+.fab-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20rpx;
+  z-index: 999;
+}
+
+.fab-action-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.fab-action-enter {
+  animation: fab-item-in 0.2s ease both;
+}
+
+@keyframes fab-item-in {
+  from {
+    opacity: 0;
+    transform: translateY(20rpx) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.fab-action-label {
+  margin-right: 16rpx;
+}
+
+.fab-action-text {
+  font-size: 24rpx;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.65);
+  padding: 8rpx 20rpx;
+  border-radius: 8rpx;
+  white-space: nowrap;
+}
+
+.fab-action-btn {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.12);
+}
+
+.fab-action-btn:active {
+  transform: scale(0.92);
+}
+
+.fab-action-icon {
+  font-size: 36rpx;
+}
+
+/* ====== 主触发按钮 ====== */
+.fab-trigger {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 24rpx rgba(255, 107, 53, 0.4);
+  z-index: 999;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fab-trigger--hover {
+  transform: scale(0.92);
+}
+
+.fab-trigger--active {
+  box-shadow: 0 8rpx 32rpx rgba(255, 107, 53, 0.55);
+}
+
+.fab-trigger-icon {
+  font-size: 52rpx;
+  color: #fff;
+  font-weight: 300;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.fab-trigger-icon--rotated {
+  transform: rotate(45deg);
+}

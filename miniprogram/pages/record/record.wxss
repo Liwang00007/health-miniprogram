@@ -1,0 +1,242 @@
+/* pages/record/record.wxss — 记录 Tab */
+
+/* ====== 网络异常提示条 ====== */
+.network-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16rpx 32rpx;
+  background: #FFF3CD;
+  border-bottom: 1rpx solid #FFE69C;
+}
+
+.network-banner__text {
+  font-size: var(--font-sm);
+  color: #856404;
+}
+
+.network-banner__retry {
+  font-size: var(--font-sm);
+  color: var(--color-primary);
+  font-weight: 600;
+  padding: 6rpx 20rpx;
+  background: rgba(255, 107, 53, 0.1);
+  border-radius: var(--radius-round);
+}
+
+/* ====== 导航栏右侧 ====== */
+.nav-right {
+  display: flex;
+  align-items: center;
+  padding-right: 16rpx;
+}
+
+.nav-btn {
+  font-size: 36rpx;
+  padding: 8rpx;
+}
+
+/* ====== 概览卡片 ====== */
+.overview-card {
+  margin: 16rpx 24rpx 0;
+}
+
+.overview-header {
+  margin-bottom: var(--spacing-md);
+}
+
+.overview-date {
+  font-size: var(--font-md);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.overview-link {
+  color: var(--color-text-secondary);
+}
+
+.overview-grid {
+  display: flex;
+}
+
+.ov-item {
+  flex: 1;
+  text-align: center;
+}
+
+.ov-val {
+  font-size: var(--font-xl);
+  font-weight: 800;
+  color: var(--color-text);
+  margin-bottom: 4rpx;
+}
+
+.ov-unit {
+  font-size: var(--font-sm);
+  font-weight: 400;
+  color: var(--color-text-secondary);
+  margin-left: 2rpx;
+}
+
+.ov-label {
+  font-size: var(--font-xs);
+  color: var(--color-text-secondary);
+}
+
+/* ====== 快速入口 ====== */
+.quick-actions {
+  display: flex;
+  margin: 16rpx 24rpx;
+  gap: var(--spacing-sm);
+}
+
+.act-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx 8rpx;
+  border-radius: var(--radius-md);
+  transition: transform 0.2s;
+}
+
+.act-item:active {
+  transform: scale(0.94);
+}
+
+.act-training { background: #FFF5F0; }
+.act-diet     { background: #F0FFF5; }
+.act-ai       { background: #F0F5FF; }
+.act-tutorial { background: #F8F0FF; }
+
+.act-icon {
+  font-size: 40rpx;
+  margin-bottom: 6rpx;
+}
+
+.act-name {
+  font-size: var(--font-sm);
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+/* ====== 区块标题 ====== */
+.section-title {
+  margin: 16rpx 24rpx 8rpx;
+  font-size: var(--font-md);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+/* ====== 记录条目 ====== */
+.record-item {
+  margin: 0 24rpx 8rpx;
+  padding: 20rpx var(--spacing-lg);
+}
+
+.record-icon {
+  font-size: 36rpx;
+  width: 56rpx;
+  height: 56rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+}
+
+.record-name {
+  font-size: var(--font-base);
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 2rpx;
+}
+
+/* ====== 悬浮按钮 ====== */
+.fab {
+  position: fixed;
+  right: 32rpx;
+  bottom: calc(var(--tab-bar-height, 100rpx) + env(safe-area-inset-bottom) + 32rpx);
+  z-index: 800;
+}
+
+.fab-btn {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 16rpx rgba(255, 107, 53, 0.4);
+  transition: transform 0.2s;
+}
+
+.fab-btn:active {
+  transform: scale(0.9) rotate(45deg);
+}
+
+/* ====== 悬浮按钮菜单 ====== */
+.fab-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 850;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+}
+
+.fab-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.fab-menu {
+  position: fixed;
+  right: 32rpx;
+  bottom: calc(var(--tab-bar-height, 100rpx) + env(safe-area-inset-bottom) + 140rpx);
+  z-index: 860;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  opacity: 0;
+  transform: translateY(20rpx);
+  pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s;
+}
+
+.fab-menu.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.fab-menu-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  background: var(--color-card);
+  border-radius: 48rpx;
+  padding: 16rpx 24rpx;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.2s;
+}
+
+.fab-menu-item:active {
+  transform: scale(0.94);
+}
+
+.fab-menu-icon {
+  font-size: 36rpx;
+}
+
+.fab-menu-text {
+  font-size: var(--font-base);
+  font-weight: 500;
+  color: var(--color-text);
+  white-space: nowrap;
+}

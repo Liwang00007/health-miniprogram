@@ -1,0 +1,245 @@
+/* pages/diet-detail/diet-detail.wxss */
+
+.detail-content {
+  padding: var(--spacing-md) var(--spacing-lg);
+}
+
+/* ====== 记录头 ====== */
+.detail-header {
+  margin-bottom: var(--spacing-sm);
+}
+
+.meal-icon {
+  font-size: 48rpx;
+}
+
+.meal-type {
+  font-size: var(--font-lg);
+  font-weight: 800;
+  color: var(--color-text);
+  display: block;
+}
+
+.meal-date {
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
+  display: block;
+  margin-top: 2rpx;
+}
+
+.calorie-badge {
+  text-align: center;
+  background: #FFF8F0;
+  border-radius: var(--radius-md);
+  padding: 12rpx 24rpx;
+}
+
+.calorie-num {
+  font-size: var(--font-xl);
+  font-weight: 800;
+  color: var(--color-warning);
+  display: block;
+  line-height: 1.2;
+}
+
+.calorie-unit {
+  font-size: var(--font-xs);
+  color: var(--color-warning);
+}
+
+/* ====== 食物列表 ====== */
+.food-item {
+  margin-bottom: var(--spacing-sm);
+}
+
+.food-header {
+  margin-bottom: var(--spacing-md);
+}
+
+.food-index {
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+  background: var(--color-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
+  font-weight: 600;
+}
+
+.food-name {
+  font-size: var(--font-md);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.food-weight {
+  font-size: var(--font-base);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* ====== 营养素条 ====== */
+.nutrition-bars {
+  border-top: 1rpx solid var(--color-bg);
+  padding-top: var(--spacing-sm);
+}
+
+.nutri-item {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  padding: 6rpx 0;
+}
+
+.nutri-label {
+  width: 72rpx;
+  font-size: var(--font-xs);
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
+}
+
+.nutri-bar-wrap {
+  flex: 1;
+  height: 10rpx;
+  background: var(--color-bg);
+  border-radius: 5rpx;
+  overflow: hidden;
+}
+
+.nutri-bar {
+  height: 100%;
+  border-radius: 5rpx;
+  transition: width 0.3s ease;
+}
+
+.nutri-cal {
+  background: var(--color-warning);
+}
+
+.nutri-protein {
+  background: #E74C3C;
+}
+
+.nutri-carbs {
+  background: #3498DB;
+}
+
+.nutri-fat {
+  background: #F39C12;
+}
+
+.nutri-val {
+  width: 80rpx;
+  text-align: right;
+  font-size: var(--font-xs);
+  color: var(--color-text);
+  flex-shrink: 0;
+}
+
+.nutri-unit {
+  font-size: var(--font-xs);
+  color: var(--color-text-secondary);
+}
+
+/* ====== 营养汇总 ====== */
+.nutrition-summary {
+  margin-bottom: var(--spacing-sm);
+}
+
+.nutrition-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-sm);
+}
+
+.nutri-card {
+  border-radius: var(--radius-md);
+  padding: 20rpx;
+  text-align: center;
+}
+
+.nutri-cal-bg {
+  background: #FFF8F0;
+}
+
+.nutri-protein-bg {
+  background: #FFF0F0;
+}
+
+.nutri-carbs-bg {
+  background: #F0F5FF;
+}
+
+.nutri-fat-bg {
+  background: #FFFBF0;
+}
+
+.nutri-card-val {
+  font-size: var(--font-lg);
+  font-weight: 800;
+  color: var(--color-text);
+  display: block;
+}
+
+.nutri-card-label {
+  font-size: var(--font-xs);
+  color: var(--color-text-secondary);
+  display: block;
+  margin-top: 4rpx;
+}
+
+/* ====== 备注 ====== */
+.notes-card {
+  margin-bottom: var(--spacing-sm);
+}
+
+.notes-title {
+  font-size: var(--font-base);
+  font-weight: 600;
+  color: var(--color-text);
+  display: block;
+  margin-bottom: var(--spacing-xs);
+}
+
+.notes-content {
+  font-size: var(--font-base);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+/* ====== 操作按钮 ====== */
+.action-row {
+  margin-top: var(--spacing-lg);
+}
+
+.edit-btn {
+  text-align: center;
+  padding: 24rpx;
+  color: var(--color-primary);
+  font-size: var(--font-base);
+  background: var(--color-card);
+  border-radius: var(--radius-card);
+  border: 2rpx solid var(--color-primary);
+}
+
+.edit-btn:active {
+  background: var(--color-primary-light);
+}
+
+.delete-btn {
+  text-align: center;
+  padding: 24rpx;
+  color: var(--color-danger);
+  font-size: var(--font-base);
+  background: var(--color-card);
+  border-radius: var(--radius-card);
+  border: 2rpx solid var(--color-danger);
+}
+
+.delete-btn:active {
+  background: #FFF5F5;
+}

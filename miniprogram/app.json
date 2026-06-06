@@ -9,7 +9,13 @@
     "pages/logs/logs",
     "pages/diet-edit/diet-edit",
     "pages/diet-detail/diet-detail",
-    "pages/points-detail/points-detail"
+    "pages/points-detail/points-detail",
+    "pages/training/edit/edit",
+    "pages/training/detail/detail",
+    "pages/statistics/statistics",
+    "pages/settings/settings",
+    "pages/ai-plan/ai-plan",
+    "pages/plan-preview/plan-preview"
   ],
   "window": {
     "navigationBarTextStyle": "black",

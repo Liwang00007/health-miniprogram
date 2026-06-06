@@ -1,0 +1,48 @@
+<view class="timer {{large ? 'timer--large' : ''}}">
+  <!-- 时间显示 -->
+  <view class="timer-display">
+    <text class="timer-display-text {{large ? 'timer-display-text--large' : ''}}">{{display}}</text>
+  </view>
+
+  <!-- 状态标签 -->
+  <view class="timer-status" wx:if="{{status !== 'idle'}}">
+    <text class="timer-status-text">{{status === 'running' ? '计时中...' : '已暂停'}}</text>
+  </view>
+
+  <!-- 倒计时快捷预设 -->
+  <view class="timer-presets" wx:if="{{mode === 'countdown' && showPresets && status === 'idle'}}">
+    <view
+      class="timer-preset {{seconds === item ? 'timer-preset--active' : ''}}"
+      wx:for="{{presets}}"
+      wx:key="*this"
+      wx:for-item="item"
+      data-seconds="{{item}}"
+      bindtap="setSeconds"
+    >
+      <text>{{item >= 60 ? (item / 60) + 'min' : item + 's'}}</text>
+    </view>
+  </view>
+
+  <!-- 控制按钮 -->
+  <view class="timer-controls">
+    <!-- 重置按钮 -->
+    <view
+      class="timer-btn timer-btn--secondary"
+      bindtap="reset"
+      hover-class="timer-btn--hover"
+    >
+      <text class="timer-btn-text">重置</text>
+    </view>
+
+    <!-- 开始/暂停按钮 -->
+    <view
+      class="timer-btn timer-btn--primary {{status === 'running' ? 'timer-btn--pause' : ''}}"
+      bindtap="toggle"
+      hover-class="timer-btn--hover"
+    >
+      <text class="timer-btn-text timer-btn-text--primary">
+        {{status === 'running' ? '暂停' : '开始'}}
+      </text>
+    </view>
+  </view>
+</view>

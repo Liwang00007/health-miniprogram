@@ -1,0 +1,97 @@
+<!-- pages/training/detail/detail.wxml — 训练记录详情页 -->
+<navigation-bar title="训练详情" color="white" background="#2D2D2D">
+  <view slot="right" class="nav-actions">
+    <text class="nav-btn" bindtap="onEdit">编辑</text>
+  </view>
+</navigation-bar>
+
+<view class="page page--no-tab" wx:if="{{!loading && record}}">
+
+  <!-- ====== 概览头部卡片 ====== -->
+  <view class="card overview-card">
+    <view class="overview-top">
+      <view class="overview-icon-wrap">
+        <text class="overview-icon">{{record.exercises[0].icon || '🏋️'}}</text>
+      </view>
+      <view class="overview-info">
+        <view class="overview-name">{{record.exercises[0].name || '训练记录'}}</view>
+        <view class="overview-meta">{{record.type}} · {{record.date}}</view>
+      </view>
+    </view>
+
+    <!-- 三个统计数字 -->
+    <view class="overview-stats">
+      <view class="stat-item">
+        <view class="stat-val">{{totalSets}}</view>
+        <view class="stat-label">总组数</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-val text-primary">{{durationDisplay}}</view>
+        <view class="stat-label">总时长</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-val">{{totalVolumeDisplay}}<text class="stat-unit">kg</text></view>
+        <view class="stat-label">总容量</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ====== 动作详情（每个动作一张卡片） ====== -->
+  <view class="section-title">📋 动作详情</view>
+  <view
+    class="card ex-detail-card"
+    wx:for="{{record.exercises}}"
+    wx:key="id"
+    wx:for-item="ex"
+  >
+    <!-- 动作头部 -->
+    <view class="ex-detail-header">
+      <text class="ex-detail-icon">{{ex.icon || '🏋️'}}</text>
+      <text class="ex-detail-name">{{ex.name}}</text>
+      <text class="ex-detail-sets">{{ex.sets.length}}组</text>
+    </view>
+
+    <!-- 组记录表头 -->
+    <view class="detail-set-header">
+      <text class="detail-set-col detail-set-col--num">组数</text>
+      <text class="detail-set-col detail-set-col--weight">重量(kg)</text>
+      <text class="detail-set-col detail-set-col--reps">次数</text>
+      <text class="detail-set-col detail-set-col--rest">休息(s)</text>
+    </view>
+
+    <!-- 每组记录 -->
+    <view class="detail-set-row" wx:for="{{ex.sets}}" wx:key="setNumber" wx:for-item="set">
+      <text class="detail-set-col detail-set-col--num">第{{set.setNumber}}组</text>
+      <text class="detail-set-col detail-set-col--weight">{{set.weight}}</text>
+      <text class="detail-set-col detail-set-col--reps">{{set.reps}}</text>
+      <text class="detail-set-col detail-set-col--rest">{{set.restSeconds}}</text>
+    </view>
+  </view>
+
+  <!-- ====== 备注 ====== -->
+  <view class="section-title" wx:if="{{record.notes}}">📝 备注</view>
+  <view class="card notes-card" wx:if="{{record.notes}}">
+    <text class="notes-text">{{record.notes}}</text>
+  </view>
+
+  <!-- ====== 底部操作 ====== -->
+  <view class="action-section">
+    <view class="btn btn-ghost action-btn" bindtap="onEdit">
+      <text>✏️ 编辑记录</text>
+    </view>
+    <view class="btn action-btn action-delete" bindtap="onDelete">
+      <text>🗑️ 删除记录</text>
+    </view>
+  </view>
+
+  <view style="height: 80rpx;"></view>
+</view>
+
+<!-- 加载骨架屏 -->
+<view class="page page--no-tab" wx:if="{{loading}}">
+  <view class="card" style="margin: 24rpx;">
+    <view class="skeleton skeleton--title" style="width:40%"></view>
+    <view class="skeleton skeleton--text"></view>
+    <view class="skeleton skeleton--card"></view>
+  </view>
+</view>

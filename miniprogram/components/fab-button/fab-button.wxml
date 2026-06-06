@@ -1,0 +1,39 @@
+<view class="fab-container" wx:if="{{visible}}" style="bottom: {{bottom}}rpx; right: {{right}}rpx;">
+  <!-- 遮罩层 -->
+  <view
+    class="fab-mask"
+    wx:if="{{maskVisible}}"
+    bindtap="handleMaskTap"
+    catchtouchmove="noop"
+  ></view>
+
+  <!-- 菜单项列表（从下往上排列） -->
+  <view class="fab-actions" wx:if="{{expanded}}">
+    <view
+      class="fab-action-item {{expanded ? 'fab-action-enter' : ''}}"
+      wx:for="{{actions}}"
+      wx:key="key"
+      wx:for-item="item"
+      data-index="{{index}}"
+      style="animation-delay: {{index * 0.05}}s"
+      bindtap="handleAction"
+    >
+      <view class="fab-action-label">
+        <text class="fab-action-text">{{item.text}}</text>
+      </view>
+      <view class="fab-action-btn" style="width: {{size * 0.75}}rpx; height: {{size * 0.75}}rpx; background: #fff;">
+        <text class="fab-action-icon">{{item.icon || '📋'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 主触发按钮 -->
+  <view
+    class="fab-trigger {{expanded ? 'fab-trigger--active' : ''}}"
+    style="width: {{size}}rpx; height: {{size}}rpx; background: {{color}};"
+    bindtap="handleToggle"
+    hover-class="fab-trigger--hover"
+  >
+    <text class="fab-trigger-icon {{expanded ? 'fab-trigger-icon--rotated' : ''}}">+</text>
+  </view>
+</view>

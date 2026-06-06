@@ -1,0 +1,307 @@
+<!-- pages/training/edit/edit.wxml — 训练记录编辑页 -->
+<navigation-bar title="{{isEdit ? '编辑训练' : '添加训练'}}" color="white" background="#2D2D2D">
+  <view slot="right" class="nav-save" bindtap="onSave">
+    <text class="nav-save-text">保存</text>
+  </view>
+</navigation-bar>
+
+<view class="page page--no-tab">
+  <view class="form">
+
+    <!-- ====== 训练日期 ====== -->
+    <view class="form-group">
+      <view class="form-label">训练日期</view>
+      <picker mode="date" value="{{date}}" bindchange="onDateChange">
+        <view class="form-picker {{errors.date ? 'form-picker--error' : ''}}">
+          <text>{{date}}</text>
+          <text class="picker-arrow">📅</text>
+        </view>
+      </picker>
+    </view>
+
+    <!-- ====== 训练类型 ====== -->
+    <view class="form-group">
+      <view class="form-label">训练类型</view>
+      <view class="type-chips {{errors.type ? 'type-chips--error' : ''}}">
+        <view
+          class="type-chip {{type === item ? 'type-chip--active' : ''}}"
+          wx:for="{{trainingTypes}}"
+          wx:key="*this"
+          wx:for-item="item"
+          data-type="{{item}}"
+          bindtap="onTypeTap"
+        >{{item}}</view>
+      </view>
+      <view class="form-error" wx:if="{{errors.type}}">{{errors.type}}</view>
+    </view>
+
+    <!-- ====== 训练动作 ====== -->
+    <view class="form-group">
+      <view class="form-label-row">
+        <text class="form-label">训练动作</text>
+        <text class="form-label-hint" bindtap="onOpenExercisePicker">从动作库选择</text>
+      </view>
+
+      <view class="form-error" wx:if="{{errors.exercises}}">{{errors.exercises}}</view>
+
+      <!-- 动作列表（空状态） -->
+      <view wx:if="{{exercises.length === 0}}" class="exercise-empty">
+        <text class="exercise-empty-icon">🏋️</text>
+        <text class="exercise-empty-text">还没有添加训练动作</text>
+        <text class="exercise-empty-hint">点击上方"从动作库选择"或下方"添加动作"</text>
+      </view>
+
+      <!-- 动作卡片 -->
+      <view
+        class="exercise-card"
+        wx:for="{{exercises}}"
+        wx:key="id"
+        wx:for-item="ex"
+        wx:for-index="exIdx"
+      >
+        <!-- 动作头部 -->
+        <view class="ex-header">
+          <view class="ex-title-row">
+            <text class="ex-icon">{{ex.icon || '🏋️'}}</text>
+            <text class="ex-name">{{ex.name || '未命名动作'}}</text>
+          </view>
+          <view class="ex-delete" data-id="{{ex.id}}" bindtap="onDeleteExercise">
+            <text>✕</text>
+          </view>
+        </view>
+
+        <!-- 组记录表头 -->
+        <view class="set-header">
+          <text class="set-col set-col--num">组数</text>
+          <text class="set-col set-col--weight">重量(kg)</text>
+          <text class="set-col set-col--reps">次数</text>
+          <text class="set-col set-col--rest">休息(s)</text>
+          <text class="set-col set-col--action"></text>
+        </view>
+
+        <!-- 组记录行 -->
+        <view
+          class="set-row {{errors['weight_' + ex.id + '_' + si] || errors['reps_' + ex.id + '_' + si] ? 'set-row--error' : ''}}"
+          wx:for="{{ex.sets}}"
+          wx:key="setNumber"
+          wx:for-item="set"
+          wx:for-index="si"
+        >
+          <text class="set-col set-col--num">{{set.setNumber}}</text>
+
+          <input
+            class="set-input set-col--weight {{errors['weight_' + ex.id + '_' + si] ? 'set-input--error' : ''}}"
+            type="digit"
+            value="{{set.weight}}"
+            data-exercise-id="{{ex.id}}"
+            data-index="{{si}}"
+            bindinput="onWeightInput"
+          />
+
+          <input
+            class="set-input set-col--reps {{errors['reps_' + ex.id + '_' + si] ? 'set-input--error' : ''}}"
+            type="number"
+            value="{{set.reps}}"
+            data-exercise-id="{{ex.id}}"
+            data-index="{{si}}"
+            bindinput="onRepsInput"
+          />
+
+          <input
+            class="set-input set-col--rest"
+            type="number"
+            value="{{set.restSeconds}}"
+            data-exercise-id="{{ex.id}}"
+            data-index="{{si}}"
+            bindinput="onRestInput"
+          />
+
+          <view class="set-col set-col--action">
+            <text
+              class="set-delete {{ex.sets.length <= 1 ? 'set-delete--disabled' : ''}}"
+              wx:if="{{ex.sets.length > 1}}"
+              data-exercise-id="{{ex.id}}"
+              data-index="{{si}}"
+              bindtap="onDeleteSet"
+            >−</text>
+          </view>
+        </view>
+
+        <!-- 添加组 -->
+        <view class="add-set-btn" data-id="{{ex.id}}" bindtap="onAddSet">
+          <text>+ 添加组</text>
+        </view>
+      </view>
+
+      <!-- 添加动作 -->
+      <view class="add-exercise-btn" bindtap="onOpenExercisePicker">
+        <text>+ 添加动作</text>
+      </view>
+    </view>
+
+    <!-- ====== 训练时长 ====== -->
+    <view class="form-group">
+      <view class="form-label-row">
+        <text class="form-label">训练时长</text>
+        <text class="form-label-hint timer-link" bindtap="onOpenTimer">⏱️ 计时器</text>
+      </view>
+      <view class="duration-row {{errors.duration ? 'duration-row--error' : ''}}">
+        <input
+          class="duration-input"
+          type="number"
+          value="{{duration}}"
+          placeholder="0"
+          bindinput="onDurationInput"
+        />
+        <text class="duration-unit">分钟</text>
+        <text class="duration-display" wx:if="{{duration > 0}}">{{durationDisplay}}</text>
+      </view>
+      <view class="form-error" wx:if="{{errors.duration}}">{{errors.duration}}</view>
+    </view>
+
+    <!-- ====== 备注 ====== -->
+    <view class="form-group">
+      <view class="form-label">备注（可选）</view>
+      <textarea
+        class="form-textarea"
+        value="{{notes}}"
+        placeholder="记录训练感受、注意事项..."
+        maxlength="500"
+        bindinput="onNotesInput"
+      />
+    </view>
+
+    <!-- ====== 保存按钮 ====== -->
+    <view class="save-section">
+      <view class="btn btn-primary save-btn" bindtap="onSave">
+        <text>💾 {{isEdit ? '保存修改' : '保存训练记录'}}</text>
+      </view>
+    </view>
+
+  </view>
+
+  <!-- ====== 底部留白 ====== -->
+  <view style="height: 60rpx;"></view>
+</view>
+
+<!-- ============================================= -->
+<!-- 动作库选择弹窗（底部弹出）                       -->
+<!-- ============================================= -->
+<view class="popup-mask {{showExercisePicker ? 'popup-mask--show' : ''}}" bindtap="onCloseExercisePicker"></view>
+<view class="popup-sheet {{showExercisePicker ? 'popup-sheet--show' : ''}}">
+  <view class="popup-header">
+    <text class="popup-title">选择动作</text>
+    <text class="popup-close" bindtap="onCloseExercisePicker">✕</text>
+  </view>
+
+  <!-- 搜索栏 -->
+  <view class="popup-search">
+    <input
+      class="popup-search-input"
+      value="{{exerciseSearchKeyword}}"
+      placeholder="🔍 搜索动作名称..."
+      bindinput="onExerciseSearch"
+    />
+  </view>
+
+  <!-- 部位筛选 tabs -->
+  <scroll-view class="bodypart-tabs" scroll-x="true" wx:if="{{exerciseSearchKeyword === ''}}">
+    <view
+      class="bodypart-tab {{activeBodyPart === 'all' ? 'bodypart-tab--active' : ''}}"
+      data-key="all"
+      bindtap="onBodyPartTap"
+    >全部</view>
+    <view
+      class="bodypart-tab {{activeBodyPart === item.key ? 'bodypart-tab--active' : ''}}"
+      wx:for="{{bodyParts}}"
+      wx:key="key"
+      wx:for-item="item"
+      data-key="{{item.key}}"
+      bindtap="onBodyPartTap"
+    >{{item.name}}</view>
+  </scroll-view>
+
+  <!-- 搜索结果 / 动作列表 -->
+  <view class="popup-body">
+    <!-- 搜索结果 -->
+    <view wx:if="{{exerciseSearchKeyword !== ''}}">
+      <view wx:if="{{exerciseSearchResults.length === 0}}" class="search-empty">未找到匹配动作</view>
+      <view
+        class="exercise-option"
+        wx:for="{{exerciseSearchResults}}"
+        wx:key="name"
+        data-name="{{item.name}}"
+        data-icon="{{item.icon}}"
+        bindtap="onSelectExercise"
+      >
+        <text class="exercise-option-icon">{{item.icon}}</text>
+        <text class="exercise-option-name">{{item.name}}</text>
+        <text class="exercise-option-part">{{item.bodyPart}}</text>
+      </view>
+    </view>
+
+    <!-- 按部位筛选 -->
+    <view wx:else>
+      <block wx:for="{{bodyParts}}" wx:key="key" wx:for-item="group">
+        <view wx:if="{{activeBodyPart === 'all' || activeBodyPart === group.key}}">
+          <view class="bodypart-group-name">{{group.name}}</view>
+          <view
+            class="exercise-option"
+            wx:for="{{group.exercises}}"
+            wx:key="name"
+            wx:for-item="ex"
+            data-name="{{ex.name}}"
+            data-icon="{{ex.icon}}"
+            bindtap="onSelectExercise"
+          >
+            <text class="exercise-option-icon">{{ex.icon}}</text>
+            <text class="exercise-option-name">{{ex.name}}</text>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 自定义动作 -->
+  <view class="popup-footer">
+    <view wx:if="{{!showCustomExercise}}" class="custom-toggle" bindtap="onToggleCustomExercise">
+      <text>+ 自定义动作</text>
+    </view>
+    <view wx:else class="custom-input-row">
+      <input
+        class="custom-input"
+        value="{{customExerciseName}}"
+        placeholder="输入自定义动作名称"
+        bindinput="onCustomNameInput"
+        focus="{{true}}"
+      />
+      <view class="custom-confirm" bindtap="onConfirmCustomExercise">确认</view>
+    </view>
+  </view>
+</view>
+
+<!-- ============================================= -->
+<!-- 计时器弹窗                                     -->
+<!-- ============================================= -->
+<view class="popup-mask {{showTimer ? 'popup-mask--show' : ''}}" bindtap="onCloseTimer"></view>
+<view class="popup-sheet popup-timer {{showTimer ? 'popup-sheet--show' : ''}}">
+  <view class="popup-header">
+    <text class="popup-title">⏱️ 训练计时器</text>
+    <text class="popup-close" bindtap="onCloseTimer">✕</text>
+  </view>
+
+  <timer
+    mode="stopwatch"
+    large="{{true}}"
+    showPresets="{{false}}"
+    autoStart="{{false}}"
+    bind:tick="onTimerTick"
+  />
+
+  <view class="timer-apply-row">
+    <text class="timer-current">当前计时：{{timerDisplay}}</text>
+    <view class="btn btn-primary btn-sm" bindtap="onApplyTimer">
+      <text>填入训练时长</text>
+    </view>
+  </view>
+</view>

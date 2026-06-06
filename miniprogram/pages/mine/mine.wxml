@@ -1,0 +1,108 @@
+<!-- pages/mine/mine.wxml — 我的 Tab -->
+<navigation-bar title="我的" back="{{false}}" color="white" background="#2D2D2D">
+  <view slot="right" class="nav-right">
+    <view class="nav-btn" bindtap="onSettingsTap">⚙️</view>
+  </view>
+</navigation-bar>
+
+<view class="page">
+
+  <!-- ====== 未登录状态 ====== -->
+  <view wx:if="{{!isLoggedIn}}" class="login-area" bindtap="onLoginTap">
+    <view class="card login-card">
+      <image class="avatar-placeholder" src="{{userInfo.avatarUrl}}" mode="cover"/>
+      <view class="login-text">点击登录</view>
+      <view class="login-desc">登录后畅享智能训练与饮食管理</view>
+      <view class="btn btn-primary" style="width: 300rpx; margin: 16rpx auto 0;">
+        微信一键登录
+      </view>
+    </view>
+  </view>
+
+  <!-- ====== 已登录状态 ====== -->
+  <block wx:if="{{isLoggedIn}}">
+    <!-- 个人信息区 -->
+    <view class="card profile-card">
+      <view class="flex-row gap-sm">
+        <image class="avatar" src="{{userInfo.avatarUrl}}" mode="cover"/>
+        <view class="flex-1">
+          <view class="nickname">{{userInfo.nickName || '健身达人'}}</view>
+          <view class="motto text-sm text-secondary">坚持健身，遇见更好的自己 💪</view>
+        </view>
+        <view class="points-badge" bindtap="onPointsTap">
+          <view class="points-star">⭐</view>
+          <view class="points-value">{{userInfo.points}}</view>
+          <view class="points-label">积分</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 训练统计区 -->
+    <view class="card stats-card" bindtap="onStatsTap">
+      <view class="flex-between stats-header">
+        <view class="section-title" style="margin:0;">📊 训练统计</view>
+        <view class="text-sm text-secondary">查看详情 →</view>
+      </view>
+      <view class="stats-grid">
+        <view class="stat-item">
+          <view class="stat-value">{{stats.totalSessions}}</view>
+          <view class="stat-label">累计次数</view>
+        </view>
+        <view class="stat-item">
+          <view class="stat-value">{{stats.totalMinutes}}<text class="stat-unit">min</text></view>
+          <view class="stat-label">累计时长</view>
+        </view>
+        <view class="stat-item">
+          <view class="stat-value">{{stats.streakDays}}</view>
+          <view class="stat-label">连续打卡</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 功能菜单 -->
+    <view class="card menu-card">
+      <view
+        wx:for="{{menuList}}"
+        wx:key="key"
+        class="menu-item"
+        data-key="{{item.key}}"
+        bindtap="onMenuTap"
+      >
+        <view class="flex-row gap-sm flex-1">
+          <view class="menu-icon">{{item.icon}}</view>
+          <view class="flex-1">
+            <view class="menu-title">{{item.title}}</view>
+            <view class="menu-desc text-sm text-secondary">{{item.desc}}</view>
+          </view>
+        </view>
+        <view wx:if="{{item.arrow}}" class="menu-arrow">›</view>
+      </view>
+    </view>
+
+    <!-- 退出登录按钮 -->
+    <view class="logout-area">
+      <view class="btn btn-ghost" style="width: 400rpx; margin: 0 auto;" bindtap="onLogoutTap">
+        退出登录
+      </view>
+    </view>
+  </block>
+
+  <view style="height: 40rpx;"></view>
+
+</view>
+
+<!-- ====== 退出确认弹窗 ====== -->
+<view wx:if="{{showLogoutModal}}" class="modal-overlay" bindtap="onLogoutCancel">
+  <view class="modal-dialog" catchtap="noop">
+    <view class="modal-title">确认退出登录？</view>
+    <view class="modal-desc">退出后需重新登录，本地训练记录不会丢失。</view>
+    <view class="modal-actions">
+      <view class="modal-btn modal-btn--cancel" bindtap="onLogoutCancel">取消</view>
+      <view class="modal-btn modal-btn--confirm {{logoutConfirming ? 'loading' : ''}}" bindtap="onLogoutConfirm">
+        {{logoutConfirming ? '退出中…' : '确认退出'}}
+      </view>
+    </view>
+  </view>
+</view>
+
+<tab-bar current="mine"></tab-bar>

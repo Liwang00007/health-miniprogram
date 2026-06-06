@@ -95,7 +95,7 @@ Component({
 
     /** 查看统计详情 */
     onStatsTap() {
-      wx.showToast({ title: '统计详情开发中', icon: 'none' })
+      wx.navigateTo({ url: '/pages/statistics/statistics' })
     },
 
     /** 点击功能菜单 */
@@ -111,8 +111,11 @@ Component({
         case 'favorites':
           wx.switchTab({ url: '/pages/tutorial/tutorial' })
           break
+        case 'export':
+          wx.navigateTo({ url: '/pages/settings/settings' })
+          break
         case 'settings':
-          wx.navigateTo({ url: '/pages/logs/logs' })
+          wx.navigateTo({ url: '/pages/settings/settings' })
           break
         default:
           wx.showToast({ title: '功能开发中', icon: 'none' })

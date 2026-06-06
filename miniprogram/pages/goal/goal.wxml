@@ -1,0 +1,115 @@
+<!-- pages/goal/goal.wxml — 目标 Tab -->
+<navigation-bar title="训练目标" back="{{false}}" color="white" background="#2D2D2D">
+  <view slot="right" class="nav-right">
+    <view class="nav-btn" bindtap="onAIPlan">🤖</view>
+  </view>
+</navigation-bar>
+
+<view class="page">
+
+  <!-- ====== 子标签栏 ====== -->
+  <view class="sub-tabs">
+    <view
+      class="sub-tab {{activeTab === 'goals' ? 'sub-tab--active' : ''}}"
+      data-tab="goals"
+      bindtap="switchTab"
+    >目标</view>
+    <view
+      class="sub-tab {{activeTab === 'training' ? 'sub-tab--active' : ''}}"
+      data-tab="training"
+      bindtap="switchTab"
+    >训练计划</view>
+    <view
+      class="sub-tab {{activeTab === 'diet' ? 'sub-tab--active' : ''}}"
+      data-tab="diet"
+      bindtap="switchTab"
+    >饮食计划</view>
+  </view>
+
+  <!-- ====== 目标列表 ====== -->
+  <view wx:if="{{activeTab === 'goals'}}">
+    <view wx:if="{{goals.length === 0}}" class="empty-state">
+      <view class="empty-state__icon">🎯</view>
+      <view class="empty-state__text">还没有训练目标</view>
+      <view class="empty-state__hint">设定目标，让每一次训练都有方向</view>
+      <view class="btn btn-primary" style="width: 360rpx; margin: 0 auto;" bindtap="onCreateGoal">
+        制定第一个目标
+      </view>
+    </view>
+    <block wx:for="{{goals}}" wx:key="id">
+      <view class="card goal-item" data-id="{{item.id}}">
+        <view class="flex-between">
+          <view class="flex-row gap-sm">
+            <view class="goal-type-icon">{{item.icon || '🎯'}}</view>
+            <view>
+              <view class="goal-name">{{item.name}}</view>
+              <view class="text-sm text-secondary">进度 {{item.progress || 0}}%</view>
+            </view>
+          </view>
+          <view class="text-primary font-semibold">{{item.progress || 0}}%</view>
+        </view>
+        <!-- 进度条 -->
+        <view class="progress-bar mt-sm">
+          <view class="progress-fill" style="width: {{item.progress || 0}}%;"></view>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <!-- ====== AI 训练计划 ====== -->
+  <view wx:if="{{activeTab === 'training'}}">
+    <view wx:if="{{trainingPlans.length === 0}}" class="empty-state">
+      <view class="empty-state__icon">🤖</view>
+      <view class="empty-state__text">还没有 AI 训练计划</view>
+      <view class="empty-state__hint">AI 根据你的目标生成个性化力量训练方案</view>
+      <view class="btn btn-primary" style="width: 360rpx; margin: 0 auto;" bindtap="onAIPlan">
+        AI 生成训练计划
+      </view>
+    </view>
+    <block wx:for="{{trainingPlans}}" wx:key="id">
+      <view class="card plan-item" data-id="{{item.id}}" bindtap="onPlanTap">
+        <view class="flex-between">
+          <view class="flex-row gap-sm">
+            <view class="plan-icon">🏋️</view>
+            <view>
+              <view class="plan-name">{{item.name}}</view>
+              <view class="text-sm text-secondary">{{item.days}}天 · {{item.level}}</view>
+            </view>
+          </view>
+          <view class="text-sm text-secondary">{{item.createTime}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <!-- ====== AI 饮食计划 ====== -->
+  <view wx:if="{{activeTab === 'diet'}}">
+    <view wx:if="{{dietPlans.length === 0}}" class="empty-state">
+      <view class="empty-state__icon">🥗</view>
+      <view class="empty-state__text">还没有 AI 饮食计划</view>
+      <view class="empty-state__hint">AI 根据你的目标生成个性化饮食方案</view>
+      <view class="btn btn-primary" style="width: 360rpx; margin: 0 auto;" bindtap="onAIPlan">
+        AI 生成饮食计划
+      </view>
+    </view>
+    <block wx:for="{{dietPlans}}" wx:key="id">
+      <view class="card plan-item" data-id="{{item.id}}" bindtap="onPlanTap">
+        <view class="flex-between">
+          <view class="flex-row gap-sm">
+            <view class="plan-icon">🥗</view>
+            <view>
+              <view class="plan-name">{{item.name}}</view>
+              <view class="text-sm text-secondary">{{item.days}}天 · {{item.target}}</view>
+            </view>
+          </view>
+          <view class="text-sm text-secondary">{{item.createTime}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <view style="height: 40rpx;"></view>
+
+</view>
+
+<tab-bar current="goal"></tab-bar>

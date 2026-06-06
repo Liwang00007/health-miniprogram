@@ -1,0 +1,99 @@
+/* pages/goal/goal.wxss — 目标 Tab */
+
+/* ====== 导航栏右侧 ====== */
+.nav-right {
+  display: flex;
+  align-items: center;
+  padding-right: 16rpx;
+}
+
+.nav-btn {
+  font-size: 36rpx;
+  padding: 8rpx;
+}
+
+/* ====== 子标签 ====== */
+.sub-tabs {
+  display: flex;
+  margin: 16rpx 24rpx;
+  background: var(--color-card);
+  border-radius: var(--radius-sm);
+  padding: 6rpx;
+}
+
+.sub-tab {
+  flex: 1;
+  text-align: center;
+  padding: 14rpx 0;
+  font-size: var(--font-base);
+  color: var(--color-text-secondary);
+  border-radius: 6rpx;
+  transition: all 0.25s;
+}
+
+.sub-tab--active {
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ====== 目标卡片 ====== */
+.goal-item {
+  margin: 0 24rpx 8rpx;
+  padding: 20rpx var(--spacing-lg);
+}
+
+.goal-type-icon {
+  font-size: 36rpx;
+  width: 56rpx;
+  height: 56rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  background: #FFF5F0;
+}
+
+.goal-name {
+  font-size: var(--font-base);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* ====== 进度条 ====== */
+.progress-bar {
+  height: 8rpx;
+  background: #F0F0F0;
+  border-radius: 4rpx;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: 4rpx;
+  transition: width 0.4s ease;
+}
+
+/* ====== 计划卡片 ====== */
+.plan-item {
+  margin: 0 24rpx 8rpx;
+  padding: 20rpx var(--spacing-lg);
+}
+
+.plan-icon {
+  font-size: 36rpx;
+  width: 56rpx;
+  height: 56rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  background: #F0F5FF;
+}
+
+.plan-name {
+  font-size: var(--font-base);
+  font-weight: 600;
+  color: var(--color-text);
+}

@@ -1,0 +1,90 @@
+<!-- pages/statistics/statistics.wxml -->
+<navigation-bar title="数据统计" color="white" background="#2D2D2D"></navigation-bar>
+
+<scroll-view scroll-y class="page">
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading-block">
+    <view class="skeleton-card card" wx:for="{{[1,2,3,4]}}" wx:key="index">
+      <view class="skeleton-line skeleton-line-short"></view>
+      <view class="skeleton-line"></view>
+    </view>
+  </view>
+
+  <block wx:else>
+    <!-- 概览卡片 -->
+    <view class="overview-grid">
+      <view class="stat-card card">
+        <text class="stat-val">{{stats.totalTrainingCount}}<text class="stat-u">次</text></text>
+        <text class="stat-label">训练次数</text>
+      </view>
+      <view class="stat-card card">
+        <text class="stat-val">{{stats.totalTrainingMinutes}}<text class="stat-u">min</text></text>
+        <text class="stat-label">训练时长</text>
+      </view>
+      <view class="stat-card card">
+        <text class="stat-val">{{stats.recordDays}}<text class="stat-u">天</text></text>
+        <text class="stat-label">活跃天数</text>
+      </view>
+      <view class="stat-card card">
+        <text class="stat-val">{{stats.totalCaloriesIntake}}<text class="stat-u">kcal</text></text>
+        <text class="stat-label">摄入热量</text>
+      </view>
+    </view>
+
+    <!-- 肌群分布 -->
+    <view class="section card">
+      <text class="section-title">💪 肌群训练分布</text>
+      <block wx:if="{{stats.bodyPartDistribution && Object.keys(stats.bodyPartDistribution).length > 0}}">
+        <view
+          wx:for="{{stats.bodyPartDistribution}}"
+          wx:key="key"
+          class="dist-item"
+        >
+          <text class="dist-name">{{key}}</text>
+          <view class="dist-bar-bg">
+            <view class="dist-bar" style="width: {{item / maxBodyPart * 100}}%;"></view>
+          </view>
+          <text class="dist-count">{{item}}次</text>
+        </view>
+      </block>
+      <view wx:else class="dist-empty">
+        <text>暂无训练数据</text>
+      </view>
+    </view>
+
+    <!-- 热量概览环图（可选：用 ring-chart 展示热量对比） -->
+    <view class="section card" wx:if="{{stats.totalCaloriesIntake > 0 || stats.totalTrainingMinutes > 0}}">
+      <text class="section-title">📊 热量概览</text>
+      <view class="calorie-overview">
+        <view class="calo-item">
+          <ring-chart
+            percent="{{100}}"
+            color="#2ED573"
+            size="{{160}}"
+            label="{{stats.totalTrainingMinutes * 7}}"
+            subLabel="消耗估算(kcal)"
+          />
+        </view>
+        <view class="calo-item">
+          <ring-chart
+            percent="{{100}}"
+            color="#FFA502"
+            size="{{160}}"
+            label="{{stats.totalCaloriesIntake}}"
+            subLabel="实际摄入(kcal)"
+          />
+        </view>
+      </view>
+      <text class="calo-note">* 消耗热量按 7 kcal/min 估算</text>
+    </view>
+
+    <!-- 蛋白摄入卡片 -->
+    <view class="section card" wx:if="{{stats.totalProtein > 0}}">
+      <text class="section-title">🥩 蛋白质摄入</text>
+      <view class="protein-row">
+        <text class="protein-value">{{stats.totalProtein}}<text class="stat-u">g</text></text>
+        <text class="protein-label">统计周期内累计蛋白质摄入</text>
+      </view>
+    </view>
+  </block>
+</scroll-view>

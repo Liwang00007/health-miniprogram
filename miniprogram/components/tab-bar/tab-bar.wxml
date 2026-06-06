@@ -1,0 +1,16 @@
+<!-- 自定义底部导航栏 -->
+<view class="tab-bar">
+  <view
+    wx:for="{{tabs}}"
+    wx:key="key"
+    class="tab-bar__item {{current === item.key ? 'tab-bar__item--active' : ''}}"
+    data-key="{{item.key}}"
+    data-path="{{item.pagePath}}"
+    bindtap="onTabTap"
+  >
+    <view class="tab-bar__icon">
+      {{current === item.key ? item.iconActive : item.icon}}
+    </view>
+    <view class="tab-bar__text">{{item.text}}</view>
+  </view>
+</view>

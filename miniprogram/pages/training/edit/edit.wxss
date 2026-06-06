@@ -1,0 +1,579 @@
+/* pages/training/edit/edit.wxss — 训练记录编辑页 */
+
+/* ====== 导航栏保存按钮 ====== */
+.nav-save {
+  padding: 8rpx 20rpx;
+}
+.nav-save-text {
+  font-size: var(--font-md);
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+/* ====== 表单容器 ====== */
+.form {
+  padding: 24rpx;
+}
+
+.form-group {
+  margin-bottom: 32rpx;
+}
+
+.form-label {
+  font-size: var(--font-sm);
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 12rpx;
+}
+
+.form-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12rpx;
+}
+.form-label-row .form-label {
+  margin-bottom: 0;
+}
+
+.form-label-hint {
+  font-size: var(--font-xs);
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+.form-error {
+  font-size: var(--font-xs);
+  color: var(--color-danger);
+  margin-top: 6rpx;
+}
+
+/* ====== 日期选择器 ====== */
+.form-picker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--color-card);
+  border: 1rpx solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 20rpx 24rpx;
+  font-size: var(--font-base);
+  color: var(--color-text);
+}
+
+.form-picker--error {
+  border-color: var(--color-danger);
+  background: #FFF5F5;
+}
+
+.picker-arrow {
+  font-size: var(--font-lg);
+}
+
+/* ====== 训练类型选择 Chips ====== */
+.type-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+  padding: 4rpx 0;
+}
+
+.type-chips--error {
+  padding: 8rpx;
+  border: 1rpx solid var(--color-danger);
+  border-radius: var(--radius-md);
+  background: #FFF5F5;
+}
+
+.type-chip {
+  padding: 12rpx 28rpx;
+  border-radius: 32rpx;
+  font-size: var(--font-sm);
+  color: #666;
+  background: var(--color-card);
+  border: 1rpx solid var(--color-border);
+  transition: all 0.2s;
+}
+
+.type-chip--active {
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* ====== 动作区域 ====== */
+.exercise-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48rpx 24rpx;
+  background: var(--color-card);
+  border: 2rpx dashed var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.exercise-empty-icon {
+  font-size: 64rpx;
+  margin-bottom: 12rpx;
+  opacity: 0.5;
+}
+
+.exercise-empty-text {
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
+}
+
+.exercise-empty-hint {
+  font-size: var(--font-xs);
+  color: var(--color-text-hint);
+  margin-top: 4rpx;
+}
+
+/* 动作卡片 */
+.exercise-card {
+  background: var(--color-card);
+  border-radius: var(--radius-card);
+  padding: 20rpx 20rpx 12rpx;
+  margin-bottom: 16rpx;
+  box-shadow: var(--shadow-card);
+  border: 1rpx solid var(--color-border);
+}
+
+.ex-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14rpx;
+}
+
+.ex-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+
+.ex-icon {
+  font-size: 36rpx;
+}
+
+.ex-name {
+  font-size: var(--font-md);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.ex-delete {
+  width: 44rpx;
+  height: 44rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+.ex-delete:active {
+  background: #FFF5F5;
+  color: var(--color-danger);
+}
+
+/* 组记录表头 */
+.set-header {
+  display: flex;
+  align-items: center;
+  padding: 0 4rpx 8rpx;
+  border-bottom: 1rpx solid var(--color-border);
+  margin-bottom: 4rpx;
+}
+
+.set-header .set-col {
+  font-size: var(--font-xs);
+  color: var(--color-text-secondary);
+}
+
+/* 组记录行 */
+.set-row {
+  display: flex;
+  align-items: center;
+  padding: 10rpx 4rpx;
+  border-radius: 8rpx;
+  margin-top: 2rpx;
+}
+
+.set-row--error {
+  background: #FFF5F5;
+}
+
+.set-col--num {
+  width: 48rpx;
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+.set-col--weight {
+  width: 100rpx;
+  margin-right: 8rpx;
+}
+
+.set-col--reps {
+  width: 80rpx;
+  margin-right: 8rpx;
+}
+
+.set-col--rest {
+  width: 80rpx;
+  margin-right: 8rpx;
+}
+
+.set-col--action {
+  width: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.set-input {
+  height: 56rpx;
+  border: 1rpx solid var(--color-border);
+  border-radius: 8rpx;
+  padding: 4rpx 8rpx;
+  font-size: var(--font-sm);
+  text-align: center;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.set-input--error {
+  border-color: var(--color-danger);
+  background: #FFF5F5;
+}
+
+.set-delete {
+  width: 40rpx;
+  height: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  color: var(--color-text-secondary);
+  border-radius: 50%;
+  background: #F5F5F5;
+}
+.set-delete:active {
+  background: #FFE0E0;
+  color: var(--color-danger);
+}
+
+/* 添加组 / 添加动作按钮 */
+.add-set-btn {
+  margin-top: 10rpx;
+  padding: 12rpx;
+  text-align: center;
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
+  background: var(--color-bg);
+  border: 1.5rpx dashed var(--color-border);
+  border-radius: var(--radius-sm);
+  transition: all 0.2s;
+}
+.add-set-btn:active {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.add-exercise-btn {
+  padding: 20rpx;
+  text-align: center;
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
+  background: var(--color-card);
+  border: 2rpx dashed var(--color-border);
+  border-radius: var(--radius-md);
+  transition: all 0.2s;
+}
+.add-exercise-btn:active {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+/* ====== 训练时长 ====== */
+.timer-link {
+  color: var(--color-primary);
+}
+
+.duration-row {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  background: var(--color-card);
+  border: 1rpx solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 16rpx 24rpx;
+}
+
+.duration-row--error {
+  border-color: var(--color-danger);
+  background: #FFF5F5;
+}
+
+.duration-input {
+  width: 80rpx;
+  height: 56rpx;
+  border: 1rpx solid var(--color-border);
+  border-radius: 8rpx;
+  padding: 4rpx 12rpx;
+  font-size: var(--font-base);
+  text-align: center;
+  color: var(--color-text);
+}
+
+.duration-unit {
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
+}
+
+.duration-display {
+  margin-left: auto;
+  font-size: var(--font-sm);
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+/* ====== 备注 ====== */
+.form-textarea {
+  width: 100%;
+  min-height: 160rpx;
+  background: var(--color-card);
+  border: 1rpx solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 20rpx 24rpx;
+  font-size: var(--font-sm);
+  color: var(--color-text);
+  box-sizing: border-box;
+}
+
+/* ====== 保存按钮 ====== */
+.save-section {
+  margin-top: 48rpx;
+  padding: 0 24rpx;
+}
+
+.save-btn {
+  width: 100%;
+  height: 96rpx;
+  border-radius: 48rpx;
+  font-size: var(--font-lg);
+  box-shadow: 0 4rpx 16rpx rgba(255, 107, 53, 0.3);
+}
+
+/* ============================================= */
+/* 弹窗（动作库 & 计时器）                          */
+/* ============================================= */
+
+/* 遮罩 */
+.popup-mask {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 900;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.popup-mask--show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* 底部弹出面板 */
+.popup-sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-height: 80vh;
+  background: var(--color-bg);
+  border-radius: 32rpx 32rpx 0 0;
+  z-index: 901;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+.popup-sheet--show {
+  transform: translateY(0);
+}
+
+.popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28rpx 32rpx 16rpx;
+  border-bottom: 1rpx solid var(--color-border);
+}
+.popup-title {
+  font-size: var(--font-md);
+  font-weight: 700;
+  color: var(--color-text);
+}
+.popup-close {
+  font-size: 32rpx;
+  color: var(--color-text-secondary);
+  padding: 8rpx;
+}
+
+/* 搜索栏 */
+.popup-search {
+  padding: 16rpx 24rpx;
+}
+.popup-search-input {
+  width: 100%;
+  height: 72rpx;
+  background: var(--color-card);
+  border: 1rpx solid var(--color-border);
+  border-radius: 36rpx;
+  padding: 0 32rpx;
+  font-size: var(--font-sm);
+  color: var(--color-text);
+  box-sizing: border-box;
+}
+
+/* 部位 tabs */
+.bodypart-tabs {
+  white-space: nowrap;
+  padding: 0 24rpx 16rpx;
+}
+.bodypart-tab {
+  display: inline-block;
+  padding: 10rpx 24rpx;
+  margin-right: 12rpx;
+  border-radius: 24rpx;
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
+  background: var(--color-card);
+  border: 1rpx solid var(--color-border);
+}
+.bodypart-tab--active {
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* 动作列表 */
+.popup-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 24rpx;
+  max-height: 600rpx;
+}
+
+.bodypart-group-name {
+  font-size: var(--font-sm);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  padding: 16rpx 0 8rpx;
+}
+
+.exercise-option {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 16rpx;
+  background: var(--color-card);
+  border-radius: var(--radius-sm);
+  margin-bottom: 8rpx;
+  transition: all 0.2s;
+}
+.exercise-option:active {
+  background: var(--color-primary-light);
+}
+
+.exercise-option-icon {
+  font-size: 36rpx;
+  margin-right: 16rpx;
+}
+
+.exercise-option-name {
+  flex: 1;
+  font-size: var(--font-base);
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.exercise-option-part {
+  font-size: var(--font-xs);
+  color: var(--color-text-hint);
+}
+
+.search-empty {
+  text-align: center;
+  padding: 48rpx;
+  color: var(--color-text-secondary);
+  font-size: var(--font-sm);
+}
+
+/* 弹窗底部 */
+.popup-footer {
+  padding: 16rpx 24rpx;
+  border-top: 1rpx solid var(--color-border);
+}
+
+.custom-toggle {
+  text-align: center;
+  padding: 16rpx;
+  font-size: var(--font-sm);
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+.custom-input-row {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.custom-input {
+  flex: 1;
+  height: 72rpx;
+  background: var(--color-card);
+  border: 1rpx solid var(--color-primary);
+  border-radius: var(--radius-sm);
+  padding: 0 20rpx;
+  font-size: var(--font-sm);
+  color: var(--color-text);
+}
+
+.custom-confirm {
+  padding: 16rpx 32rpx;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: var(--font-sm);
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+}
+.custom-confirm:active {
+  opacity: 0.8;
+}
+
+/* ====== 计时器弹窗专用 ====== */
+.popup-timer {
+  max-height: none;
+}
+
+.timer-apply-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24rpx 32rpx 40rpx;
+}
+
+.timer-current {
+  font-size: var(--font-base);
+  color: var(--color-text);
+  font-weight: 500;
+}

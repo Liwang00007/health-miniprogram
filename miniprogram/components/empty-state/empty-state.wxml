@@ -1,0 +1,37 @@
+<view class="empty-state" style="padding-top: {{topOffset}}rpx;">
+  <!-- 插画区域 -->
+  <view class="empty-image-wrapper">
+    <image
+      wx:if="{{useImage && image}}"
+      class="empty-image"
+      src="{{image}}"
+      mode="aspectFit"
+      style="width: {{imageSize}}rpx; height: {{imageSize}}rpx;"
+    />
+    <text
+      wx:else
+      class="empty-emoji"
+      style="font-size: {{imageSize}}rpx;"
+    >{{image}}</text>
+  </view>
+
+  <!-- 主标题 -->
+  <view class="empty-title" wx:if="{{title}}">{{title}}</view>
+
+  <!-- 描述文案 -->
+  <view class="empty-desc" wx:if="{{description}}">{{description}}</view>
+
+  <!-- 操作按钮 -->
+  <view
+    wx:if="{{showButton && buttonText}}"
+    class="empty-btn empty-btn--{{buttonType}}"
+    bindtap="handleAction"
+    hover-class="empty-btn--hover"
+    hover-stay-time="80"
+  >
+    <text>{{buttonText}}</text>
+  </view>
+
+  <!-- 底部插槽：自定义扩展内容 -->
+  <slot name="extra"></slot>
+</view>

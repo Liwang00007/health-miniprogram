@@ -1,0 +1,85 @@
+/* components/empty-state/empty-state.wxss — Skyline 兼容版 */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 64rpx;
+  padding-right: 64rpx;
+  box-sizing: border-box;
+}
+
+/* ====== 插画区 ====== */
+.empty-image-wrapper {
+  margin-bottom: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-image {
+  display: block;
+}
+
+.empty-emoji {
+  line-height: 1;
+  display: block;
+}
+
+/* ====== 文案 ====== */
+.empty-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  margin-bottom: 12rpx;
+  line-height: 1.4;
+}
+
+.empty-desc {
+  font-size: 26rpx;
+  color: #999;
+  text-align: center;
+  line-height: 1.6;
+  margin-bottom: 40rpx;
+  max-width: 480rpx;
+}
+
+/* ====== 操作按钮 ====== */
+.empty-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx 56rpx;
+  border-radius: 48rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.empty-btn--hover {
+  transform: scale(0.95);
+  opacity: 0.85;
+}
+
+/* 主色填充按钮 */
+.empty-btn--primary {
+  background: #FF6B35;
+  color: #fff;
+  box-shadow: 0 4rpx 16rpx rgba(255, 107, 53, 0.3);
+}
+
+/* 描边按钮 */
+.empty-btn--outline {
+  background: #fff;
+  color: #FF6B35;
+  border: 2rpx solid #FF6B35;
+}
+
+/* 文字按钮 */
+.empty-btn--text {
+  background: transparent;
+  color: #FF6B35;
+  padding: 16rpx 32rpx;
+}

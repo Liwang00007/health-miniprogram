@@ -1,0 +1,83 @@
+<!-- pages/training-detail/training-detail.wxml -->
+<navigation-bar title="训练详情" color="white" background="#2D2D2D"></navigation-bar>
+
+<scroll-view scroll-y class="page page--no-tab" wx:if="{{!loading}}">
+
+  <!-- 加载失败 / 记录不存在 -->
+  <view wx:if="{{!record}}" class="empty-state">
+    <view class="empty-state__icon">📋</view>
+    <view class="empty-state__text">记录不存在或已删除</view>
+    <view class="empty-state__hint">请返回重新选择</view>
+  </view>
+
+  <!-- 记录详情 -->
+  <view wx:else class="detail-content">
+
+    <!-- 记录头 -->
+    <view class="card detail-header">
+      <view class="flex-between">
+        <view class="flex-row gap-sm">
+          <text class="detail-type-icon">{{record.trainingType === '力量训练' ? '🏋️' : record.trainingType === '有氧' ? '🏃' : record.trainingType === 'HIIT' ? '⚡' : record.trainingType === '拉伸' ? '🧘' : '💪'}}</text>
+          <view>
+            <text class="detail-type">{{record.trainingType || '训练记录'}}</text>
+            <text class="detail-date">{{record.recordDate}}</text>
+          </view>
+        </view>
+        <view class="detail-duration-badge">
+          <text class="duration-num">{{record.duration}}</text>
+          <text class="duration-unit">分钟</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 动作详情 -->
+    <view wx:for="{{record.exercises}}" wx:key="name" class="card exercise-detail">
+      <view class="ex-header flex-between">
+        <view>
+          <text class="ex-index">动作 {{index + 1}}</text>
+          <text class="ex-name">{{item.name}}</text>
+        </view>
+        <text class="ex-bodypart" wx:if="{{item.bodyPart}}">{{item.bodyPart}}</text>
+      </view>
+
+      <!-- 组数表格 -->
+      <view class="sets-table">
+        <view class="sets-header flex-row">
+          <text class="col-group">组</text>
+          <text class="col-weight">重量</text>
+          <text class="col-reps">次数</text>
+          <text class="col-rest">休息</text>
+        </view>
+        <view wx:for="{{item.sets}}" wx:for-item="set" wx:for-index="si" wx:key="si" class="sets-row flex-row">
+          <text class="col-group">{{si + 1}}</text>
+          <text class="col-weight">{{set.weight}}<text class="col-unit">kg</text></text>
+          <text class="col-reps">{{set.reps}}</text>
+          <text class="col-rest">{{set.restSeconds}}<text class="col-unit">s</text></text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 备注 -->
+    <view wx:if="{{record.notes}}" class="card notes-card">
+      <text class="notes-title">📝 备注</text>
+      <text class="notes-content">{{record.notes}}</text>
+    </view>
+
+    <!-- 删除按钮 -->
+    <view class="delete-btn" bindtap="deleteRecord">
+      <text wx:if="{{!deleting}}">🗑️ 删除此记录</text>
+      <text wx:else>删除中…</text>
+    </view>
+
+    <!-- 底部留白 -->
+    <view style="height: 80rpx;"></view>
+
+  </view>
+</scroll-view>
+
+<!-- 加载中 -->
+<view wx:if="{{loading}}" class="empty-state" style="padding-top: 200rpx;">
+  <view class="skeleton skeleton--card" style="margin: 0 24rpx;"></view>
+  <view class="skeleton skeleton--card" style="margin: 16rpx 24rpx;"></view>
+  <view class="skeleton skeleton--card" style="margin: 16rpx 24rpx;"></view>
+</view>

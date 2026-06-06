@@ -1,0 +1,256 @@
+/* pages/mine/mine.wxss — 我的 Tab */
+
+/* ====== 导航栏右侧 ====== */
+.nav-right {
+  display: flex;
+  align-items: center;
+  padding-right: 16rpx;
+}
+
+.nav-btn {
+  font-size: 36rpx;
+  padding: 8rpx;
+}
+
+/* ====== 未登录卡片 ====== */
+.login-area {
+  margin: 32rpx 24rpx 0;
+}
+
+.login-card {
+  text-align: center;
+  padding: 48rpx var(--spacing-lg);
+}
+
+.avatar-placeholder {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 60rpx;
+  background: #F0F0F0;
+  margin: 0 auto 16rpx;
+}
+
+.login-text {
+  font-size: var(--font-lg);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 8rpx;
+}
+
+.login-desc {
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
+}
+
+/* ====== 个人信息卡片 ====== */
+.profile-card {
+  margin: 16rpx 24rpx 8rpx;
+  padding: 24rpx var(--spacing-lg);
+}
+
+.avatar {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 48rpx;
+  background: #F0F0F0;
+}
+
+.nickname {
+  font-size: var(--font-lg);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 4rpx;
+}
+
+.motto {
+  color: var(--color-text-secondary);
+}
+
+.points-badge {
+  background: #FFF5F0;
+  border-radius: var(--radius-md);
+  padding: 12rpx 24rpx;
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.points-badge:active {
+  transform: scale(0.94);
+}
+
+.points-star {
+  font-size: 24rpx;
+}
+
+.points-value {
+  font-size: var(--font-xl);
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+.points-label {
+  font-size: var(--font-xs);
+  color: var(--color-text-secondary);
+}
+
+/* ====== 训练统计卡片 ====== */
+.stats-card {
+  margin: 0 24rpx 8rpx;
+  padding: 24rpx var(--spacing-lg);
+}
+
+.stats-header {
+  margin-bottom: var(--spacing-md);
+}
+
+.stats-grid {
+  display: flex;
+}
+
+.stat-item {
+  flex: 1;
+  text-align: center;
+}
+
+.stat-value {
+  font-size: var(--font-xl);
+  font-weight: 800;
+  color: var(--color-text);
+  margin-bottom: 4rpx;
+}
+
+.stat-unit {
+  font-size: var(--font-sm);
+  font-weight: 400;
+  color: var(--color-text-secondary);
+  margin-left: 2rpx;
+}
+
+.stat-label {
+  font-size: var(--font-xs);
+  color: var(--color-text-secondary);
+}
+
+/* ====== 功能菜单卡片 ====== */
+.menu-card {
+  margin: 8rpx 24rpx 16rpx;
+  padding: 0;
+  overflow: hidden;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 24rpx var(--spacing-lg);
+  transition: background 0.15s;
+}
+
+.menu-item:not(:last-child) {
+  border-bottom: 1rpx solid var(--color-border);
+}
+
+.menu-item:active {
+  background: #FAFAFA;
+}
+
+.menu-icon {
+  font-size: 36rpx;
+  width: 48rpx;
+  text-align: center;
+}
+
+.menu-title {
+  font-size: var(--font-base);
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.menu-desc {
+  margin-top: 2rpx;
+}
+
+.menu-arrow {
+  font-size: 36rpx;
+  color: var(--color-text-hint);
+  font-weight: 300;
+}
+
+/* ====== 退出登录区域 ====== */
+.logout-area {
+  padding: 32rpx 0 16rpx;
+  text-align: center;
+}
+
+/* ====== 退出确认弹窗 ====== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: modal-fade-in 0.2s ease;
+}
+
+@keyframes modal-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.modal-dialog {
+  width: 560rpx;
+  background: var(--color-card);
+  border-radius: var(--radius-lg);
+  padding: 48rpx 40rpx 32rpx;
+  text-align: center;
+}
+
+.modal-title {
+  font-size: var(--font-lg);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 12rpx;
+}
+
+.modal-desc {
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: 32rpx;
+  line-height: 1.6;
+}
+
+.modal-actions {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.modal-btn {
+  flex: 1;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  font-size: var(--font-md);
+  font-weight: 600;
+  transition: transform 0.2s;
+}
+
+.modal-btn:active {
+  transform: scale(0.96);
+}
+
+.modal-btn--cancel {
+  background: #F5F5F5;
+  color: var(--color-text-secondary);
+}
+
+.modal-btn--confirm {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.modal-btn--confirm.loading {
+  opacity: 0.6;
+}

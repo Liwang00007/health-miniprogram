@@ -1,0 +1,121 @@
+/* components/timer/timer.wxss — Skyline 兼容版 */
+
+.timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32rpx 24rpx;
+}
+
+.timer--large {
+  padding: 48rpx 32rpx;
+}
+
+/* ====== 时间显示 ====== */
+.timer-display {
+  margin-bottom: 12rpx;
+}
+
+.timer-display-text {
+  font-size: 72rpx;
+  font-weight: 700;
+  font-family: 'Menlo', 'Consolas', monospace;
+  font-variant-numeric: tabular-nums;
+  color: #333;
+  letter-spacing: 8rpx;
+}
+
+.timer-display-text--large {
+  font-size: 120rpx;
+  letter-spacing: 12rpx;
+}
+
+/* ====== 状态标签 ====== */
+.timer-status {
+  margin-bottom: 24rpx;
+}
+
+.timer-status-text {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* ====== 快捷预设（倒计时模式） ====== */
+.timer-presets {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 32rpx;
+}
+
+.timer-preset {
+  padding: 12rpx 28rpx;
+  margin: 8rpx 10rpx;
+  border-radius: 32rpx;
+  background: #F5F5F5;
+  font-size: 24rpx;
+  color: #666;
+  border: 2rpx solid transparent;
+}
+
+.timer-preset--active {
+  background: #FFF0E8;
+  color: #FF6B35;
+  border-color: #FF6B35;
+}
+
+/* ====== 控制按钮区 ====== */
+.timer-controls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.timer-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin: 0 24rpx;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.timer-btn--hover {
+  transform: scale(0.92);
+  opacity: 0.85;
+}
+
+/* 主按钮（开始/暂停） */
+.timer-btn--primary {
+  width: 140rpx;
+  height: 140rpx;
+  background: #FF6B35;
+  box-shadow: 0 8rpx 24rpx rgba(255, 107, 53, 0.35);
+}
+
+.timer-btn--pause {
+  background: #FFA502;
+  box-shadow: 0 8rpx 24rpx rgba(255, 165, 2, 0.35);
+}
+
+.timer-btn-text--primary {
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: 600;
+}
+
+/* 次级按钮（重置） */
+.timer-btn--secondary {
+  width: 100rpx;
+  height: 100rpx;
+  background: #F0F0F0;
+  border: 3rpx solid #E0E0E0;
+}
+
+.timer-btn--secondary .timer-btn-text {
+  font-size: 26rpx;
+  color: #666;
+}

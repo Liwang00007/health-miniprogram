@@ -1,0 +1,22 @@
+<view class="swipe-delete">
+  <!-- 内容区（可滑动层） -->
+  <view
+    class="swipe-content {{touching ? '' : 'swipe-content--transition'}}"
+    style="transform: translateX({{translateX}}px);"
+    bindtouchstart="handleTouchStart"
+    bindtouchmove="handleTouchMove"
+    bindtouchend="handleTouchEnd"
+    bindtap="handleContentTap"
+  >
+    <slot></slot>
+  </view>
+
+  <!-- 删除按钮区（隐藏在内容下方） -->
+  <view
+    class="swipe-delete-btn"
+    style="width: {{deleteWidth}}rpx; background: {{deleteColor}};"
+    bindtap="handleDelete"
+  >
+    <text class="swipe-delete-text">{{deleteText}}</text>
+  </view>
+</view>

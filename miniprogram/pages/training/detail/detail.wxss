@@ -1,0 +1,221 @@
+/* pages/training/detail/detail.wxss — 训练记录详情页 */
+
+/* ====== 导航栏操作 ====== */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  padding-right: 16rpx;
+}
+.nav-btn {
+  font-size: var(--font-md);
+  font-weight: 600;
+  color: var(--color-primary);
+}
+.nav-delete {
+  font-size: var(--font-md);
+  font-weight: 500;
+  color: var(--color-danger);
+}
+
+/* ====== 概览卡片 ====== */
+.overview-card {
+  margin: 24rpx 24rpx 0;
+  padding: 28rpx;
+}
+
+.overview-top {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin-bottom: 24rpx;
+}
+
+.overview-icon-wrap {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  background: var(--color-primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overview-icon {
+  font-size: 44rpx;
+}
+
+.overview-info {
+  flex: 1;
+}
+
+.overview-name {
+  font-size: var(--font-lg);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 4rpx;
+}
+
+.overview-meta {
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
+}
+
+/* 统计数字 */
+.overview-stats {
+  display: flex;
+  gap: 8rpx;
+}
+
+.stat-item {
+  flex: 1;
+  text-align: center;
+  background: var(--color-bg);
+  border-radius: var(--radius-sm);
+  padding: 18rpx 8rpx;
+}
+
+.stat-val {
+  font-size: var(--font-xl);
+  font-weight: 800;
+  color: var(--color-text);
+  margin-bottom: 2rpx;
+}
+
+.stat-unit {
+  font-size: var(--font-sm);
+  font-weight: 400;
+  color: var(--color-text-secondary);
+}
+
+.stat-label {
+  font-size: var(--font-xs);
+  color: var(--color-text-secondary);
+}
+
+/* ====== 区块标题 ====== */
+.section-title {
+  margin: 28rpx 24rpx 12rpx;
+  font-size: var(--font-md);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+/* ====== 动作详情卡片 ====== */
+.ex-detail-card {
+  margin: 0 24rpx 12rpx;
+  padding: 20rpx 24rpx;
+}
+
+.ex-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  padding-bottom: 16rpx;
+  border-bottom: 1rpx solid var(--color-border);
+  margin-bottom: 8rpx;
+}
+
+.ex-detail-icon {
+  font-size: 32rpx;
+}
+
+.ex-detail-name {
+  flex: 1;
+  font-size: var(--font-md);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.ex-detail-sets {
+  font-size: var(--font-sm);
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+/* 组记录表头 */
+.detail-set-header {
+  display: flex;
+  align-items: center;
+  padding: 4rpx 0 8rpx;
+}
+
+.detail-set-header .detail-set-col {
+  font-size: var(--font-xs);
+  color: var(--color-text-secondary);
+}
+
+/* 组记录行 */
+.detail-set-row {
+  display: flex;
+  align-items: center;
+  padding: 12rpx 0;
+  border-bottom: 1rpx solid var(--color-bg);
+}
+
+.detail-set-row:last-child {
+  border-bottom: none;
+}
+
+.detail-set-col--num {
+  width: 100rpx;
+  font-size: var(--font-sm);
+  color: var(--color-text);
+}
+
+.detail-set-col--weight {
+  width: 120rpx;
+  text-align: right;
+  font-size: var(--font-sm);
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.detail-set-col--reps {
+  width: 100rpx;
+  text-align: right;
+  font-size: var(--font-sm);
+  color: var(--color-text);
+}
+
+.detail-set-col--rest {
+  flex: 1;
+  text-align: right;
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
+}
+
+/* ====== 备注 ====== */
+.notes-card {
+  margin: 0 24rpx;
+  padding: 24rpx;
+}
+
+.notes-text {
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+/* ====== 底部操作按钮 ====== */
+.action-section {
+  margin: 40rpx 24rpx 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.action-btn {
+  height: 88rpx;
+  border-radius: var(--radius-md);
+  font-size: var(--font-md);
+}
+
+.action-delete {
+  background: var(--color-bg);
+  color: var(--color-danger);
+  border: 1rpx solid var(--color-border);
+}
+.action-delete:active {
+  background: #FFF5F5;
+}

@@ -67,7 +67,7 @@ Component({
           const content: DayContent[] = schedule.map((day: any) => {
             if (this.data.planType === 'training') {
               const exercises = (day.exercises || []).map((ex: any) => {
-                const totalSets = ex.sets?.length || 0
+                const totalSets = (ex.sets && ex.sets.length) || 0
                 const avgReps = totalSets > 0
                   ? Math.round(ex.sets.reduce((s: number, set: any) => s + (set.reps || 0), 0) / totalSets)
                   : 0

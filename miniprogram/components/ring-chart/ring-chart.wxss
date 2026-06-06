@@ -1,0 +1,28 @@
+/* components/ring-chart/ring-chart.wxss — Skyline 兼容版 */
+
+.ring-chart-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.ring-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Canvas 未就绪时的文字降级显示 */
+.ring-text-fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ring-percent-text {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #333;
+}

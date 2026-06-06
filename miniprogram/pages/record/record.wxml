@@ -1,0 +1,146 @@
+<!-- pages/record/record.wxml — 记录 Tab -->
+<navigation-bar title="FitPlan" back="{{false}}" color="white" background="#2D2D2D">
+  <view slot="right" class="nav-right">
+    <view class="nav-btn" bindtap="onDateChange">📅</view>
+  </view>
+</navigation-bar>
+
+<!-- ====== 网络异常提示条 ====== -->
+<view class="network-banner" wx:if="{{isOffline}}">
+  <text class="network-banner__text">⚠️ 网络异常，数据可能不是最新</text>
+  <text class="network-banner__retry" bindtap="onRetryLoad">重试</text>
+</view>
+
+<view class="page">
+
+  <!-- ====== 今日概览卡片 ====== -->
+  <view class="card overview-card" bindtap="onOverviewTap">
+    <view class="overview-header flex-between">
+      <view class="overview-date">{{selectedDate}}</view>
+      <view class="overview-link text-sm text-secondary">详细统计 →</view>
+    </view>
+    <view class="overview-grid">
+      <view class="ov-item">
+        <view class="ov-val text-primary">{{overview.completionRate}}%</view>
+        <view class="ov-label">完成度</view>
+      </view>
+      <view class="ov-item">
+        <view class="ov-val">{{overview.trainingMinutes}}<text class="ov-unit">min</text></view>
+        <view class="ov-label">训练时长</view>
+      </view>
+      <view class="ov-item">
+        <view class="ov-val">{{overview.caloriesBurned}}<text class="ov-unit">kcal</text></view>
+        <view class="ov-label">已消耗</view>
+      </view>
+      <view class="ov-item">
+        <view class="ov-val">{{overview.goalsCompleted}}<text class="ov-unit">项</text></view>
+        <view class="ov-label">目标进度</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ====== 快速入口 ====== -->
+  <view class="quick-actions">
+    <view class="act-item act-training" bindtap="onAddTraining">
+      <view class="act-icon">🏋️</view>
+      <view class="act-name">训练记录</view>
+    </view>
+    <view class="act-item act-diet" bindtap="onAddDiet">
+      <view class="act-icon">🍽️</view>
+      <view class="act-name">饮食记录</view>
+    </view>
+    <view class="act-item act-ai" bindtap="onAIPlan">
+      <view class="act-icon">🤖</view>
+      <view class="act-name">AI 计划</view>
+    </view>
+    <view class="act-item act-tutorial" bindtap="onTutorial">
+      <view class="act-icon">📖</view>
+      <view class="act-name">教程库</view>
+    </view>
+  </view>
+
+  <!-- ====== 今日训练记录 ====== -->
+  <view class="section-title">🏋️ 今日训练</view>
+  <view wx:if="{{trainingRecords.length === 0}}" class="empty-state">
+    <view class="empty-state__icon">📋</view>
+    <view class="empty-state__text">还没有训练记录</view>
+    <view class="empty-state__hint">点击右下角 ＋ 开始记录</view>
+  </view>
+  <block wx:for="{{trainingRecords}}" wx:key="_id">
+    <swipe-delete
+      confirmText="确认删除该训练记录？"
+      bind:delete="onDeleteTraining"
+      itemId="{{item._id}}"
+    >
+      <view class="card record-item" data-id="{{item._id}}" bindtap="onTrainingTap">
+        <view class="flex-between">
+          <view class="flex-row gap-sm">
+            <view class="record-icon">{{item.icon}}</view>
+            <view>
+              <view class="record-name">{{item.name}}</view>
+              <view class="text-sm text-secondary">{{item.sets}}组 × {{item.weight}}kg · {{item.reps}}次/组</view>
+            </view>
+          </view>
+          <view class="flex-row gap-sm items-center">
+            <view class="text-sm font-semibold text-primary">{{item.durationDisplay}}</view>
+            <text class="text-xs text-secondary">{{item.time}}</text>
+          </view>
+        </view>
+      </view>
+    </swipe-delete>
+  </block>
+
+  <!-- ====== 今日饮食记录 ====== -->
+  <view class="section-title">🍽️ 今日饮食</view>
+  <view wx:if="{{dietRecords.length === 0}}" class="empty-state">
+    <view class="empty-state__icon">🍽️</view>
+    <view class="empty-state__text">还没有饮食记录</view>
+    <view class="empty-state__hint">点击上方「饮食记录」开始</view>
+  </view>
+  <block wx:for="{{dietRecords}}" wx:key="_id">
+    <swipe-delete
+      confirmText="确认删除该饮食记录？"
+      bind:delete="onDeleteDiet"
+      itemId="{{item._id}}"
+    >
+      <view class="card record-item" data-id="{{item._id}}" bindtap="onDietTap">
+        <view class="flex-between">
+          <view class="flex-row gap-sm">
+            <view class="record-icon">🍽️</view>
+            <view>
+              <view class="record-name">{{item.name}}</view>
+              <view class="text-sm text-secondary">{{item.mealType}} · {{item.weight}}g</view>
+            </view>
+          </view>
+          <view class="text-sm font-semibold text-primary">{{item.calories}}kcal</view>
+        </view>
+      </view>
+    </swipe-delete>
+  </block>
+
+  <!-- ====== 底部留白（给 TabBar） ====== -->
+  <view style="height: 40rpx;"></view>
+
+</view>
+
+<!-- 悬浮按钮 -->
+<view class="fab" bindtap="onFabTap">
+  <view class="fab-btn">＋</view>
+</view>
+
+<!-- 悬浮按钮菜单 -->
+<view class="fab-overlay {{showFabMenu ? 'show' : ''}}" bindtap="onFabTap"></view>
+<view class="fab-menu {{showFabMenu ? 'show' : ''}}">
+  <view class="fab-menu-item" bindtap="onAddTraining">
+    <view class="fab-menu-icon">🏋️</view>
+    <view class="fab-menu-text">训练记录</view>
+  </view>
+  <view class="fab-menu-item" bindtap="onAddDiet">
+    <view class="fab-menu-icon">🍽️</view>
+    <view class="fab-menu-text">饮食记录</view>
+  </view>
+</view>
+
+
+<!-- 底部导航 -->
+<tab-bar current="record"></tab-bar>
