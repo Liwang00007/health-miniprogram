@@ -1,0 +1,85 @@
+<!-- pages/index/index.wxml -->
+<navigation-bar title="FitPlan" back="{{false}}" color="white" background="#2D2D2D"></navigation-bar>
+
+<view class="container">
+
+  <!-- 未登录提示 -->
+  <view class="login-tip-block" wx:if="{{showLoginTip}}">
+    <view class="login-card" bindtap="goToLogin">
+      <view class="login-icon">🔐</view>
+      <view class="login-title">点击登录</view>
+      <view class="login-desc">登录后畅享智能训练与饮食管理</view>
+      <view class="login-btn">微信一键登录</view>
+    </view>
+    <view class="guest-link" bindtap="goToLogs">暂不登录，浏览公开内容 →</view>
+  </view>
+
+  <!-- 已登录：用户信息卡片 -->
+  <view class="user-card" wx:if="{{isLoggedIn}}">
+    <view class="user-row">
+      <image class="user-avatar" src="{{userInfo.avatarUrl}}" mode="cover"/>
+      <view class="user-center">
+        <view class="user-name">{{userInfo.nickName || '健身达人'}}</view>
+        <view class="user-motto">坚持健身，遇见更好的自己 💪</view>
+      </view>
+      <view class="points-box">
+        <view class="points-star">⭐</view>
+        <view class="points-num">{{userInfo.points}}</view>
+        <view class="points-tag">积分</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 今日概览 -->
+  <view class="block-title">📊 今日概览</view>
+  <view class="overview-line">
+    <view class="ov-item">
+      <view class="ov-val ov-primary">60%</view>
+      <view class="ov-label">完成度</view>
+    </view>
+    <view class="ov-item">
+      <view class="ov-val">{{todayOverview.trainingMinutes}}<text class="ov-unit">min</text></view>
+      <view class="ov-label">训练时长</view>
+    </view>
+  </view>
+  <view class="overview-line">
+    <view class="ov-item">
+      <view class="ov-val">{{todayOverview.caloriesBurned}}<text class="ov-unit">kcal</text></view>
+      <view class="ov-label">已消耗</view>
+    </view>
+    <view class="ov-item">
+      <view class="ov-val">{{todayOverview.goalsCompleted}}<text class="ov-unit">项</text></view>
+      <view class="ov-label">目标进度</view>
+    </view>
+  </view>
+
+  <!-- 快速入口 -->
+  <view class="block-title">⚡ 快速入口</view>
+  <view class="quick-line">
+    <view class="act-card act-orange">
+      <view class="act-icon">🏋️</view>
+      <view class="act-name">训练记录</view>
+    </view>
+    <view class="act-card act-green">
+      <view class="act-icon">🍽️</view>
+      <view class="act-name">饮食记录</view>
+    </view>
+    <view class="act-card act-blue">
+      <view class="act-icon">🤖</view>
+      <view class="act-name">AI 计划</view>
+    </view>
+    <view class="act-card act-purple">
+      <view class="act-icon">📖</view>
+      <view class="act-name">教程库</view>
+    </view>
+  </view>
+
+  <!-- 最新记录 -->
+  <view class="block-title">🕐 最新记录</view>
+  <view class="empty-block">
+    <view class="empty-icon">📋</view>
+    <view class="empty-text">还没有训练和饮食记录</view>
+    <view class="empty-hint">点击上方快速入口开始记录吧</view>
+  </view>
+
+</view>

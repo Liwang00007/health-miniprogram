@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitPlan - AI制定计划</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#FF6B35', 'dark': '#2D2D2D', 'bg-gray': '#F5F5F5',
+        'text-gray': '#999999', 'text-light': '#BBBBBB', 'border': '#EEEEEE',
+      }
+    }
+  }
+}
+</script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', sans-serif; background: #E8E8E8; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+  .phone-frame { width: 430px; height: 932px; background: #F5F5F5; overflow-y: auto; overflow-x: hidden; position: relative; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+  .phone-frame::-webkit-scrollbar { width: 0; }
+  .form-label { font-size: 13px; font-weight: 600; color: #2D2D2D; margin-bottom: 6px; }
+  .form-input { width: 100%; border: 1px solid #eee; border-radius: 10px; padding: 10px 12px; font-size: 14px; outline: none; background: #fff; }
+  .form-input:focus { border-color: #FF6B35; }
+  .plan-type-card { background: #fff; border-radius: 16px; padding: 16px; cursor: pointer; border: 2px solid transparent; transition: all 0.2s; }
+  .plan-type-card.selected { border-color: #FF6B35; background: #FFF9F6; }
+  .option-chip { display: inline-block; padding: 8px 14px; border-radius: 20px; font-size: 12px; cursor: pointer; border: 1px solid #eee; background: #fff; color: #666; white-space: nowrap; }
+  .option-chip.selected { background: #FFF5F0; border-color: #FF6B35; color: #FF6B35; font-weight: 500; }
+  .generate-btn { background: linear-gradient(135deg, #FF6B35, #FF8F5E); color: #fff; border: none; border-radius: 24px; padding: 14px; font-size: 16px; font-weight: 600; cursor: pointer; width: 100%; box-shadow: 0 4px 16px rgba(255,107,53,0.3); }
+  .generate-btn:active { transform: scale(0.97); }
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <!-- Header -->
+  <div class="sticky top-0 z-30 bg-white px-5 pt-14 pb-4 border-b border-border">
+    <div class="flex items-center gap-3">
+      <div class="cursor-pointer p-1" onclick="history.back()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      </div>
+      <span class="text-lg font-semibold text-dark">🤖 AI 制定计划</span>
+    </div>
+  </div>
+
+  <!-- Points Balance -->
+  <div class="px-4 mt-4">
+    <div class="bg-white rounded-2xl p-4 shadow-sm flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="text-lg">⭐</span>
+        <div>
+          <div class="text-sm font-semibold text-dark">积分余额</div>
+          <div class="text-[10px] text-text-gray">训练计划消耗3积分 · 饮食计划消耗2积分</div>
+        </div>
+      </div>
+      <span class="text-2xl font-bold text-primary">38</span>
+    </div>
+  </div>
+
+  <!-- Plan Type Selection -->
+  <div class="px-4 mt-4">
+    <div class="form-label">选择计划类型</div>
+    <div class="grid grid-cols-2 gap-2">
+      <div class="plan-type-card selected" id="plan-training" onclick="selectPlanType('training')">
+        <div class="text-3xl mb-2">🏋️</div>
+        <div class="text-sm font-semibold text-dark">AI 力量训练计划</div>
+        <div class="text-[10px] text-text-gray mt-1">个性化训练方案 · 消耗3积分</div>
+      </div>
+      <div class="plan-type-card" id="plan-diet" onclick="selectPlanType('diet')">
+        <div class="text-3xl mb-2">🍽️</div>
+        <div class="text-sm font-semibold text-dark">AI 饮食计划</div>
+        <div class="text-[10px] text-text-gray mt-1">营养配餐方案 · 消耗2积分</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Training Plan Parameters (default visible) -->
+  <div id="training-params" class="px-4 mt-4 pb-24 space-y-4">
+    <div>
+      <div class="form-label">目标肌群</div>
+      <div class="flex flex-wrap gap-2">
+        <span class="option-chip selected" onclick="toggleChip(this)">胸部</span>
+        <span class="option-chip" onclick="toggleChip(this)">背部</span>
+        <span class="option-chip" onclick="toggleChip(this)">腿部</span>
+        <span class="option-chip" onclick="toggleChip(this)">肩部</span>
+        <span class="option-chip" onclick="toggleChip(this)">手臂</span>
+        <span class="option-chip" onclick="toggleChip(this)">核心</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="form-label">训练天数</div>
+      <input type="range" min="1" max="14" value="5" class="w-full accent-primary" oninput="document.getElementById('days-val').textContent=this.value">
+      <div class="text-center text-sm text-primary font-semibold mt-1"><span id="days-val">5</span> 天</div>
+    </div>
+
+    <div>
+      <div class="form-label">训练水平</div>
+      <div class="flex gap-2">
+        <span class="option-chip selected" onclick="selectOne(this, this.parentElement)">新手</span>
+        <span class="option-chip" onclick="selectOne(this, this.parentElement)">进阶</span>
+        <span class="option-chip" onclick="selectOne(this, this.parentElement)">高阶</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="form-label">可用器械</div>
+      <div class="flex flex-wrap gap-2">
+        <span class="option-chip selected" onclick="toggleChip(this)">杠铃</span>
+        <span class="option-chip selected" onclick="toggleChip(this)">哑铃</span>
+        <span class="option-chip" onclick="toggleChip(this)">龙门架</span>
+        <span class="option-chip" onclick="toggleChip(this)">史密斯机</span>
+        <span class="option-chip" onclick="toggleChip(this)">弹力带</span>
+        <span class="option-chip selected" onclick="toggleChip(this)">自重</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="form-label">伤病史（可选）</div>
+      <input type="text" class="form-input" placeholder="如有伤病史请填写，AI将避开相关动作...">
+    </div>
+
+    <!-- Generate Button -->
+    <div class="pt-4">
+      <button class="generate-btn" onclick="if(confirm('确认消耗 3 积分生成训练计划？\n当前余额：38 积分')){showLoading()}">🤖 生成计划（消耗3积分）</button>
+    </div>
+  </div>
+
+  <!-- Diet Plan Parameters (hidden by default) -->
+  <div id="diet-params" class="px-4 mt-4 pb-24 space-y-4 hidden">
+    <div>
+      <div class="form-label">目标</div>
+      <div class="flex gap-2">
+        <span class="option-chip selected" onclick="selectOne(this, this.parentElement)">增肌</span>
+        <span class="option-chip" onclick="selectOne(this, this.parentElement)">减脂</span>
+        <span class="option-chip" onclick="selectOne(this, this.parentElement)">维持</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="form-label">每日目标热量 (kcal)</div>
+      <input type="number" class="form-input" value="2800" placeholder="如：2500">
+    </div>
+
+    <div>
+      <div class="form-label">饮食偏好</div>
+      <div class="flex flex-wrap gap-2">
+        <span class="option-chip selected" onclick="selectOne(this, this.parentElement)">正常</span>
+        <span class="option-chip" onclick="selectOne(this, this.parentElement)">高蛋白</span>
+        <span class="option-chip" onclick="selectOne(this, this.parentElement)">低碳</span>
+        <span class="option-chip" onclick="selectOne(this, this.parentElement)">生酮</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="form-label">过敏食材（可选）</div>
+      <input type="text" class="form-input" placeholder="如：花生、海鲜、牛奶...">
+    </div>
+
+    <div>
+      <div class="form-label">计划天数</div>
+      <input type="range" min="1" max="14" value="7" class="w-full accent-primary" oninput="document.getElementById('ddays-val').textContent=this.value">
+      <div class="text-center text-sm text-primary font-semibold mt-1"><span id="ddays-val">7</span> 天</div>
+    </div>
+
+    <!-- Generate Button -->
+    <div class="pt-4">
+      <button class="generate-btn" onclick="if(confirm('确认消耗 2 积分生成饮食计划？\n当前余额：38 积分')){showLoading()}">🤖 生成计划（消耗2积分）</button>
+    </div>
+  </div>
+</div>
+
+<div id="loading-overlay" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center" onclick="event.stopPropagation()">
+  <div class="bg-white rounded-3xl p-8 w-80 text-center">
+    <div class="text-4xl mb-4 animate-bounce">🤖</div>
+    <div class="text-base font-semibold text-dark mb-2">AI 正在为你生成计划...</div>
+    <div class="text-xs text-text-gray mb-4" id="loading-text">正在分析你的训练需求…</div>
+    <div class="h-1.5 bg-bg-gray rounded-full overflow-hidden">
+      <div class="h-full bg-primary rounded-full animate-pulse" style="width:60%"></div>
+    </div>
+    <div class="text-[10px] text-text-light mt-3">预计等待 5-15 秒</div>
+  </div>
+</div>
+
+<script>
+function selectPlanType(type) {
+  document.getElementById('plan-training').classList.toggle('selected', type==='training');
+  document.getElementById('plan-diet').classList.toggle('selected', type==='diet');
+  document.getElementById('training-params').classList.toggle('hidden', type!=='training');
+  document.getElementById('diet-params').classList.toggle('hidden', type!=='diet');
+}
+function toggleChip(el) { el.classList.toggle('selected'); }
+function selectOne(el, parent) {
+  parent.querySelectorAll('.option-chip').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function showLoading() {
+  const overlay = document.getElementById('loading-overlay');
+  overlay.classList.remove('hidden');
+  const texts = ['正在分析你的训练需求…','正在匹配最佳动作组合…','正在计算训练容量分配…','正在优化休息间隔…','即将完成，请稍候…'];
+  let i = 0;
+  const t = document.getElementById('loading-text');
+  const interval = setInterval(() => { i=(i+1)%texts.length; t.textContent=texts[i]; }, 2000);
+  setTimeout(() => { clearInterval(interval); overlay.classList.add('hidden'); location.href='plan-preview.html'; }, 6000);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+/* components/image-uploader/image-uploader.wxss — Skyline 兼容版 */
+
+.image-uploader {
+  width: 100%;
+}
+
+/* ====== 上传触发区（空状态） ====== */
+.upload-area {
+  border: 3rpx dashed #ddd;
+  border-radius: 20rpx;
+  padding: 48rpx 32rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #fafafa;
+}
+
+.upload-area:active {
+  border-color: #FF6B35;
+  background: #FFF9F6;
+}
+
+.upload-icon {
+  font-size: 56rpx;
+  margin-bottom: 12rpx;
+}
+
+.upload-text {
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 8rpx;
+}
+
+.upload-hint {
+  font-size: 22rpx;
+  color: #bbb;
+}
+
+/* ====== 图片预览列表 ====== */
+.preview-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.preview-item {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 16rpx;
+  position: relative;
+  background: #f0f0f0;
+  margin-right: 16rpx;
+  margin-bottom: 16rpx;
+}
+
+.preview-item:last-child {
+  margin-right: 0;
+}
+
+.preview-image {
+  width: 160rpx;
+  height: 160rpx;
+}
+
+/* 上传状态标记 */
+.upload-status {
+  position: absolute;
+  top: 8rpx;
+  right: 8rpx;
+}
+
+.status-badge {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+}
+
+.status-badge.success {
+  background: #2ED573;
+  color: #fff;
+}
+
+.status-badge.uploading-badge {
+  background: rgba(0,0,0,0.5);
+}
+
+/* 删除按钮 */
+.remove-btn {
+  position: absolute;
+  top: 8rpx;
+  left: 8rpx;
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 18rpx;
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22rpx;
+}
+
+/* 添加按钮 */
+.add-btn {
+  border: 3rpx dashed #ddd;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #fafafa;
+}
+
+.add-icon {
+  font-size: 48rpx;
+  color: #ccc;
+  margin-bottom: 4rpx;
+}
+
+.add-text {
+  font-size: 22rpx;
+  color: #ccc;
+}
+
+/* ====== 进度条 ====== */
+.progress-bar-wrapper {
+  margin-top: 16rpx;
+  display: flex;
+  align-items: center;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 8rpx;
+  background: #eee;
+  border-radius: 4rpx;
+  margin-right: 16rpx;
+}
+
+.progress-fill {
+  height: 8rpx;
+  background: #FF6B35;
+  border-radius: 4rpx;
+}
+
+.progress-text {
+  font-size: 22rpx;
+  color: #999;
+  white-space: nowrap;
+}

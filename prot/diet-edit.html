@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitPlan - 添加饮食记录</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#FF6B35', 'dark': '#2D2D2D', 'bg-gray': '#F5F5F5',
+        'text-gray': '#999999', 'text-light': '#BBBBBB', 'border': '#EEEEEE',
+        'success': '#2ED573',
+      }
+    }
+  }
+}
+</script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', sans-serif; background: #E8E8E8; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+  .phone-frame { width: 430px; height: 932px; background: #F5F5F5; overflow-y: auto; overflow-x: hidden; position: relative; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+  .phone-frame::-webkit-scrollbar { width: 0; }
+  .form-label { font-size: 13px; font-weight: 600; color: #2D2D2D; margin-bottom: 4px; }
+  .form-input { width: 100%; border: 1px solid #eee; border-radius: 10px; padding: 10px 12px; font-size: 14px; outline: none; transition: border-color 0.2s; background: #fff; }
+  .form-input:focus { border-color: #FF6B35; }
+  .meal-chip { display: inline-block; padding: 8px 16px; border-radius: 20px; font-size: 13px; cursor: pointer; border: 1px solid #eee; background: #fff; color: #666; white-space: nowrap; }
+  .meal-chip.selected { font-weight: 500; }
+  .meal-chip.selected.breakfast { background: #FFF3E0; border-color: #E65100; color: #E65100; }
+  .meal-chip.selected.lunch { background: #E8F5E9; border-color: #1B5E20; color: #1B5E20; }
+  .meal-chip.selected.dinner { background: #EDE7F6; border-color: #4527A0; color: #4527A0; }
+  .meal-chip.selected.snack { background: #FFF8E1; border-color: #F57F17; color: #F57F17; }
+  .save-btn { background: linear-gradient(135deg, #FF6B35, #FF8F5E); color: #fff; border: none; border-radius: 24px; padding: 14px; font-size: 16px; font-weight: 600; cursor: pointer; width: 100%; box-shadow: 0 4px 16px rgba(255,107,53,0.3); }
+  .save-btn:active { transform: scale(0.97); }
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <!-- Header -->
+  <div class="sticky top-0 z-30 bg-white px-5 pt-14 pb-4 border-b border-border flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="cursor-pointer p-1" onclick="history.back()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      </div>
+      <span class="text-lg font-semibold text-dark">添加饮食记录</span>
+    </div>
+    <span class="text-sm font-semibold text-primary cursor-pointer" onclick="alert('饮食记录已保存！')">保存</span>
+  </div>
+
+  <div class="px-4 pt-4 pb-24 space-y-4">
+    <!-- Date -->
+    <div>
+      <div class="form-label">记录日期</div>
+      <input type="date" class="form-input" value="2026-06-06">
+    </div>
+
+    <!-- Meal Type -->
+    <div>
+      <div class="form-label">餐别</div>
+      <div class="flex gap-2">
+        <span class="meal-chip selected breakfast" onclick="selectMeal(this, 'breakfast')">🌅 早餐</span>
+        <span class="meal-chip lunch" onclick="selectMeal(this, 'lunch')">☀️ 午餐</span>
+        <span class="meal-chip dinner" onclick="selectMeal(this, 'dinner')">🌙 晚餐</span>
+        <span class="meal-chip snack" onclick="selectMeal(this, 'snack')">🍪 加餐</span>
+      </div>
+    </div>
+
+    <!-- Food Search -->
+    <div>
+      <div class="form-label">食物名称</div>
+      <div class="relative">
+        <input type="text" class="form-input pl-9" placeholder="搜索食物库..." value="鸡胸肉" oninput="showSearchResults(this.value)">
+        <svg class="absolute left-3 top-2.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </div>
+      <!-- Search Results Dropdown -->
+      <div class="bg-white rounded-xl mt-1 shadow-sm border border-border overflow-hidden">
+        <div class="px-3 py-2.5 flex items-center justify-between cursor-pointer hover:bg-bg-gray border-b border-border">
+          <div><span class="text-sm text-dark font-medium">鸡胸肉</span><span class="text-[10px] text-text-gray ml-2">每100g</span></div>
+          <div class="text-xs text-text-gray">165kcal · 蛋白31g</div>
+        </div>
+        <div class="px-3 py-2.5 flex items-center justify-between cursor-pointer hover:bg-bg-gray border-b border-border">
+          <div><span class="text-sm text-dark">鸡腿肉</span><span class="text-[10px] text-text-gray ml-2">每100g</span></div>
+          <div class="text-xs text-text-gray">181kcal · 蛋白26g</div>
+        </div>
+        <div class="px-3 py-2.5 text-xs text-primary text-center cursor-pointer">+ 自定义食物（手动输入营养数据）</div>
+      </div>
+    </div>
+
+    <!-- Portion -->
+    <div>
+      <div class="form-label">分量</div>
+      <div class="flex gap-2 items-center">
+        <input type="number" class="form-input w-24" value="150">
+        <span class="text-sm text-text-gray">克 (g)</span>
+      </div>
+    </div>
+
+    <!-- Calculated Nutrition -->
+    <div class="bg-white rounded-2xl p-4 shadow-sm">
+      <div class="text-sm font-semibold text-dark mb-3">📊 营养计算（自动）</div>
+      <div class="grid grid-cols-2 gap-3">
+        <div class="bg-bg-gray rounded-xl p-2.5 text-center">
+          <div class="text-lg font-bold text-primary">248</div>
+          <div class="text-[10px] text-text-gray">热量 (kcal)</div>
+        </div>
+        <div class="bg-bg-gray rounded-xl p-2.5 text-center">
+          <div class="text-lg font-bold text-dark">46.5</div>
+          <div class="text-[10px] text-text-gray">蛋白质 (g)</div>
+        </div>
+        <div class="bg-bg-gray rounded-xl p-2.5 text-center">
+          <div class="text-lg font-bold text-dark">0</div>
+          <div class="text-[10px] text-text-gray">碳水 (g)</div>
+        </div>
+        <div class="bg-bg-gray rounded-xl p-2.5 text-center">
+          <div class="text-lg font-bold text-dark">5.3</div>
+          <div class="text-[10px] text-text-gray">脂肪 (g)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Photo Recognition -->
+    <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-3 flex items-center gap-3 cursor-pointer" onclick="alert('拍照识别功能（消耗1积分）')">
+      <span class="text-2xl">📸</span>
+      <div class="flex-1">
+        <div class="text-sm font-semibold text-dark">拍照识别食物</div>
+        <div class="text-[10px] text-text-gray">自动识别食物并填入营养数据，消耗 1 积分</div>
+      </div>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+    </div>
+
+    <!-- Notes -->
+    <div>
+      <div class="form-label">备注（可选）</div>
+      <textarea class="form-input h-16 resize-none" placeholder="记录饮食备注..."></textarea>
+    </div>
+
+    <!-- Save Button -->
+    <div class="pt-4">
+      <button class="save-btn" onclick="alert('饮食记录保存成功！')">💾 保存饮食记录</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function selectMeal(el, type) {
+  document.querySelectorAll('.meal-chip').forEach(c => { c.classList.remove('selected','breakfast','lunch','dinner','snack'); });
+  el.classList.add('selected', type);
+}
+function showSearchResults(val) { /* placeholder for search logic */ }
+</script>
+</body>
+</html>

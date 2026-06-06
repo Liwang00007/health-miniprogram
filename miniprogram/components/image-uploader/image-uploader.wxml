@@ -1,0 +1,64 @@
+<!-- components/image-uploader/image-uploader.wxml -->
+<view class="image-uploader">
+  <!-- 已选图片预览列表 -->
+  <view class="preview-list" wx:if="{{showPreview && tempFiles.length > 0}}">
+    <view
+      class="preview-item"
+      wx:for="{{tempFiles}}"
+      wx:key="path"
+    >
+      <image
+        class="preview-image"
+        src="{{item.path}}"
+        mode="aspectFill"
+      />
+      <!-- 上传状态 -->
+      <view class="upload-status" wx:if="{{uploadedFileIDs[index]}}">
+        <view class="status-badge success">✓</view>
+      </view>
+      <view class="upload-status uploading" wx:elif="{{isUploading && !uploadedFileIDs[index]}}">
+        <view class="status-badge uploading-badge">⏳</view>
+      </view>
+      <!-- 删除按钮 -->
+      <view
+        class="remove-btn"
+        data-index="{{index}}"
+        catch:tap="handleRemoveImage"
+      >✕</view>
+    </view>
+
+    <!-- 添加按钮 -->
+    <view
+      class="preview-item add-btn"
+      wx:if="{{tempFiles.length < maxCount}}"
+      bindtap="handleChooseImage"
+    >
+      <view class="add-icon">+</view>
+      <view class="add-text">添加</view>
+    </view>
+  </view>
+
+  <!-- 未选择图片时的添加区域 -->
+  <view
+    class="upload-area"
+    wx:if="{{tempFiles.length === 0}}"
+    bindtap="handleChooseImage"
+  >
+    <view class="upload-icon">📷</view>
+    <view class="upload-text">
+      <text wx:if="{{category === 'avatar'}}">点击上传头像</text>
+      <text wx:elif="{{category === 'food'}}">点击拍照或选择食物图片</text>
+      <text wx:elif="{{category === 'training'}}">点击上传训练截图</text>
+      <text wx:else>点击上传图片</text>
+    </view>
+    <view class="upload-hint">支持 JPG/PNG，最多{{maxCount}}张</view>
+  </view>
+
+  <!-- 上传进度条 -->
+  <view class="progress-bar-wrapper" wx:if="{{isUploading}}">
+    <view class="progress-bar">
+      <view class="progress-fill" style="width: {{uploadProgress}}%"></view>
+    </view>
+    <view class="progress-text">上传中 {{uploadProgress}}%</view>
+  </view>
+</view>

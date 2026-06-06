@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitPlan - 教程</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#FF6B35',
+        'primary-light': '#FF8F5E',
+        'primary-dark': '#E55A2B',
+        dark: '#2D2D2D',
+        'bg-gray': '#F5F5F5',
+        'card': '#FFFFFF',
+        'text-gray': '#999999',
+        'text-light': '#BBBBBB',
+        'border': '#EEEEEE',
+        'danger': '#FF4757',
+        'success': '#2ED573',
+        'warning': '#FFA502',
+      }
+    }
+  }
+}
+</script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', sans-serif; background: #E8E8E8; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+  .phone-frame { width: 430px; height: 932px; background: #F5F5F5; overflow-y: auto; overflow-x: hidden; position: relative; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+  .phone-frame::-webkit-scrollbar { width: 0; }
+  .tab-bar { position: sticky; bottom: 0; width: 100%; background: #fff; border-top: 1px solid #eee; display: flex; padding: 8px 0 env(safe-area-inset-bottom); z-index: 100; }
+  .category-tab { padding: 6px 14px; border-radius: 20px; font-size: 13px; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+  .category-tab.active { background: #FF6B35; color: #fff; }
+  .category-tab:not(.active) { background: #fff; color: #666; }
+  .tutorial-card { background: #fff; border-radius: 14px; overflow: hidden; cursor: pointer; transition: transform 0.15s; }
+  .tutorial-card:active { transform: scale(0.98); }
+  .video-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 40px; height: 40px; border-radius: 50%; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; }
+  .collection-badge { background: #FF6B35; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 4px; }
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <!-- Header -->
+  <div class="sticky top-0 z-30 bg-dark text-white px-5 pt-14 pb-4">
+    <div class="flex items-center justify-between">
+      <span class="text-lg font-semibold">📖 教程库</span>
+      <div class="cursor-pointer p-1">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="px-4 -mt-2 relative z-20">
+    <div class="bg-white rounded-xl px-4 py-2.5 flex items-center gap-2 shadow-sm">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" placeholder="搜索动作教程..." class="text-sm flex-1 outline-none text-dark placeholder-text-light">
+    </div>
+  </div>
+
+  <!-- Category Tabs -->
+  <div class="px-4 mt-4">
+    <div class="flex gap-2 overflow-x-auto pb-1">
+      <div class="category-tab active" onclick="switchCategory('all', this)">全部</div>
+      <div class="category-tab" onclick="switchCategory('chest', this)">胸部</div>
+      <div class="category-tab" onclick="switchCategory('back', this)">背部</div>
+      <div class="category-tab" onclick="switchCategory('legs', this)">腿部</div>
+      <div class="category-tab" onclick="switchCategory('shoulders', this)">肩部</div>
+      <div class="category-tab" onclick="switchCategory('arms', this)">手臂</div>
+      <div class="category-tab" onclick="switchCategory('core', this)">核心</div>
+    </div>
+  </div>
+
+  <!-- AI Generated Plans Archive -->
+  <div class="px-4 mt-4">
+    <div class="flex items-center justify-between mb-3">
+      <span class="text-sm font-semibold text-dark">🤖 AI 生成的计划存档</span>
+      <span class="text-xs text-primary">2份 →</span>
+    </div>
+    <div class="flex gap-3 overflow-x-auto pb-1">
+      <div class="tutorial-card flex-shrink-0 w-40 shadow-sm" onclick="location.href='plan-preview.html'">
+        <div class="h-20 bg-gradient-to-br from-orange-100 to-orange-200 flex items-center justify-center text-3xl">📋</div>
+        <div class="p-2.5">
+          <div class="text-xs font-semibold text-dark truncate">上肢力量5天计划</div>
+          <div class="text-[10px] text-text-gray mt-0.5">AI生成 · 6/6</div>
+        </div>
+      </div>
+      <div class="tutorial-card flex-shrink-0 w-40 shadow-sm" onclick="location.href='plan-preview.html'">
+        <div class="h-20 bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center text-3xl">🍽️</div>
+        <div class="p-2.5">
+          <div class="text-xs font-semibold text-dark truncate">增肌高蛋白饮食</div>
+          <div class="text-[10px] text-text-gray mt-0.5">AI生成 · 6/5</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tutorial Cards Grid -->
+  <div class="px-4 mt-5 pb-24">
+    <div class="flex items-center justify-between mb-3">
+      <span class="text-sm font-semibold text-dark">🔥 热门教程</span>
+    </div>
+    <div class="grid grid-cols-2 gap-3">
+      <!-- Card 1 -->
+      <div class="tutorial-card shadow-sm">
+        <div class="h-28 bg-gradient-to-br from-gray-100 to-gray-200 relative flex items-center justify-center">
+          <span class="text-4xl">🏋️</span>
+          <div class="video-play">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+          <span class="absolute top-2 right-2 bg-black/60 text-white text-[9px] px-1.5 py-0.5 rounded">03:25</span>
+        </div>
+        <div class="p-2.5">
+          <div class="text-xs font-semibold text-dark">杠铃卧推标准动作</div>
+          <div class="flex items-center justify-between mt-1">
+            <span class="text-[10px] text-text-gray">胸部 · 2.3万次</span>
+            <span class="collection-badge">收藏</span>
+          </div>
+        </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="tutorial-card shadow-sm">
+        <div class="h-28 bg-gradient-to-br from-blue-50 to-blue-100 relative flex items-center justify-center">
+          <span class="text-4xl">🏃</span>
+          <div class="video-play">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+          <span class="absolute top-2 right-2 bg-black/60 text-white text-[9px] px-1.5 py-0.5 rounded">05:12</span>
+        </div>
+        <div class="p-2.5">
+          <div class="text-xs font-semibold text-dark">深蹲完整教学</div>
+          <div class="flex items-center justify-between mt-1">
+            <span class="text-[10px] text-text-gray">腿部 · 4.1万次</span>
+            <span class="text-[10px] text-text-gray">⭐4.9</span>
+          </div>
+        </div>
+      </div>
+      <!-- Card 3 -->
+      <div class="tutorial-card shadow-sm">
+        <div class="h-28 bg-gradient-to-br from-yellow-50 to-yellow-100 relative flex items-center justify-center">
+          <span class="text-4xl">💪</span>
+          <div class="video-play">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+          <span class="absolute top-2 right-2 bg-black/60 text-white text-[9px] px-1.5 py-0.5 rounded">02:48</span>
+        </div>
+        <div class="p-2.5">
+          <div class="text-xs font-semibold text-dark">引体向上入门</div>
+          <div class="flex items-center justify-between mt-1">
+            <span class="text-[10px] text-text-gray">背部 · 1.8万次</span>
+            <span class="text-[10px] text-text-gray">⭐4.8</span>
+          </div>
+        </div>
+      </div>
+      <!-- Card 4 -->
+      <div class="tutorial-card shadow-sm">
+        <div class="h-28 bg-gradient-to-br from-purple-50 to-purple-100 relative flex items-center justify-center">
+          <span class="text-4xl">🧘</span>
+          <div class="video-play">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+          <span class="absolute top-2 right-2 bg-black/60 text-white text-[9px] px-1.5 py-0.5 rounded">06:30</span>
+        </div>
+        <div class="p-2.5">
+          <div class="text-xs font-semibold text-dark">核心训练合集</div>
+          <div class="flex items-center justify-between mt-1">
+            <span class="text-[10px] text-text-gray">核心 · 3.5万次</span>
+            <span class="text-[10px] text-text-gray">⭐4.9</span>
+          </div>
+        </div>
+      </div>
+      <!-- Card 5 -->
+      <div class="tutorial-card shadow-sm">
+        <div class="h-28 bg-gradient-to-br from-red-50 to-red-100 relative flex items-center justify-center">
+          <span class="text-4xl">🏋️</span>
+          <div class="video-play">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+          <span class="absolute top-2 right-2 bg-black/60 text-white text-[9px] px-1.5 py-0.5 rounded">04:15</span>
+        </div>
+        <div class="p-2.5">
+          <div class="text-xs font-semibold text-dark">哑铃飞鸟教程</div>
+          <div class="flex items-center justify-between mt-1">
+            <span class="text-[10px] text-text-gray">胸部 · 1.2万次</span>
+            <span class="text-[10px] text-text-gray">⭐4.7</span>
+          </div>
+        </div>
+      </div>
+      <!-- Card 6 -->
+      <div class="tutorial-card shadow-sm">
+        <div class="h-28 bg-gradient-to-br from-green-50 to-green-100 relative flex items-center justify-center">
+          <span class="text-4xl">🏃</span>
+          <div class="video-play">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+          <span class="absolute top-2 right-2 bg-black/60 text-white text-[9px] px-1.5 py-0.5 rounded">08:00</span>
+        </div>
+        <div class="p-2.5">
+          <div class="text-xs font-semibold text-dark">正确跑步姿势</div>
+          <div class="flex items-center justify-between mt-1">
+            <span class="text-[10px] text-text-gray">有氧 · 5.6万次</span>
+            <span class="text-[10px] text-text-gray">⭐4.9</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab Bar -->
+  <div class="tab-bar">
+    <div class="flex justify-around items-center">
+      <div class="flex flex-col items-center cursor-pointer" onclick="location.href='record.html'">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <span class="text-[10px] mt-0.5 text-text-gray">记录</span>
+      </div>
+      <div class="flex flex-col items-center cursor-pointer" onclick="location.href='goal.html'">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+        <span class="text-[10px] mt-0.5 text-text-gray">目标</span>
+      </div>
+      <div class="flex flex-col items-center cursor-pointer">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="#FF6B35" stroke="#FF6B35" stroke-width="1.5"><path d="M2 3h7a3 3 0 0 1 3 3v13a1 1 0 0 0-1-1H2V3z"/><path d="M22 3h-7a3 3 0 0 0-3 3v13a1 1 0 0 1 1-1h9V3z"/></svg>
+        <span class="text-[10px] mt-0.5 text-primary font-medium">教程</span>
+      </div>
+      <div class="flex flex-col items-center cursor-pointer" onclick="location.href='mine.html'">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        <span class="text-[10px] mt-0.5 text-text-gray">我的</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function switchCategory(cat, el) {
+  document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitPlan - 积分明细</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#FF6B35', 'dark': '#2D2D2D', 'bg-gray': '#F5F5F5',
+        'text-gray': '#999999', 'text-light': '#BBBBBB', 'border': '#EEEEEE',
+        'success': '#2ED573', 'danger': '#FF4757',
+      }
+    }
+  }
+}
+</script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', sans-serif; background: #E8E8E8; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+  .phone-frame { width: 430px; height: 932px; background: #F5F5F5; overflow-y: auto; overflow-x: hidden; position: relative; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+  .phone-frame::-webkit-scrollbar { width: 0; }
+  .point-item { background: #fff; padding: 14px 16px; display: flex; align-items: center; gap: 12px; }
+  .point-item:first-of-type { border-radius: 14px 14px 0 0; }
+  .point-item:last-of-type { border-radius: 0 0 14px 14px; }
+  .point-divider { height: 1px; background: #f5f5f5; margin: 0 16px; }
+  .point-badge { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <!-- Header -->
+  <div class="sticky top-0 z-30 bg-white px-5 pt-14 pb-4 border-b border-border">
+    <div class="flex items-center gap-3">
+      <div class="cursor-pointer p-1" onclick="history.back()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      </div>
+      <span class="text-lg font-semibold text-dark">积分明细</span>
+    </div>
+  </div>
+
+  <!-- Balance Card -->
+  <div class="px-4 mt-5">
+    <div class="bg-gradient-to-br from-primary to-primary-light rounded-2xl p-5 text-white shadow-lg">
+      <div class="text-xs opacity-80 mb-1">当前积分余额</div>
+      <div class="text-4xl font-bold mb-2">38<span class="text-lg font-normal ml-1">积分</span></div>
+      <div class="flex items-center gap-4 text-xs opacity-80">
+        <span>累计获取 56 积分</span>
+        <span>累计消耗 18 积分</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rules Card -->
+  <div class="px-4 mt-4">
+    <div class="bg-white rounded-2xl p-4 shadow-sm">
+      <div class="text-sm font-semibold text-dark mb-3">📋 积分规则</div>
+      <div class="space-y-2 text-xs text-text-gray">
+        <div class="flex justify-between"><span>🎁 新用户注册赠送</span><span class="text-success font-medium">+10 积分</span></div>
+        <div class="flex justify-between"><span>📅 每日签到</span><span class="text-success font-medium">+1 积分</span></div>
+        <div class="flex justify-between"><span>🔥 连续打卡7天</span><span class="text-success font-medium">+3 积分</span></div>
+        <div class="flex justify-between"><span>🎯 完成训练目标</span><span class="text-success font-medium">+2 积分</span></div>
+        <div class="flex justify-between border-t border-border pt-2 mt-2"><span>🤖 AI 生成训练计划</span><span class="text-danger font-medium">-3 积分</span></div>
+        <div class="flex justify-between"><span>🍽️ AI 生成饮食计划</span><span class="text-danger font-medium">-2 积分</span></div>
+        <div class="flex justify-between"><span>📸 拍照识别食物</span><span class="text-danger font-medium">-1 积分</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- History -->
+  <div class="px-4 mt-4 pb-8">
+    <div class="text-sm font-semibold text-dark mb-3">积分记录</div>
+    <div class="rounded-2xl overflow-hidden shadow-sm">
+      <div class="point-item rounded-t-2xl">
+        <div class="point-badge bg-green-50">📅</div>
+        <div class="flex-1"><div class="text-sm text-dark">每日签到</div><div class="text-[10px] text-text-gray">2026-06-06 08:30</div></div>
+        <span class="text-sm font-semibold text-success">+1</span>
+      </div>
+      <div class="point-divider"></div>
+      <div class="point-item">
+        <div class="point-badge bg-orange-50">🤖</div>
+        <div class="flex-1"><div class="text-sm text-dark">AI生成训练计划</div><div class="text-[10px] text-text-gray">2026-06-05 14:22</div></div>
+        <span class="text-sm font-semibold text-danger">-3</span>
+      </div>
+      <div class="point-divider"></div>
+      <div class="point-item">
+        <div class="point-badge bg-green-50">📅</div>
+        <div class="flex-1"><div class="text-sm text-dark">每日签到</div><div class="text-[10px] text-text-gray">2026-06-05 07:15</div></div>
+        <span class="text-sm font-semibold text-success">+1</span>
+      </div>
+      <div class="point-divider"></div>
+      <div class="point-item">
+        <div class="point-badge bg-orange-50">🍽️</div>
+        <div class="flex-1"><div class="text-sm text-dark">AI生成饮食计划</div><div class="text-[10px] text-text-gray">2026-06-04 12:10</div></div>
+        <span class="text-sm font-semibold text-danger">-2</span>
+      </div>
+      <div class="point-divider"></div>
+      <div class="point-item">
+        <div class="point-badge bg-blue-50">🔥</div>
+        <div class="flex-1"><div class="text-sm text-dark">连续打卡7天奖励</div><div class="text-[10px] text-text-gray">2026-06-03 08:00</div></div>
+        <span class="text-sm font-semibold text-success">+3</span>
+      </div>
+      <div class="point-divider"></div>
+      <div class="point-item">
+        <div class="point-badge bg-purple-50">🎯</div>
+        <div class="flex-1"><div class="text-sm text-dark">完成训练目标</div><div class="text-[10px] text-text-gray">2026-06-02 18:45</div></div>
+        <span class="text-sm font-semibold text-success">+2</span>
+      </div>
+      <div class="point-divider"></div>
+      <div class="point-item rounded-b-2xl">
+        <div class="point-badge bg-green-50">🎁</div>
+        <div class="flex-1"><div class="text-sm text-dark">新用户注册赠送</div><div class="text-[10px] text-text-gray">2026-05-15 10:00</div></div>
+        <span class="text-sm font-semibold text-success">+10</span>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

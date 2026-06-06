@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitPlan - 我的</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#FF6B35',
+        'primary-light': '#FF8F5E',
+        'primary-dark': '#E55A2B',
+        dark: '#2D2D2D',
+        'bg-gray': '#F5F5F5',
+        'card': '#FFFFFF',
+        'text-gray': '#999999',
+        'text-light': '#BBBBBB',
+        'border': '#EEEEEE',
+        'danger': '#FF4757',
+        'success': '#2ED573',
+        'warning': '#FFA502',
+      }
+    }
+  }
+}
+</script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', sans-serif; background: #E8E8E8; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+  .phone-frame { width: 430px; height: 932px; background: #F5F5F5; overflow-y: auto; overflow-x: hidden; position: relative; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+  .phone-frame::-webkit-scrollbar { width: 0; }
+  .tab-bar { position: sticky; bottom: 0; width: 100%; background: #fff; border-top: 1px solid #eee; display: flex; padding: 8px 0 env(safe-area-inset-bottom); z-index: 100; }
+  .menu-item { background: #fff; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: background 0.15s; }
+  .menu-item:active { background: #f9f9f9; }
+  .menu-item:first-of-type { border-radius: 14px 14px 0 0; }
+  .menu-item:last-of-type { border-radius: 0 0 14px 14px; }
+  .menu-item:only-of-type { border-radius: 14px; }
+  .menu-divider { height: 1px; background: #f5f5f5; margin: 0 16px; }
+  .logout-btn { background: #fff; color: #FF4757; border: 1px solid #FF4757; border-radius: 24px; padding: 12px; width: 100%; font-size: 15px; font-weight: 500; cursor: pointer; }
+  .logout-btn:active { background: #FFF5F5; }
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <!-- Header -->
+  <div class="sticky top-0 z-30 bg-dark text-white px-5 pt-14 pb-4">
+    <div class="flex items-center justify-between">
+      <span class="text-lg font-semibold">👤 我的</span>
+      <div class="cursor-pointer p-1" onclick="location.href='settings.html'">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- User Info Card -->
+  <div class="px-4 -mt-2 relative z-20">
+    <div class="bg-white rounded-2xl shadow-sm p-5">
+      <div class="flex items-center gap-4">
+        <!-- Avatar -->
+        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-white text-2xl font-bold flex-shrink-0">
+          李
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="text-base font-bold text-dark">李旺仔</div>
+          <div class="text-xs text-text-gray mt-0.5">坚持健身，遇见更好的自己 💪</div>
+        </div>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+      <!-- Points Badge -->
+      <div class="flex items-center gap-3 mt-4 bg-gradient-to-r from-orange-50 to-yellow-50 rounded-xl p-3 cursor-pointer" onclick="location.href='points-detail.html'">
+        <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <div>
+          <div class="text-lg font-bold text-primary">38<span class="text-xs font-normal text-text-gray ml-1">积分</span></div>
+          <div class="text-[10px] text-text-gray">点击查看积分明细</div>
+        </div>
+        <div class="ml-auto bg-primary text-white text-xs px-3 py-1.5 rounded-full font-medium">签到 +1</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Training Statistics -->
+  <div class="px-4 mt-4">
+    <div class="bg-white rounded-2xl shadow-sm p-4 cursor-pointer" onclick="location.href='statistics.html'">
+      <div class="flex items-center justify-between mb-3">
+        <span class="text-sm font-semibold text-dark">📊 训练统计</span>
+        <span class="text-xs text-primary">详细数据 →</span>
+      </div>
+      <div class="grid grid-cols-3 gap-2 text-center">
+        <div>
+          <div class="text-xl font-bold text-dark">128</div>
+          <div class="text-[10px] text-text-gray">累计训练次数</div>
+        </div>
+        <div>
+          <div class="text-xl font-bold text-dark">96<span class="text-xs text-text-gray">h</span></div>
+          <div class="text-[10px] text-text-gray">累计训练时长</div>
+        </div>
+        <div>
+          <div class="text-xl font-bold text-primary">🔥7</div>
+          <div class="text-[10px] text-text-gray">连续打卡天数</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Menu List -->
+  <div class="px-4 mt-4 pb-24">
+    <div class="rounded-2xl overflow-hidden shadow-sm">
+      <div class="menu-item rounded-t-2xl" onclick="location.href='goal.html'">
+        <div class="flex items-center gap-3">
+          <span class="text-lg">📋</span>
+          <span class="text-sm text-dark">我的训练计划</span>
+        </div>
+        <div class="flex items-center gap-1">
+          <span class="text-xs text-text-gray">2个进行中</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+      <div class="menu-divider"></div>
+      <div class="menu-item" onclick="location.href='goal.html'">
+        <div class="flex items-center gap-3">
+          <span class="text-lg">🍽️</span>
+          <span class="text-sm text-dark">我的饮食计划</span>
+        </div>
+        <div class="flex items-center gap-1">
+          <span class="text-xs text-text-gray">1个进行中</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+      <div class="menu-divider"></div>
+      <div class="menu-item" onclick="alert('我的收藏页面')">
+        <div class="flex items-center gap-3">
+          <span class="text-lg">⭐</span>
+          <span class="text-sm text-dark">我的收藏</span>
+        </div>
+        <div class="flex items-center gap-1">
+          <span class="text-xs text-text-gray">8个教程</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+      <div class="menu-divider"></div>
+      <div class="menu-item" onclick="alert('数据导出功能')">
+        <div class="flex items-center gap-3">
+          <span class="text-lg">📤</span>
+          <span class="text-sm text-dark">数据导出</span>
+        </div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+      <div class="menu-divider"></div>
+      <div class="menu-item" onclick="alert('提醒设置')">
+        <div class="flex items-center gap-3">
+          <span class="text-lg">🔔</span>
+          <span class="text-sm text-dark">提醒设置</span>
+        </div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+      <div class="menu-divider"></div>
+      <div class="menu-item rounded-b-2xl" onclick="location.href='settings.html'">
+        <div class="flex items-center gap-3">
+          <span class="text-lg">⚙️</span>
+          <span class="text-sm text-dark">设置</span>
+        </div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+    </div>
+
+    <!-- Logout Button -->
+    <div class="mt-6 px-2">
+      <button class="logout-btn" onclick="if(confirm('确定退出登录？')){location.href='login.html'}">退出登录</button>
+    </div>
+  </div>
+
+  <!-- Tab Bar -->
+  <div class="tab-bar">
+    <div class="flex justify-around items-center">
+      <div class="flex flex-col items-center cursor-pointer" onclick="location.href='record.html'">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <span class="text-[10px] mt-0.5 text-text-gray">记录</span>
+      </div>
+      <div class="flex flex-col items-center cursor-pointer" onclick="location.href='goal.html'">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+        <span class="text-[10px] mt-0.5 text-text-gray">目标</span>
+      </div>
+      <div class="flex flex-col items-center cursor-pointer" onclick="location.href='tutorial.html'">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5"><path d="M2 3h7a3 3 0 0 1 3 3v13a1 1 0 0 0-1-1H2V3z"/><path d="M22 3h-7a3 3 0 0 0-3 3v13a1 1 0 0 1 1-1h9V3z"/></svg>
+        <span class="text-[10px] mt-0.5 text-text-gray">教程</span>
+      </div>
+      <div class="flex flex-col items-center cursor-pointer">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="#FF6B35" stroke="#FF6B35" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        <span class="text-[10px] mt-0.5 text-primary font-medium">我的</span>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

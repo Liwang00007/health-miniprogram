@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitPlan - 计划预览</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#FF6B35', 'dark': '#2D2D2D', 'bg-gray': '#F5F5F5',
+        'text-gray': '#999999', 'text-light': '#BBBBBB', 'border': '#EEEEEE',
+        'success': '#2ED573', 'warning': '#FFA502',
+      }
+    }
+  }
+}
+</script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', sans-serif; background: #E8E8E8; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+  .phone-frame { width: 430px; height: 932px; background: #F5F5F5; overflow-y: auto; overflow-x: hidden; position: relative; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+  .phone-frame::-webkit-scrollbar { width: 0; }
+  .day-card { background: #fff; border-radius: 14px; padding: 14px; margin-bottom: 8px; }
+  .day-card:last-child { margin-bottom: 0; }
+  .action-item { display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid #f8f8f8; font-size: 13px; }
+  .action-item:last-child { border-bottom: none; }
+  .btn { padding: 10px 24px; border-radius: 22px; font-size: 14px; font-weight: 600; cursor: pointer; transition: transform 0.2s; }
+  .btn:active { transform: scale(0.95); }
+  .btn-primary { background: linear-gradient(135deg, #FF6B35, #FF8F5E); color: #fff; border: none; box-shadow: 0 4px 12px rgba(255,107,53,0.3); }
+  .btn-outline { background: #fff; color: #FF6B35; border: 1.5px solid #FF6B35; }
+  .btn-ghost { background: #f5f5f5; color: #666; border: none; }
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <!-- Header -->
+  <div class="sticky top-0 z-30 bg-white px-5 pt-14 pb-4 border-b border-border">
+    <div class="flex items-center gap-3">
+      <div class="cursor-pointer p-1" onclick="history.back()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      </div>
+      <span class="text-lg font-semibold text-dark">计划预览</span>
+      <span class="ml-auto bg-blue-100 text-blue-700 text-[10px] px-2 py-0.5 rounded-full font-medium">AI生成</span>
+    </div>
+  </div>
+
+  <!-- Plan Summary -->
+  <div class="px-4 mt-4">
+    <div class="bg-gradient-to-br from-dark to-gray-700 rounded-2xl p-5 text-white">
+      <div class="text-sm font-semibold mb-1">🏋️ AI上肢力量训练</div>
+      <div class="text-xs opacity-70 mb-3">5天力量训练计划 · 新手友好</div>
+      <div class="grid grid-cols-3 gap-2 text-center">
+        <div class="bg-white/10 rounded-xl py-2">
+          <div class="text-lg font-bold">5</div>
+          <div class="text-[9px] opacity-70">训练天数</div>
+        </div>
+        <div class="bg-white/10 rounded-xl py-2">
+          <div class="text-lg font-bold">15</div>
+          <div class="text-[9px] opacity-70">训练动作</div>
+        </div>
+        <div class="bg-white/10 rounded-xl py-2">
+          <div class="text-lg font-bold">45<span class="text-xs">min</span></div>
+          <div class="text-[9px] opacity-70">日均时长</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day-by-Day Schedule -->
+  <div class="px-4 mt-4 pb-24">
+    <div class="text-sm font-semibold text-dark mb-3">📅 每日训练安排</div>
+
+    <!-- Day 1 -->
+    <div class="day-card">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-sm font-semibold text-dark">Day 1 · 胸部+三头</span>
+        <span class="text-[10px] text-text-gray">约45min</span>
+      </div>
+      <div class="action-item"><span class="text-base">🏋️</span><span class="flex-1">杠铃卧推</span><span class="text-xs text-text-gray">4组×8-12次</span></div>
+      <div class="action-item"><span class="text-base">🏋️</span><span class="flex-1">上斜哑铃卧推</span><span class="text-xs text-text-gray">3组×10-12次</span></div>
+      <div class="action-item"><span class="text-base">🏋️</span><span class="flex-1">哑铃飞鸟</span><span class="text-xs text-text-gray">3组×12-15次</span></div>
+      <div class="action-item"><span class="text-base">💪</span><span class="flex-1">绳索下压</span><span class="text-xs text-text-gray">3组×12-15次</span></div>
+    </div>
+
+    <!-- Day 2 -->
+    <div class="day-card">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-sm font-semibold text-dark">Day 2 · 背部+二头</span>
+        <span class="text-[10px] text-text-gray">约45min</span>
+      </div>
+      <div class="action-item"><span class="text-base">🏋️</span><span class="flex-1">引体向上</span><span class="text-xs text-text-gray">4组×力竭</span></div>
+      <div class="action-item"><span class="text-base">🏋️</span><span class="flex-1">杠铃划船</span><span class="text-xs text-text-gray">4组×8-10次</span></div>
+      <div class="action-item"><span class="text-base">🏋️</span><span class="flex-1">高位下拉</span><span class="text-xs text-text-gray">3组×10-12次</span></div>
+      <div class="action-item"><span class="text-base">💪</span><span class="flex-1">哑铃弯举</span><span class="text-xs text-text-gray">3组×12次</span></div>
+    </div>
+
+    <!-- Day 3 -->
+    <div class="day-card">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-sm font-semibold text-dark">Day 3 · 休息日</span>
+        <span class="bg-green-100 text-green-700 text-[10px] px-2 py-0.5 rounded-full">恢复</span>
+      </div>
+      <div class="text-xs text-text-gray py-2">建议轻度拉伸或散步，促进肌肉恢复与生长</div>
+    </div>
+
+    <!-- Day 4 -->
+    <div class="day-card">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-sm font-semibold text-dark">Day 4 · 肩部+核心</span>
+        <span class="text-[10px] text-text-gray">约40min</span>
+      </div>
+      <div class="action-item"><span class="text-base">🏋️</span><span class="flex-1">哑铃推举</span><span class="text-xs text-text-gray">4组×8-10次</span></div>
+      <div class="action-item"><span class="text-base">🏋️</span><span class="flex-1">侧平举</span><span class="text-xs text-text-gray">3组×15次</span></div>
+      <div class="action-item"><span class="text-base">🧘</span><span class="flex-1">平板支撑</span><span class="text-xs text-text-gray">3组×45s</span></div>
+    </div>
+
+    <!-- Day 5 -->
+    <div class="day-card">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-sm font-semibold text-dark">Day 5 · 全身循环</span>
+        <span class="text-[10px] text-text-gray">约50min</span>
+      </div>
+      <div class="action-item"><span class="text-base">🏋️</span><span class="flex-1">深蹲</span><span class="text-xs text-text-gray">3组×12次</span></div>
+      <div class="action-item"><span class="text-base">🏋️</span><span class="flex-1">卧推</span><span class="text-xs text-text-gray">3组×10次</span></div>
+      <div class="action-item"><span class="text-base">🏋️</span><span class="flex-1">划船</span><span class="text-xs text-text-gray">3组×10次</span></div>
+      <div class="action-item"><span class="text-base">🧘</span><span class="flex-1">全身拉伸</span><span class="text-xs text-text-gray">10min</span></div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex gap-2 mt-5">
+      <button class="btn btn-ghost flex-1 text-sm" onclick="alert('重新生成（消耗3积分）')">🔄 重新生成</button>
+      <button class="btn btn-outline flex-1 text-sm" onclick="alert('进入编辑模式（不消耗积分）')">✏️ 编辑调整</button>
+      <button class="btn btn-primary flex-1 text-sm" onclick="alert('计划已保存！')">💾 保存计划</button>
+    </div>
+    <div class="text-center mt-3">
+      <span class="text-xs text-primary cursor-pointer" onclick="alert('已保存到教程库')">📖 同时保存到教程库 →</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>

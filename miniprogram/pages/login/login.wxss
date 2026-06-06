@@ -1,0 +1,164 @@
+/* login.wxss */
+
+page {
+  background: #fff;
+}
+
+.page {
+  padding-bottom: 80rpx;
+}
+
+/* ====== 品牌区 ====== */
+.brand-area {
+  padding: 64rpx 48rpx 32rpx;
+  text-align: center;
+}
+
+.logo-box {
+  width: 144rpx;
+  height: 144rpx;
+  border-radius: 36rpx;
+  background: #FF6B35;
+  margin: 0 auto 24rpx;
+  line-height: 144rpx;
+  font-size: 64rpx;
+}
+
+.app-name {
+  font-size: 44rpx;
+  font-weight: 800;
+  color: #2D2D2D;
+  margin-bottom: 12rpx;
+}
+
+.app-desc {
+  font-size: 26rpx;
+  color: #999;
+  margin-bottom: 40rpx;
+}
+
+/* ====== 功能亮点 ====== */
+.feat-list {
+  text-align: left;
+}
+
+.feat-row {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 0;
+}
+
+.feat-icon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 20rpx;
+  text-align: center;
+  line-height: 80rpx;
+  font-size: 40rpx;
+  margin-right: 20rpx;
+}
+
+.feat-orange { background: #FFF5F0; }
+.feat-blue   { background: #F0F5FF; }
+.feat-green  { background: #F0FFF5; }
+
+.feat-info {
+  flex: 1;
+}
+
+.feat-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #2D2D2D;
+}
+
+.feat-desc {
+  font-size: 22rpx;
+  color: #999;
+  margin-top: 4rpx;
+}
+
+/* ====== 登录区 ====== */
+.login-area {
+  padding: 24rpx 48rpx 32rpx;
+}
+
+.err-msg {
+  text-align: center;
+  color: #FF4757;
+  font-size: 24rpx;
+  margin-bottom: 16rpx;
+}
+
+.wx-btn {
+  width: 100%;
+  height: 100rpx;
+  background: #07C160;
+  color: #fff;
+  border-radius: 50rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  text-align: center;
+  line-height: 100rpx;
+  margin-bottom: 24rpx;
+}
+
+.wx-btn:active {
+  background: #06AD56;
+}
+
+/* 隐私协议 */
+.privacy-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24rpx;
+  padding: 8rpx 0;
+}
+
+.cb {
+  width: 32rpx;
+  height: 32rpx;
+  border-radius: 6rpx;
+  border: 2rpx solid #ccc;
+  text-align: center;
+  line-height: 32rpx;
+  font-size: 22rpx;
+  color: #fff;
+  margin-right: 8rpx;
+}
+
+.cb.on {
+  background: #FF6B35;
+  border-color: #FF6B35;
+}
+
+.privacy-txt {
+  font-size: 22rpx;
+  color: #999;
+}
+
+.link {
+  color: #FF6B35;
+}
+
+/* 福利 */
+.bonus-line {
+  text-align: center;
+  font-size: 22rpx;
+  color: #bbb;
+  margin-bottom: 24rpx;
+}
+
+.hl {
+  color: #FF6B35;
+  font-weight: 600;
+}
+
+/* 跳过 */
+.skip-line {
+  text-align: center;
+  font-size: 24rpx;
+  color: #999;
+  padding: 16rpx 0;
+}

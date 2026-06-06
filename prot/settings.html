@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitPlan - 设置</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#FF6B35', 'dark': '#2D2D2D', 'bg-gray': '#F5F5F5',
+        'text-gray': '#999999', 'text-light': '#BBBBBB', 'border': '#EEEEEE',
+        'danger': '#FF4757',
+      }
+    }
+  }
+}
+</script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', sans-serif; background: #E8E8E8; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+  .phone-frame { width: 430px; height: 932px; background: #F5F5F5; overflow-y: auto; overflow-x: hidden; position: relative; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+  .phone-frame::-webkit-scrollbar { width: 0; }
+  .set-item { background: #fff; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+  .set-item:active { background: #f9f9f9; }
+  .set-item:first-of-type { border-radius: 14px 14px 0 0; }
+  .set-item:last-of-type { border-radius: 0 0 14px 14px; }
+  .set-divider { height: 1px; background: #f5f5f5; margin: 0 16px; }
+  .toggle { width: 48px; height: 28px; border-radius: 14px; background: #ddd; position: relative; cursor: pointer; transition: background 0.2s; }
+  .toggle.on { background: #FF6B35; }
+  .toggle::after { content: ''; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: #fff; transition: left 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+  .toggle.on::after { left: 23px; }
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <!-- Header -->
+  <div class="sticky top-0 z-30 bg-white px-5 pt-14 pb-4 border-b border-border">
+    <div class="flex items-center gap-3">
+      <div class="cursor-pointer p-1" onclick="history.back()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      </div>
+      <span class="text-lg font-semibold text-dark">设置</span>
+    </div>
+  </div>
+
+  <!-- Account Section -->
+  <div class="px-4 mt-5">
+    <div class="text-xs text-text-gray mb-2 px-1">账号安全</div>
+    <div class="rounded-2xl overflow-hidden shadow-sm">
+      <div class="set-item rounded-2xl" onclick="alert('修改个人信息')">
+        <span class="text-sm text-dark">个人信息</span>
+        <div class="flex items-center gap-1">
+          <span class="text-xs text-text-gray">李旺仔</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Section -->
+  <div class="px-4 mt-5">
+    <div class="text-xs text-text-gray mb-2 px-1">通知提醒</div>
+    <div class="rounded-2xl overflow-hidden shadow-sm">
+      <div class="set-item rounded-t-2xl">
+        <span class="text-sm text-dark">训练提醒</span>
+        <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+      </div>
+      <div class="set-divider"></div>
+      <div class="set-item rounded-b-2xl">
+        <span class="text-sm text-dark">饮食记录提醒</span>
+        <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- General Section -->
+  <div class="px-4 mt-5">
+    <div class="text-xs text-text-gray mb-2 px-1">通用</div>
+    <div class="rounded-2xl overflow-hidden shadow-sm">
+      <div class="set-item rounded-t-2xl" onclick="alert('隐私政策')">
+        <span class="text-sm text-dark">隐私政策</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+      <div class="set-divider"></div>
+      <div class="set-item" onclick="alert('用户协议')">
+        <span class="text-sm text-dark">用户协议</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+      <div class="set-divider"></div>
+      <div class="set-item rounded-b-2xl" onclick="if(confirm('确定清除本地缓存？')){alert('缓存已清除')}">
+        <span class="text-sm text-dark">清除缓存</span>
+        <div class="flex items-center gap-1">
+          <span class="text-xs text-text-gray">128MB</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- About Section -->
+  <div class="px-4 mt-5">
+    <div class="rounded-2xl overflow-hidden shadow-sm">
+      <div class="set-item rounded-2xl">
+        <span class="text-sm text-dark">当前版本</span>
+        <span class="text-xs text-text-gray">v1.0.0</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Logout -->
+  <div class="px-4 mt-8 pb-8">
+    <button class="w-full py-3 rounded-2xl bg-white text-danger text-sm font-medium border border-danger/20" onclick="if(confirm('确定退出登录？')){location.href='login.html'}">
+      退出登录
+    </button>
+  </div>
+</div>
+</body>
+</html>

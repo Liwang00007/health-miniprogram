@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitPlan 健身助手 - 小程序原型图</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#FF6B35',
+        dark: '#2D2D2D',
+        'bg-gray': '#F5F5F5',
+      }
+    }
+  }
+}
+</script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+    background: #1a1a2e;
+    min-height: 100vh;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 24px 32px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+
+  .header h1 {
+    font-size: 28px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #FF6B35, #FF8F5E);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 4px;
+  }
+
+  .header .subtitle {
+    font-size: 13px;
+    color: #8892b0;
+  }
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(460px, 1fr));
+    gap: 32px;
+    padding: 32px;
+    max-width: 2000px;
+    margin: 0 auto;
+  }
+
+  .page-group {
+    background: rgba(255,255,255,0.03);
+    border-radius: 20px;
+    padding: 24px 24px 16px;
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .page-group:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+  }
+
+  .page-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    color: #ccd6f6;
+  }
+
+  .page-label .icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+
+  .page-label .name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #e2e8f0;
+  }
+
+  .page-label .file {
+    font-size: 11px;
+    color: #64748b;
+    margin-left: auto;
+    font-family: 'SF Mono', 'Consolas', monospace;
+  }
+
+  .iframe-wrapper {
+    width: 430px;
+    height: 932px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    background: #fff;
+    margin: 0 auto;
+    transition: box-shadow 0.2s;
+  }
+
+  .iframe-wrapper:hover {
+    box-shadow: 0 12px 48px rgba(255,107,53,0.2);
+  }
+
+  .iframe-wrapper iframe {
+    width: 430px;
+    height: 932px;
+    border: none;
+    display: block;
+  }
+
+  /* Color accents for groups */
+  .accent-orange .icon { background: rgba(255,107,53,0.15); }
+  .accent-blue .icon { background: rgba(59,130,246,0.15); }
+  .accent-green .icon { background: rgba(46,213,115,0.15); }
+  .accent-purple .icon { background: rgba(139,92,246,0.15); }
+  .accent-yellow .icon { background: rgba(255,165,2,0.15); }
+  .accent-cyan .icon { background: rgba(6,182,212,0.15); }
+
+  /* Tabs indicator */
+  .tab-indicator {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 600;
+    margin-left: 6px;
+  }
+  .tab-main { background: rgba(255,107,53,0.2); color: #FF6B35; }
+  .tab-sub { background: rgba(100,116,139,0.2); color: #94a3b8; }
+
+  .legend {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    padding: 0 32px 24px;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #8892b0;
+  }
+
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .legend-dot.main { background: #FF6B35; }
+  .legend-dot.sub { background: #64748b; }
+
+  .footer {
+    text-align: center;
+    padding: 32px;
+    color: #475569;
+    font-size: 12px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    margin-top: 16px;
+  }
+
+  /* Responsive: on small screens, scale iframes down */
+  @media (max-width: 520px) {
+    .grid-container {
+      grid-template-columns: 1fr;
+      padding: 16px;
+      gap: 24px;
+    }
+    .iframe-wrapper {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 430/932;
+    }
+    .iframe-wrapper iframe {
+      width: 100%;
+      height: 100%;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <h1>💪 FitPlan 健身助手</h1>
+  <p class="subtitle">小程序原型图 — iPhone 16 Pro Max (430×932) — 共 14 个界面</p>
+</div>
+
+<!-- Legend -->
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot main"></div> 核心Tab页面（4个）</div>
+  <div class="legend-item"><div class="legend-dot sub"></div> 功能子页面（10个）</div>
+</div>
+
+<!-- Grid -->
+<div class="grid-container">
+
+  <!-- ====== CORE TAB PAGES ====== -->
+
+  <!-- 1. Login -->
+  <div class="page-group accent-orange">
+    <div class="page-label">
+      <div class="icon">🔐</div>
+      <span class="name">登录页</span>
+      <span class="tab-indicator tab-main">入口</span>
+      <span class="file">login.html</span>
+    </div>
+    <div class="iframe-wrapper">
+      <iframe src="login.html" title="登录页" loading="lazy"></iframe>
+    </div>
+  </div>
+
+  <!-- 2. Record Tab -->
+  <div class="page-group accent-orange">
+    <div class="page-label">
+      <div class="icon">📋</div>
+      <span class="name">记录页</span>
+      <span class="tab-indicator tab-main">Tab 1</span>
+      <span class="file">record.html</span>
+    </div>
+    <div class="iframe-wrapper">
+      <iframe src="record.html" title="记录页" loading="lazy"></iframe>
+    </div>
+  </div>
+
+  <!-- 3. Goal Tab -->
+  <div class="page-group accent-orange">
+    <div class="page-label">
+      <div class="icon">🎯</div>
+      <span class="name">目标页</span>
+      <span class="tab-indicator tab-main">Tab 2</span>
+      <span class="file">goal.html</span>
+    </div>
+    <div class="iframe-wrapper">
+      <iframe src="goal.html" title="目标页" loading="lazy"></iframe>
+    </div>
+  </div>
+
+  <!-- 4. Tutorial Tab -->
+  <div class="page-group accent-orange">
+    <div class="page-label">
+      <div class="icon">📖</div>
+      <span class="name">教程页</span>
+      <span class="tab-indicator tab-main">Tab 3</span>
+      <span class="file">tutorial.html</span>
+    </div>
+    <div class="iframe-wrapper">
+      <iframe src="tutorial.html" title="教程页" loading="lazy"></iframe>
+    </div>
+  </div>
+
+  <!-- 5. Mine Tab -->
+  <div class="page-group accent-orange">
+    <div class="page-label">
+      <div class="icon">👤</div>
+      <span class="name">我的页</span>
+      <span class="tab-indicator tab-main">Tab 4</span>
+      <span class="file">mine.html</span>
+    </div>
+    <div class="iframe-wrapper">
+      <iframe src="mine.html" title="我的页" loading="lazy"></iframe>
+    </div>
+  </div>
+
+  <!-- ====== SUB PAGES ====== -->
+
+  <!-- 6. Training Edit -->
+  <div class="page-group accent-blue">
+    <div class="page-label">
+      <div class="icon">🏋️</div>
+      <span class="name">训练记录编辑</span>
+      <span class="tab-indicator tab-sub">子页</span>
+      <span class="file">training-edit.html</span>
+    </div>
+    <div class="iframe-wrapper">
+      <iframe src="training-edit.html" title="训练记录编辑" loading="lazy"></iframe>
+    </div>
+  </div>
+
+  <!-- 7. Diet Edit -->
+  <div class="page-group accent-green">
+    <div class="page-label">
+      <div class="icon">🍽️</div>
+      <span class="name">饮食记录编辑</span>
+      <span class="tab-indicator tab-sub">子页</span>
+      <span class="file">diet-edit.html</span>
+    </div>
+    <div class="iframe-wrapper">
+      <iframe src="diet-edit.html" title="饮食记录编辑" loading="lazy"></iframe>
+    </div>
+  </div>
+
+  <!-- 8. AI Plan -->
+  <div class="page-group accent-purple">
+    <div class="page-label">
+      <div class="icon">🤖</div>
+      <span class="name">AI 计划定制</span>
+      <span class="tab-indicator tab-sub">子页</span>
+      <span class="file">ai-plan.html</span>
+    </div>
+    <div class="iframe-wrapper">
+      <iframe src="ai-plan.html" title="AI计划定制" loading="lazy"></iframe>
+    </div>
+  </div>
+
+  <!-- 9. Plan Preview -->
+  <div class="page-group accent-purple">
+    <div class="page-label">
+      <div class="icon">📋</div>
+      <span class="name">计划预览</span>
+      <span class="tab-indicator tab-sub">子页</span>
+      <span class="file">plan-preview.html</span>
+    </div>
+    <div class="iframe-wrapper">
+      <iframe src="plan-preview.html" title="计划预览" loading="lazy"></iframe>
+    </div>
+  </div>
+
+  <!-- 10. Statistics -->
+  <div class="page-group accent-blue">
+    <div class="page-label">
+      <div class="icon">📊</div>
+      <span class="name">训练周报</span>
+      <span class="tab-indicator tab-sub">子页</span>
+      <span class="file">statistics.html</span>
+    </div>
+    <div class="iframe-wrapper">
+      <iframe src="statistics.html" title="训练周报" loading="lazy"></iframe>
+    </div>
+  </div>
+
+  <!-- 11. Points Detail -->
+  <div class="page-group accent-yellow">
+    <div class="page-label">
+      <div class="icon">⭐</div>
+      <span class="name">积分明细</span>
+      <span class="tab-indicator tab-sub">子页</span>
+      <span class="file">points-detail.html</span>
+    </div>
+    <div class="iframe-wrapper">
+      <iframe src="points-detail.html" title="积分明细" loading="lazy"></iframe>
+    </div>
+  </div>
+
+  <!-- 12. Settings -->
+  <div class="page-group accent-cyan">
+    <div class="page-label">
+      <div class="icon">⚙️</div>
+      <span class="name">设置</span>
+      <span class="tab-indicator tab-sub">子页</span>
+      <span class="file">settings.html</span>
+    </div>
+    <div class="iframe-wrapper">
+      <iframe src="settings.html" title="设置" loading="lazy"></iframe>
+    </div>
+  </div>
+
+  <!-- 13. Training Detail -->
+  <div class="page-group accent-blue">
+    <div class="page-label">
+      <div class="icon">📝</div>
+      <span class="name">训练详情</span>
+      <span class="tab-indicator tab-sub">子页</span>
+      <span class="file">training-detail.html</span>
+    </div>
+    <div class="iframe-wrapper">
+      <iframe src="training-detail.html" title="训练详情" loading="lazy"></iframe>
+    </div>
+  </div>
+
+  <!-- 14. Diet Detail -->
+  <div class="page-group accent-green">
+    <div class="page-label">
+      <div class="icon">🔍</div>
+      <span class="name">饮食详情</span>
+      <span class="tab-indicator tab-sub">子页</span>
+      <span class="file">diet-detail.html</span>
+    </div>
+    <div class="iframe-wrapper">
+      <iframe src="diet-detail.html" title="饮食详情" loading="lazy"></iframe>
+    </div>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  FitPlan 健身助手小程序原型图 · 基于需求文档 v1.0 · 设计规格 iPhone 16 Pro Max (430×932) · 配色方案：深灰 + 活力橙 #FF6B35
+</div>
+
+</body>
+</html>

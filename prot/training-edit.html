@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitPlan - 添加训练记录</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#FF6B35', 'dark': '#2D2D2D', 'bg-gray': '#F5F5F5',
+        'text-gray': '#999999', 'text-light': '#BBBBBB', 'border': '#EEEEEE',
+      }
+    }
+  }
+}
+</script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', sans-serif; background: #E8E8E8; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+  .phone-frame { width: 430px; height: 932px; background: #F5F5F5; overflow-y: auto; overflow-x: hidden; position: relative; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+  .phone-frame::-webkit-scrollbar { width: 0; }
+  .form-label { font-size: 13px; font-weight: 600; color: #2D2D2D; margin-bottom: 4px; }
+  .form-input { width: 100%; border: 1px solid #eee; border-radius: 10px; padding: 10px 12px; font-size: 14px; outline: none; transition: border-color 0.2s; background: #fff; }
+  .form-input:focus { border-color: #FF6B35; }
+  .set-row { background: #fff; border-radius: 10px; padding: 10px 12px; display: flex; align-items: center; gap: 6px; margin-top: 6px; }
+  .set-row input { width: 56px; border: 1px solid #eee; border-radius: 6px; padding: 6px; font-size: 13px; text-align: center; outline: none; }
+  .set-row input:focus { border-color: #FF6B35; }
+  .save-btn { background: linear-gradient(135deg, #FF6B35, #FF8F5E); color: #fff; border: none; border-radius: 24px; padding: 14px; font-size: 16px; font-weight: 600; cursor: pointer; width: 100%; box-shadow: 0 4px 16px rgba(255,107,53,0.3); }
+  .save-btn:active { transform: scale(0.97); }
+  .add-btn { border: 1.5px dashed #ddd; border-radius: 10px; padding: 10px; text-align: center; font-size: 13px; color: #999; cursor: pointer; background: #fff; transition: all 0.2s; }
+  .add-btn:active { border-color: #FF6B35; color: #FF6B35; background: #FFF5F0; }
+  .type-chip { display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 12px; cursor: pointer; border: 1px solid #eee; background: #fff; color: #666; white-space: nowrap; }
+  .type-chip.selected { background: #FFF5F0; border-color: #FF6B35; color: #FF6B35; font-weight: 500; }
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <!-- Header -->
+  <div class="sticky top-0 z-30 bg-white px-5 pt-14 pb-4 border-b border-border flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="cursor-pointer p-1" onclick="history.back()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      </div>
+      <span class="text-lg font-semibold text-dark">添加训练记录</span>
+    </div>
+    <span class="text-sm font-semibold text-primary cursor-pointer" onclick="alert('记录已保存！')">保存</span>
+  </div>
+
+  <div class="px-4 pt-4 pb-24 space-y-4">
+    <!-- Date -->
+    <div>
+      <div class="form-label">训练日期</div>
+      <input type="date" class="form-input" value="2026-06-06">
+    </div>
+
+    <!-- Training Type -->
+    <div>
+      <div class="form-label">训练类型</div>
+      <div class="flex gap-2 overflow-x-auto pb-1">
+        <span class="type-chip selected" onclick="selectType(this)">力量训练</span>
+        <span class="type-chip" onclick="selectType(this)">有氧</span>
+        <span class="type-chip" onclick="selectType(this)">HIIT</span>
+        <span class="type-chip" onclick="selectType(this)">拉伸</span>
+        <span class="type-chip" onclick="selectType(this)">自定义</span>
+      </div>
+    </div>
+
+    <!-- Exercise Section -->
+    <div>
+      <div class="flex items-center justify-between mb-2">
+        <span class="form-label mb-0">训练动作</span>
+        <span class="text-xs text-primary cursor-pointer" onclick="alert('打开动作库搜索面板')">从动作库选择</span>
+      </div>
+
+      <!-- Exercise 1: Bench Press -->
+      <div class="bg-white rounded-xl p-3 shadow-sm">
+        <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center gap-2">
+            <span class="text-lg">🏋️</span>
+            <span class="text-sm font-semibold text-dark">杠铃卧推</span>
+          </div>
+          <span class="text-xs text-text-gray cursor-pointer" onclick="this.closest('.bg-white').remove()">✕</span>
+        </div>
+        <div class="flex items-center gap-1 text-[10px] text-text-gray mb-2">
+          <span class="w-10">组数</span><span class="w-14">重量(kg)</span><span class="w-14">次数</span><span class="w-16">休息(s)</span>
+        </div>
+        <div class="set-row"><span class="text-xs text-text-gray w-6">1</span><input value="60"><input value="12"><input value="60"></div>
+        <div class="set-row"><span class="text-xs text-text-gray w-6">2</span><input value="65"><input value="10"><input value="60"></div>
+        <div class="set-row"><span class="text-xs text-text-gray w-6">3</span><input value="70"><input value="8"><input value="90"></div>
+        <div class="set-row"><span class="text-xs text-text-gray w-6">4</span><input value="65"><input value="10"><input value="60"></div>
+        <div class="add-btn mt-2 text-xs" onclick="alert('添加一组')">+ 添加组</div>
+      </div>
+
+      <!-- Add Exercise Button -->
+      <div class="add-btn mt-2" onclick="alert('打开动作搜索面板')">+ 添加动作</div>
+    </div>
+
+    <!-- Duration -->
+    <div>
+      <div class="form-label flex items-center justify-between">
+        <span>训练时长</span>
+        <span class="text-xs text-primary cursor-pointer font-normal" onclick="alert('打开计时器')">⏱️ 计时器</span>
+      </div>
+      <div class="flex gap-2 items-center">
+        <input type="number" class="form-input w-20" placeholder="0" value="30">
+        <span class="text-sm text-text-gray">分钟</span>
+      </div>
+    </div>
+
+    <!-- Notes -->
+    <div>
+      <div class="form-label">备注（可选）</div>
+      <textarea class="form-input h-20 resize-none" placeholder="记录训练感受、注意事项...">今天状态不错，最后一组略吃力</textarea>
+    </div>
+
+    <!-- Save Button -->
+    <div class="pt-4">
+      <button class="save-btn" onclick="alert('训练记录保存成功！')">💾 保存训练记录</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function selectType(el) {
+  document.querySelectorAll('.type-chip').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+</script>
+</body>
+</html>

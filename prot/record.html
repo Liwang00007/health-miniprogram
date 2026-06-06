@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitPlan - 记录</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#FF6B35',
+        'primary-light': '#FF8F5E',
+        'primary-dark': '#E55A2B',
+        dark: '#2D2D2D',
+        'bg-gray': '#F5F5F5',
+        'card': '#FFFFFF',
+        'text-gray': '#999999',
+        'text-light': '#BBBBBB',
+        'border': '#EEEEEE',
+        'danger': '#FF4757',
+        'success': '#2ED573',
+        'warning': '#FFA502',
+      }
+    }
+  }
+}
+</script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', sans-serif; background: #E8E8E8; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+  .phone-frame { width: 430px; height: 932px; background: #F5F5F5; overflow-y: auto; overflow-x: hidden; position: relative; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+  .phone-frame::-webkit-scrollbar { width: 0; }
+  .tab-bar { position: sticky; bottom: 0; width: 100%; background: #fff; border-top: 1px solid #eee; display: flex; padding: 8px 0 env(safe-area-inset-bottom); z-index: 100; }
+  .fab { position: absolute; right: 20px; bottom: 100px; width: 52px; height: 52px; border-radius: 26px; background: linear-gradient(135deg, #FF6B35, #FF8F5E); box-shadow: 0 4px 16px rgba(255,107,53,0.4); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.2s; z-index: 50; }
+  .fab:active { transform: scale(0.9); }
+  .record-item:active { background: #f9f9f9; }
+  .meal-tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 500; }
+  .meal-breakfast { background: #FFF3E0; color: #E65100; }
+  .meal-lunch { background: #E8F5E9; color: #1B5E20; }
+  .meal-dinner { background: #EDE7F6; color: #4527A0; }
+  .meal-snack { background: #FFF8E1; color: #F57F17; }
+</style>
+</head>
+<body>
+<div class="phone-frame" id="app">
+  <!-- Header -->
+  <div class="sticky top-0 z-30 bg-dark text-white px-5 pt-14 pb-4">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-2 cursor-pointer" onclick="showCalendar()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        <span class="text-lg font-semibold">今天</span>
+        <span class="text-sm text-gray-400 ml-1">2026-06-06</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="cursor-pointer p-1" onclick="showCalendar()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Today Overview Card -->
+  <div class="px-4 -mt-2 relative z-20">
+    <div class="bg-white rounded-2xl shadow-sm p-4 flex items-center gap-4">
+      <!-- Ring Chart -->
+      <div class="relative w-20 h-20 flex-shrink-0">
+        <svg viewBox="0 0 80 80" class="w-full h-full -rotate-90">
+          <circle cx="40" cy="40" r="32" fill="none" stroke="#F0F0F0" stroke-width="8"/>
+          <circle cx="40" cy="40" r="32" fill="none" stroke="#FF6B35" stroke-width="8" stroke-dasharray="120 201" stroke-linecap="round"/>
+        </svg>
+        <div class="absolute inset-0 flex flex-col items-center justify-center">
+          <span class="text-sm font-bold text-dark">60%</span>
+          <span class="text-[9px] text-text-gray">完成度</span>
+        </div>
+      </div>
+      <div class="flex-1 grid grid-cols-2 gap-2">
+        <div class="bg-bg-gray rounded-xl p-2.5 text-center">
+          <div class="text-lg font-bold text-primary">45<span class="text-xs font-normal text-text-gray">min</span></div>
+          <div class="text-[10px] text-text-gray">训练时长</div>
+        </div>
+        <div class="bg-bg-gray rounded-xl p-2.5 text-center">
+          <div class="text-lg font-bold text-success">1,850<span class="text-xs font-normal text-text-gray">kcal</span></div>
+          <div class="text-[10px] text-text-gray">已消耗</div>
+        </div>
+        <div class="bg-bg-gray rounded-xl p-2.5 text-center">
+          <div class="text-lg font-bold text-warning">2,100<span class="text-xs font-normal text-text-gray">kcal</span></div>
+          <div class="text-[10px] text-text-gray">已摄入</div>
+        </div>
+        <div class="bg-bg-gray rounded-xl p-2.5 text-center">
+          <div class="text-lg font-bold text-primary">3/5<span class="text-xs font-normal text-text-gray">项</span></div>
+          <div class="text-[10px] text-text-gray">目标进度</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Training Records Section -->
+  <div class="px-4 mt-5">
+    <div class="flex items-center justify-between mb-3">
+      <span class="text-base font-semibold text-dark">🏋️ 训练记录</span>
+      <span class="text-xs text-primary font-medium">查看全部 →</span>
+    </div>
+    <div class="space-y-2.5">
+      <!-- Training Item 1 -->
+      <div class="record-item bg-white rounded-xl p-3.5 flex items-center gap-3 cursor-pointer" onclick="viewTrainingDetail()">
+        <div class="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center text-xl">🏋️</div>
+        <div class="flex-1 min-w-0">
+          <div class="text-sm font-semibold text-dark">杠铃卧推</div>
+          <div class="text-xs text-text-gray mt-0.5">4组 × 60kg · 8次/组 · 休息60s</div>
+        </div>
+        <div class="text-right flex-shrink-0">
+          <div class="text-xs font-medium text-dark">30min</div>
+          <div class="text-[10px] text-text-gray mt-0.5">10:30</div>
+        </div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+      <!-- Training Item 2 -->
+      <div class="record-item bg-white rounded-xl p-3.5 flex items-center gap-3 cursor-pointer" onclick="viewTrainingDetail()">
+        <div class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center text-xl">🏃</div>
+        <div class="flex-1 min-w-0">
+          <div class="text-sm font-semibold text-dark">跑步机有氧</div>
+          <div class="text-xs text-text-gray mt-0.5">5km · 配速5'30" · 心率145bpm</div>
+        </div>
+        <div class="text-right flex-shrink-0">
+          <div class="text-xs font-medium text-dark">25min</div>
+          <div class="text-[10px] text-text-gray mt-0.5">08:15</div>
+        </div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+      <!-- Training Item 3 -->
+      <div class="record-item bg-white rounded-xl p-3.5 flex items-center gap-3 cursor-pointer" onclick="viewTrainingDetail()">
+        <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-xl">🧘</div>
+        <div class="flex-1 min-w-0">
+          <div class="text-sm font-semibold text-dark">全身拉伸</div>
+          <div class="text-xs text-text-gray mt-0.5">6个动作 · 静态拉伸 · 放松恢复</div>
+        </div>
+        <div class="text-right flex-shrink-0">
+          <div class="text-xs font-medium text-dark">15min</div>
+          <div class="text-[10px] text-text-gray mt-0.5">07:30</div>
+        </div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Diet Records Section -->
+  <div class="px-4 mt-5 pb-24">
+    <div class="flex items-center justify-between mb-3">
+      <span class="text-base font-semibold text-dark">🍽️ 饮食记录</span>
+      <span class="text-xs text-primary font-medium">查看全部 →</span>
+    </div>
+    <!-- Breakfast -->
+    <div class="mb-3">
+      <span class="meal-tag meal-breakfast mb-2">早餐</span>
+      <div class="record-item bg-white rounded-xl p-3.5 flex items-center gap-3 mt-1.5 cursor-pointer" onclick="viewDietDetail()">
+        <span class="text-2xl">🥚</span>
+        <div class="flex-1">
+          <div class="text-sm font-semibold text-dark">水煮鸡蛋 ×2</div>
+          <div class="text-xs text-text-gray">蛋白质 12g · 脂肪 10g</div>
+        </div>
+        <div class="text-sm font-bold text-primary">156<span class="text-xs font-normal text-text-gray">kcal</span></div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+      <div class="record-item bg-white rounded-xl p-3.5 flex items-center gap-3 mt-1.5 cursor-pointer" onclick="viewDietDetail()">
+        <span class="text-2xl">🥛</span>
+        <div class="flex-1">
+          <div class="text-sm font-semibold text-dark">全脂牛奶</div>
+          <div class="text-xs text-text-gray">250ml · 蛋白质 8g</div>
+        </div>
+        <div class="text-sm font-bold text-primary">120<span class="text-xs font-normal text-text-gray">kcal</span></div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+    </div>
+    <!-- Lunch -->
+    <div class="mb-3">
+      <span class="meal-tag meal-lunch mb-2">午餐</span>
+      <div class="record-item bg-white rounded-xl p-3.5 flex items-center gap-3 mt-1.5 cursor-pointer" onclick="viewDietDetail()">
+        <span class="text-2xl">🍚</span>
+        <div class="flex-1">
+          <div class="text-sm font-semibold text-dark">白米饭</div>
+          <div class="text-xs text-text-gray">200g · 碳水 56g</div>
+        </div>
+        <div class="text-sm font-bold text-primary">250<span class="text-xs font-normal text-text-gray">kcal</span></div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+      <div class="record-item bg-white rounded-xl p-3.5 flex items-center gap-3 mt-1.5 cursor-pointer" onclick="viewDietDetail()">
+        <span class="text-2xl">🐔</span>
+        <div class="flex-1">
+          <div class="text-sm font-semibold text-dark">鸡胸肉</div>
+          <div class="text-xs text-text-gray">150g · 蛋白质 35g</div>
+        </div>
+        <div class="text-sm font-bold text-primary">195<span class="text-xs font-normal text-text-gray">kcal</span></div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAB -->
+  <div class="fab" onclick="showAddMenu()">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+  </div>
+
+  <!-- Tab Bar -->
+  <div class="tab-bar">
+    <div class="flex justify-around items-center">
+      <div class="flex flex-col items-center cursor-pointer">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="#FF6B35" stroke="#FF6B35" stroke-width="1.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <span class="text-[10px] mt-0.5 text-primary font-medium">记录</span>
+      </div>
+      <div class="flex flex-col items-center cursor-pointer" onclick="location.href='goal.html'">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+        <span class="text-[10px] mt-0.5 text-text-gray">目标</span>
+      </div>
+      <div class="flex flex-col items-center cursor-pointer" onclick="location.href='tutorial.html'">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5"><path d="M2 3h7a3 3 0 0 1 3 3v13a1 1 0 0 0-1-1H2V3z"/><path d="M22 3h-7a3 3 0 0 0-3 3v13a1 1 0 0 1 1-1h9V3z"/></svg>
+        <span class="text-[10px] mt-0.5 text-text-gray">教程</span>
+      </div>
+      <div class="flex flex-col items-center cursor-pointer" onclick="location.href='mine.html'">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        <span class="text-[10px] mt-0.5 text-text-gray">我的</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showCalendar() { alert('日历组件 - 选择日期查看历史记录'); }
+function showAddMenu() {
+  const choice = confirm('选择记录类型：\n点击"确定"=添加训练记录\n点击"取消"=添加饮食记录');
+  if (choice) location.href = 'training-edit.html';
+  else location.href = 'diet-edit.html';
+}
+function viewTrainingDetail() { location.href = 'training-detail.html'; }
+function viewDietDetail() { location.href = 'diet-detail.html'; }
+</script>
+</body>
+</html>

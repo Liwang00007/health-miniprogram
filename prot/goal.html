@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitPlan - 目标</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#FF6B35',
+        'primary-light': '#FF8F5E',
+        'primary-dark': '#E55A2B',
+        dark: '#2D2D2D',
+        'bg-gray': '#F5F5F5',
+        'card': '#FFFFFF',
+        'text-gray': '#999999',
+        'text-light': '#BBBBBB',
+        'border': '#EEEEEE',
+        'danger': '#FF4757',
+        'success': '#2ED573',
+        'warning': '#FFA502',
+      }
+    }
+  }
+}
+</script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', sans-serif; background: #E8E8E8; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+  .phone-frame { width: 430px; height: 932px; background: #F5F5F5; overflow-y: auto; overflow-x: hidden; position: relative; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+  .phone-frame::-webkit-scrollbar { width: 0; }
+  .tab-bar { position: sticky; bottom: 0; width: 100%; background: #fff; border-top: 1px solid #eee; display: flex; padding: 8px 0 env(safe-area-inset-bottom); z-index: 100; }
+  .segment-tab { padding: 6px 14px; border-radius: 20px; font-size: 13px; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+  .segment-tab.active { background: #2D2D2D; color: #fff; }
+  .segment-tab:not(.active) { background: #fff; color: #666; }
+  .plan-card { background: #fff; border-radius: 16px; padding: 16px; cursor: pointer; transition: transform 0.15s; }
+  .plan-card:active { transform: scale(0.98); }
+  .progress-bar { height: 6px; border-radius: 3px; background: #eee; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 3px; transition: width 0.5s; }
+  .ai-btn { background: linear-gradient(135deg, #FF6B35, #FF8F5E); color: #fff; border: none; border-radius: 24px; padding: 12px 28px; font-size: 14px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 16px rgba(255,107,53,0.3); transition: transform 0.2s; }
+  .ai-btn:active { transform: scale(0.95); }
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <!-- Header -->
+  <div class="sticky top-0 z-30 bg-dark text-white px-5 pt-14 pb-4">
+    <div class="flex items-center justify-between">
+      <span class="text-lg font-semibold">🎯 目标</span>
+      <div class="cursor-pointer p-1" onclick="location.href='ai-plan.html'">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 6 6.5 1-4.5 4.5 1 6.5L12 16l-6 4 1-6.5L2.5 9l6.5-1L12 2z"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Plan Entry Banner -->
+  <div class="px-4 -mt-2 relative z-20">
+    <div class="bg-gradient-to-r from-primary to-primary-light rounded-2xl p-5 text-white cursor-pointer shadow-lg" onclick="location.href='ai-plan.html'">
+      <div class="flex items-center justify-between">
+        <div>
+          <div class="text-base font-bold mb-1">🤖 AI 智能定制计划</div>
+          <div class="text-xs opacity-80">根据你的数据，生成个性化训练与饮食方案</div>
+          <div class="flex items-center gap-2 mt-3">
+            <span class="bg-white/20 rounded-full px-2.5 py-0.5 text-[11px]">训练计划 ·3积分</span>
+            <span class="bg-white/20 rounded-full px-2.5 py-0.5 text-[11px]">饮食计划 ·2积分</span>
+          </div>
+        </div>
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Segment Tabs -->
+  <div class="px-4 mt-5">
+    <div class="flex gap-2 overflow-x-auto pb-1">
+      <div class="segment-tab active" onclick="switchTab('goals', this)">训练目标</div>
+      <div class="segment-tab" onclick="switchTab('training-plans', this)">训练计划</div>
+      <div class="segment-tab" onclick="switchTab('diet-plans', this)">饮食计划</div>
+    </div>
+  </div>
+
+  <!-- Tab Content: Goals -->
+  <div id="tab-goals" class="px-4 mt-4 pb-24">
+    <!-- Active Goal -->
+    <div class="bg-white rounded-2xl p-4 mb-3 shadow-sm">
+      <div class="flex items-center justify-between mb-2">
+        <div class="flex items-center gap-2">
+          <span class="text-lg">💪</span>
+          <span class="text-sm font-semibold text-dark">增肌增重计划</span>
+          <span class="bg-green-100 text-green-700 text-[10px] px-2 py-0.5 rounded-full font-medium">进行中</span>
+        </div>
+        <span class="text-xs text-text-gray">6/1 - 9/1</span>
+      </div>
+      <div class="text-xs text-text-gray mb-3">目标增重 5kg · 体脂率保持 ≤15%</div>
+      <div class="flex items-center gap-2 mb-1.5">
+        <span class="text-xs text-dark w-12">进度</span>
+        <div class="progress-bar flex-1"><div class="progress-fill bg-primary" style="width:60%"></div></div>
+        <span class="text-xs font-semibold text-primary">60%</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-xs text-dark w-12">已坚持</span>
+        <span class="text-xs font-semibold text-primary">36 天</span>
+        <span class="text-xs text-text-gray">· 剩余 54 天</span>
+      </div>
+    </div>
+
+    <!-- Second Goal -->
+    <div class="bg-white rounded-2xl p-4 mb-3 shadow-sm">
+      <div class="flex items-center justify-between mb-2">
+        <div class="flex items-center gap-2">
+          <span class="text-lg">🏃</span>
+          <span class="text-sm font-semibold text-dark">5公里进阶挑战</span>
+          <span class="bg-gray-200 text-gray-600 text-[10px] px-2 py-0.5 rounded-full font-medium">待启动</span>
+        </div>
+        <span class="text-xs text-text-gray">7/1 - 8/15</span>
+      </div>
+      <div class="text-xs text-text-gray mb-3">5km 配速从 6'00" 提升至 5'00"</div>
+      <div class="flex items-center gap-2">
+        <span class="text-xs text-dark">状态</span>
+        <span class="text-xs text-text-gray">尚未开始，点击查看详情 →</span>
+      </div>
+    </div>
+
+    <!-- Empty State Suggestion -->
+    <div class="text-center py-8">
+      <div class="text-4xl mb-2">🎯</div>
+      <div class="text-sm text-text-gray mb-3">设定一个新目标，开始你的健身之旅</div>
+      <button class="ai-btn text-sm" onclick="alert('创建目标功能')">+ 创建新目标</button>
+    </div>
+  </div>
+
+  <!-- Tab Content: Training Plans -->
+  <div id="tab-training-plans" class="px-4 mt-4 pb-24 hidden">
+    <div class="plan-card mb-3" onclick="location.href='plan-preview.html'">
+      <div class="flex items-center justify-between mb-2">
+        <div class="flex items-center gap-2">
+          <span class="text-lg">📋</span>
+          <span class="text-sm font-semibold text-dark">AI上肢力量训练</span>
+          <span class="bg-blue-100 text-blue-700 text-[10px] px-2 py-0.5 rounded-full font-medium">AI生成</span>
+        </div>
+        <span class="text-xs text-text-gray">6/6 生成</span>
+      </div>
+      <div class="text-xs text-text-gray">5天计划 · 胸/背/肩 · 适合新手</div>
+      <div class="flex items-center gap-3 mt-2 text-[10px] text-text-gray">
+        <span>🏋️ 15个动作</span><span>⏱️ 约45min/天</span><span>📊 消耗3积分</span>
+      </div>
+    </div>
+    <div class="plan-card mb-3" onclick="location.href='plan-preview.html'">
+      <div class="flex items-center justify-between mb-2">
+        <div class="flex items-center gap-2">
+          <span class="text-lg">📋</span>
+          <span class="text-sm font-semibold text-dark">下肢强化周计划</span>
+          <span class="bg-blue-100 text-blue-700 text-[10px] px-2 py-0.5 rounded-full font-medium">AI生成</span>
+        </div>
+        <span class="text-xs text-text-gray">5/28 生成</span>
+      </div>
+      <div class="text-xs text-text-gray">7天计划 · 腿/核心 · 进阶水平</div>
+      <div class="flex items-center gap-3 mt-2 text-[10px] text-text-gray">
+        <span>🏋️ 20个动作</span><span>⏱️ 约60min/天</span><span>📊 消耗3积分</span>
+      </div>
+    </div>
+    <div class="text-center py-8">
+      <button class="ai-btn" onclick="location.href='ai-plan.html'">🤖 AI 生成新计划</button>
+    </div>
+  </div>
+
+  <!-- Tab Content: Diet Plans -->
+  <div id="tab-diet-plans" class="px-4 mt-4 pb-24 hidden">
+    <div class="plan-card mb-3" onclick="location.href='plan-preview.html'">
+      <div class="flex items-center justify-between mb-2">
+        <div class="flex items-center gap-2">
+          <span class="text-lg">🍽️</span>
+          <span class="text-sm font-semibold text-dark">增肌高蛋白饮食</span>
+          <span class="bg-blue-100 text-blue-700 text-[10px] px-2 py-0.5 rounded-full font-medium">AI生成</span>
+        </div>
+        <span class="text-xs text-text-gray">6/5 生成</span>
+      </div>
+      <div class="text-xs text-text-gray">7天计划 · 3000kcal/天 · 高蛋白</div>
+      <div class="flex items-center gap-3 mt-2 text-[10px] text-text-gray">
+        <span>🥩 蛋白质180g</span><span>🍚 碳水350g</span><span>📊 消耗2积分</span>
+      </div>
+    </div>
+    <div class="plan-card mb-3" onclick="location.href='plan-preview.html'">
+      <div class="flex items-center justify-between mb-2">
+        <div class="flex items-center gap-2">
+          <span class="text-lg">🥗</span>
+          <span class="text-sm font-semibold text-dark">减脂低碳饮食</span>
+          <span class="bg-blue-100 text-blue-700 text-[10px] px-2 py-0.5 rounded-full font-medium">AI生成</span>
+        </div>
+        <span class="text-xs text-text-gray">5/20 生成</span>
+      </div>
+      <div class="text-xs text-text-gray">14天计划 · 1800kcal/天 · 低碳水</div>
+      <div class="flex items-center gap-3 mt-2 text-[10px] text-text-gray">
+        <span>🥩 蛋白质140g</span><span>🍚 碳水120g</span><span>📊 消耗2积分</span>
+      </div>
+    </div>
+    <div class="text-center py-8">
+      <button class="ai-btn" onclick="location.href='ai-plan.html'">🤖 AI 生成饮食计划</button>
+    </div>
+  </div>
+
+  <!-- Tab Bar -->
+  <div class="tab-bar">
+    <div class="flex justify-around items-center">
+      <div class="flex flex-col items-center cursor-pointer" onclick="location.href='record.html'">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <span class="text-[10px] mt-0.5 text-text-gray">记录</span>
+      </div>
+      <div class="flex flex-col items-center cursor-pointer">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="#FF6B35" stroke="#FF6B35" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+        <span class="text-[10px] mt-0.5 text-primary font-medium">目标</span>
+      </div>
+      <div class="flex flex-col items-center cursor-pointer" onclick="location.href='tutorial.html'">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5"><path d="M2 3h7a3 3 0 0 1 3 3v13a1 1 0 0 0-1-1H2V3z"/><path d="M22 3h-7a3 3 0 0 0-3 3v13a1 1 0 0 1 1-1h9V3z"/></svg>
+        <span class="text-[10px] mt-0.5 text-text-gray">教程</span>
+      </div>
+      <div class="flex flex-col items-center cursor-pointer" onclick="location.href='mine.html'">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        <span class="text-[10px] mt-0.5 text-text-gray">我的</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function switchTab(tab, el) {
+  document.querySelectorAll('.segment-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  ['goals', 'training-plans', 'diet-plans'].forEach(id => {
+    document.getElementById('tab-' + id).classList.add('hidden');
+  });
+  document.getElementById('tab-' + tab).classList.remove('hidden');
+}
+</script>
+</body>
+</html>
