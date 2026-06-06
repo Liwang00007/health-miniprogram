@@ -1,0 +1,229 @@
+/* pages/points-detail/points-detail.wxss — 积分明细页 */
+
+/* ====== 积分余额卡片 ====== */
+.balance-card {
+  margin: 24rpx 24rpx 0;
+  padding: 40rpx var(--spacing-xl) 32rpx;
+  background: linear-gradient(135deg, #FF6B35 0%, #FF8F5E 100%);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 装饰光点 */
+.balance-card::before {
+  content: '';
+  position: absolute;
+  top: -60rpx;
+  right: -40rpx;
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.balance-card::after {
+  content: '';
+  position: absolute;
+  bottom: -40rpx;
+  left: -30rpx;
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.balance-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  position: relative;
+  z-index: 1;
+}
+
+.balance-star {
+  font-size: 28rpx;
+}
+
+.balance-label {
+  font-size: var(--font-sm);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.balance-num {
+  display: block;
+  font-size: 96rpx;
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1.1;
+  margin: 12rpx 0 24rpx;
+  position: relative;
+  z-index: 1;
+}
+
+.balance-divider {
+  height: 1rpx;
+  background: rgba(255, 255, 255, 0.2);
+  margin-bottom: 20rpx;
+}
+
+.balance-info {
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.bal-info-item {
+  text-align: center;
+}
+
+.bal-info-value {
+  font-size: var(--font-lg);
+  font-weight: 700;
+  color: #FFFFFF;
+  display: block;
+}
+
+.bal-info-label {
+  font-size: var(--font-xs);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ====== 签到区域 ====== */
+.checkin-section {
+  margin: 20rpx 24rpx 0;
+}
+
+.checkin-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  height: 88rpx;
+  background: var(--color-card);
+  border: 2rpx solid var(--color-primary);
+  border-radius: var(--radius-lg);
+  transition: all 0.2s ease;
+}
+
+.checkin-btn:active {
+  transform: scale(0.97);
+  opacity: 0.85;
+}
+
+.checkin-btn--done {
+  border-color: var(--color-success);
+  background: #F0FFF4;
+}
+
+.checkin-btn--loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.checkin-icon {
+  font-size: 36rpx;
+}
+
+.checkin-text {
+  font-size: var(--font-md);
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.checkin-btn--done .checkin-text {
+  color: var(--color-success);
+}
+
+/* ====== 规则卡片 ====== */
+.rules-card {
+  margin: 20rpx 24rpx;
+}
+
+.card-title {
+  font-size: var(--font-md);
+  font-weight: 700;
+  color: var(--color-text);
+  padding: 0 0 var(--spacing-md);
+}
+
+.rule-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14rpx 0;
+}
+
+.rule-item:not(:last-child) {
+  border-bottom: 1rpx solid #F8F8F8;
+}
+
+.rule-label {
+  font-size: var(--font-sm);
+  color: var(--color-text);
+}
+
+.rule-value {
+  font-size: var(--font-sm);
+  font-weight: 600;
+}
+
+/* ====== 积分日志 ====== */
+.logs-section {
+  margin: 0 24rpx;
+}
+
+.logs-list {
+  background: var(--color-card);
+  border-radius: var(--radius-card);
+  padding: 0 var(--spacing-lg);
+  box-shadow: var(--shadow-card);
+  border: 1rpx solid var(--color-border);
+}
+
+.log-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 0;
+}
+
+.log-item:not(:last-child) {
+  border-bottom: 1rpx solid #F5F5F5;
+}
+
+.log-left {
+  flex: 1;
+  min-width: 0;
+}
+
+.log-desc {
+  font-size: var(--font-base);
+  color: var(--color-text);
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.log-time {
+  font-size: var(--font-xs);
+  color: var(--color-text-hint);
+  display: block;
+  margin-top: 4rpx;
+}
+
+.log-amount {
+  font-size: var(--font-lg);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-left: 16rpx;
+}
+
+/* ====== 加载更多 ====== */
+.load-more {
+  text-align: center;
+  padding: 24rpx 0;
+}

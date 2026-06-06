@@ -8,7 +8,8 @@
     "pages/index/index",
     "pages/logs/logs",
     "pages/diet-edit/diet-edit",
-    "pages/diet-detail/diet-detail"
+    "pages/diet-detail/diet-detail",
+    "pages/points-detail/points-detail"
   ],
   "window": {
     "navigationBarTextStyle": "black",
