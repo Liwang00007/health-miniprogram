@@ -1,0 +1,153 @@
+<!-- pages/diet-edit/diet-edit.wxml -->
+<navigation-bar title="{{editId ? '编辑饮食记录' : '添加饮食记录'}}" color="white" background="#2D2D2D"></navigation-bar>
+
+<view class="page">
+  <!-- ====== 日期 ====== -->
+  <view class="form-group">
+    <text class="form-label">📅 日期</text>
+    <picker mode="date" value="{{recordDate}}" bindchange="onDateChange">
+      <view class="form-input">{{recordDate}}</view>
+    </picker>
+  </view>
+
+  <!-- ====== 餐别 ====== -->
+  <view class="form-group">
+    <text class="form-label">🍴 餐别</text>
+    <view class="chip-row">
+      <text
+        wx:for="{{mealTypes}}"
+        wx:key="*this"
+        class="chip {{mealType === item ? 'chip-active' : ''}}"
+        bindtap="selectMealType"
+        data-type="{{item}}"
+      >{{mealLabels[item]}}</text>
+    </view>
+    <text wx:if="{{errors.mealType}}" class="form-error">{{errors.mealType}}</text>
+  </view>
+
+  <!-- ====== 食物搜索 ====== -->
+  <view class="form-group">
+    <text class="form-label">🔍 搜索食物</text>
+    <view class="search-box">
+      <input
+        class="search-input"
+        placeholder="输入食物名称搜索（如：鸡胸肉、米饭…）"
+        value="{{searchKeyword}}"
+        bindinput="onSearchInput"
+        bindblur="onSearchBlur"
+        bindfocus="onSearchFocus"
+      />
+      <text wx:if="{{searching}}" class="searching-hint">搜索中…</text>
+    </view>
+
+    <!-- 搜索结果下拉 -->
+    <view wx:if="{{showResults && searchResults.length > 0}}" class="search-results">
+      <view
+        wx:for="{{searchResults}}"
+        wx:key="_id"
+        class="search-item"
+        bindtap="selectFood"
+        data-index="{{index}}"
+      >
+        <view class="search-item-main">
+          <text class="search-item-name">{{item.name}}</text>
+          <text class="search-item-category">{{item.category}}</text>
+        </view>
+        <view class="search-item-nutrition">
+          <text class="search-item-cal">{{item.calories}}kcal/100{{item.unit || 'g'}}</text>
+          <text class="search-item-macro">蛋白{{item.protein}}g · 碳水{{item.carbs}}g · 脂肪{{item.fat}}g</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 无结果提示 -->
+    <view wx:if="{{showResults && searchResults.length === 0 && searchKeyword}}" class="no-result">
+      <text>未找到 "{{searchKeyword}}"，试试其他关键词</text>
+    </view>
+
+    <text wx:if="{{errors.foods}}" class="form-error">{{errors.foods}}</text>
+  </view>
+
+  <!-- ====== 已选食物列表 ====== -->
+  <view wx:if="{{selectedFoods.length > 0}}" class="foods-section">
+    <text class="form-label">📋 已选食物</text>
+    <view
+      wx:for="{{selectedFoods}}"
+      wx:key="index"
+      class="food-item card"
+    >
+      <!-- 食物信息 -->
+      <view class="food-item-top">
+        <view class="food-item-info">
+          <text class="food-item-name">{{item.name}}</text>
+          <text class="food-item-meta">{{item.calories}}kcal/100{{item.unit || 'g'}}</text>
+        </view>
+        <view class="food-item-delete" bindtap="removeFood" data-index="{{index}}">
+          <text>🗑️</text>
+        </view>
+      </view>
+
+      <!-- 份量调节 -->
+      <view class="food-item-bottom">
+        <text class="weight-label">份量</text>
+        <view class="weight-control">
+          <view class="weight-btn" bindtap="onWeightMinus" data-index="{{index}}">−</view>
+          <input
+            class="weight-input"
+            type="digit"
+            value="{{item.weight}}"
+            bindinput="onWeightChange"
+            data-index="{{index}}"
+          />
+          <view class="weight-btn" bindtap="onWeightPlus" data-index="{{index}}">+</view>
+        </view>
+        <text class="weight-unit">{{item.unit || 'g'}}</text>
+
+        <!-- 该食物实际摄入 -->
+        <view class="food-actual">
+          <text class="food-actual-cal">{{item.weight > 0 ? Math.round(item.calories * item.weight / 100) : 0}} kcal</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ====== 营养预览（汇总） ====== -->
+  <view class="nutrition-preview card" wx:if="{{selectedFoods.length > 0}}">
+    <text class="preview-title">📊 营养汇总</text>
+    <view class="preview-grid">
+      <view class="preview-item">
+        <text class="preview-val preview-val-cal">{{nutrition.calories}}</text>
+        <text class="preview-label">热量 (kcal)</text>
+      </view>
+      <view class="preview-item">
+        <text class="preview-val preview-val-protein">{{nutrition.protein}}</text>
+        <text class="preview-label">蛋白质 (g)</text>
+      </view>
+      <view class="preview-item">
+        <text class="preview-val preview-val-carbs">{{nutrition.carbs}}</text>
+        <text class="preview-label">碳水 (g)</text>
+      </view>
+      <view class="preview-item">
+        <text class="preview-val preview-val-fat">{{nutrition.fat}}</text>
+        <text class="preview-label">脂肪 (g)</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ====== 备注 ====== -->
+  <view class="form-group">
+    <text class="form-label">📝 备注（可选）</text>
+    <textarea
+      class="form-textarea"
+      placeholder="如：少油少盐、三分饱…"
+      maxlength="200"
+      value="{{notes}}"
+      bindinput="onNotesInput"
+    />
+  </view>
+
+  <!-- ====== 保存按钮 ====== -->
+  <view class="save-btn btn-primary" bindtap="save">
+    {{saving ? '保存中…' : (editId ? '💾 更新记录' : '💾 保存记录')}}
+  </view>
+</view>

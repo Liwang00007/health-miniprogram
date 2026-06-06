@@ -1,12 +1,52 @@
 {
   "pages": [
     "pages/login/login",
+    "pages/record/record",
+    "pages/goal/goal",
+    "pages/tutorial/tutorial",
+    "pages/mine/mine",
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/diet-edit/diet-edit",
+    "pages/diet-detail/diet-detail"
   ],
   "window": {
     "navigationBarTextStyle": "black",
     "navigationStyle": "custom"
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#999999",
+    "selectedColor": "#FF6B35",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/record/record",
+        "text": "记录"
+      },
+      {
+        "pagePath": "pages/goal/goal",
+        "text": "目标"
+      },
+      {
+        "pagePath": "pages/tutorial/tutorial",
+        "text": "教程"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的"
+      }
+    ]
+  },
+  "usingComponents": {
+    "navigation-bar": "/components/navigation-bar/navigation-bar",
+    "image-uploader": "/components/image-uploader/image-uploader",
+    "fab-button": "/components/fab-button/fab-button",
+    "empty-state": "/components/empty-state/empty-state",
+    "ring-chart": "/components/ring-chart/ring-chart",
+    "swipe-delete": "/components/swipe-delete/swipe-delete",
+    "timer": "/components/timer/timer"
   },
   "style": "v2",
   "renderer": "skyline",
